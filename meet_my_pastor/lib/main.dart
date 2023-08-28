@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/view/screens/appointment.dart';
+import 'package:meet_my_pastor/view/screens/home.dart';
+import 'package:meet_my_pastor/view/screens/register.dart';
+// import 'package:meet_my_pastor/view/screens/about.dart';
+// import 'package:meet_my_pastor/view/screens/home.dart';
+import 'package:meet_my_pastor/view/screens/testimonies.dart';
+import 'package:meet_my_pastor/widgets/appointment_widgets.dart';
+// import 'package:meet_my_pastor/view/screens/login.dart';
+// import 'package:meet_my_pastor/view/screens/register.dart';
 
 void main() {
-  //print("hello world");
-  runApp(
-    MaterialApp(home:AboutPage())
-  );
-}
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(
-      child: Text(
-        "hello!",
-        style: TextStyle(fontSize: 30),
-    
-      ),
-    ),);
-  }
+  runApp(
+    MaterialApp(debugShowCheckedModeBanner: false,
+      home:
+      // AboutPage()
+      // Login()
+      Register()
+      //  HomePage()
+      // Testimonies(),
+      // Appointment()
+      
+      )
+  );
 }
