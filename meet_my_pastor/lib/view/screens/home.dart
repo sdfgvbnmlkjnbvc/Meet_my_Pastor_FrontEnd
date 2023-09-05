@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/view/screens/about.dart';
+import 'package:meet_my_pastor/view/screens/register.dart';
+import 'package:meet_my_pastor/view/screens/testimonies.dart';
+
+import 'login.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -27,26 +33,47 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                "About",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              Material(
+                child: InkWell(onTap: (){
+                  pageNavigator(ctx: context).nextPage(page: AboutPage());
+                },
+                  child: Text(
+                    "About",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
-              Text(
-                "Contact us",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              Material(
+                child: InkWell(
+                  onTap: (){
+                    // pageNavigator(ctx: context).nextPage(page: AboutPage());
+                  },
+                  child: Text(
+                    "Contact us",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
-              Text(
-                "Testimonies",
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              Material(
+                child: InkWell(
+                  onTap: (){
+                   
+                    pageNavigator(ctx: context).nextPage(page: Testimonies());
+                  },
+                  child: Text(
+                    "Testimonies",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ],
           ),
@@ -62,6 +89,7 @@ class HomePage extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: () {
                 print("hello world");
+                 pageNavigator(ctx: context).nextPageOnly(page: Register());
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -89,6 +117,7 @@ class HomePage extends StatelessWidget {
               splashColor: Colors.transparent,
               onTap: () {
                 print("hello world");
+                pageNavigator(ctx: context).nextPageOnly(page: Login());
               },
               child: Container(
                 decoration: BoxDecoration(

@@ -2,11 +2,18 @@
 
 import 'package:flutter/material.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+ 
   const Register({Key? key}) : super(key: key);
 
   @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  @override
   Widget build(BuildContext context) {
+     bool _eye=true;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -49,10 +56,16 @@ class Register extends StatelessWidget {
            Padding(
             padding: const EdgeInsets.only(top: 16,left:20.0,right: 20),
             child: TextField(
-          
+          obscureText:true ,
               decoration: InputDecoration(hintText: "Password",
           border:OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                suffixIcon: Icon(Icons.remove_red_eye_outlined,color: Colors.black,)
+                suffixIcon: IconButton(onPressed: (){
+setState((){
+  _eye=!_eye;
+  print(_eye);
+});
+                },
+                icon: _eye ? const Icon( Icons.remove_red_eye_outlined,color: Colors.black ) : const Icon(Icons.visibility_off,color: Colors.black,) )
               ),
             ),
           ),
