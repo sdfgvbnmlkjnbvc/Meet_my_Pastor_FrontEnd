@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ShowToast {
   static void vitaToast(
       {String message = "", bool warn = true, bool long = false}) {
-    Toast.show(
-      message,
-      duration: long == true ? Toast.lengthLong : Toast.lengthShort,
-      gravity: Toast.center,
+    Fluttertoast.showToast(
+      msg:message,
+      toastLength: long == true ? Toast.LENGTH_LONG: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
       backgroundColor: warn == true
           ? Colors.redAccent
           : const Color.fromARGB(255, 1, 198, 50),

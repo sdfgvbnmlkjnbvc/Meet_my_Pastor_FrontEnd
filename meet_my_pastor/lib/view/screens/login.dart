@@ -1,61 +1,98 @@
-
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
+import 'package:meet_my_pastor/view/screens/reset_password.dart';
+import 'package:provider/provider.dart';
 
+import '../../pageNavigator.dart';
+import '../../widgets/InputTextfield.dart';
+import '../../widgets/authentication.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-           SizedBox(height: 120,)
-          ,
-          Center(
-            child: Image.asset("images/login.png",width: 236,height: 254,),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left:20.0,right: 20),
-            child: TextField(
-          
-              decoration: InputDecoration(hintText: "Enter your email",
-          border:OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                suffixIcon: Icon(Icons.alternate_email)
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 120),
+              Center(
+                child: Image.asset(
+                  "images/login.png",
+                  width: 236,
+                  height: 254,
+                ),
               ),
-            ),
-          ), Padding(
-            padding: const EdgeInsets.only(top: 16,left:20.0,right: 20),
-            child: TextField(
-          
-              decoration: InputDecoration(hintText: "Password",
-          border:OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                suffixIcon: Icon(Icons.remove_red_eye)
+              buildTextField(
+                _emailController,
+                "Email",
+                false,
+                const Icon(Icons.alternate_email, color: Colors.black),
+                () {},
               ),
-            ),
+              buildTextField(
+                _passwordController,
+                "Password",
+                !_isPasswordVisible,
+                _isPasswordVisible
+                    ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black)
+                    : const Icon(Icons.visibility_off, color: Colors.black),
+                () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 12),
+                child: Row(
+                  children: [
+                    const Text("Forgot Password ? "),
+                    InkWell(
+                      onTap: () {
+                        pageNavigator(ctx: context).nextPage(page: const ResetPassword());
+                      },
+                      child: const Text(
+                        "Reset",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 60),
+              Material(
+                child: Consumer<Authentication>(
+                  builder: (context, auth, child) {
+                    return buildRegisterButton(
+                      context,
+                      () {
+                        final auth = Provider.of<Authentication>(context, listen: false);
+                        auth.loginUser(
+                          context: context,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-      
-          Padding(
-            padding: const EdgeInsets.only(left:20.0,top: 12),
-            child: Row(children: [
-              Text("Forgot Password ? "),
-              Text("Reset",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
-            ],),
-          ),
-          SizedBox(height: 60,)
-          ,
-      Material(
-        child: InkWell(splashColor: Colors.transparent,onTap: (){
-          print("hello world");
-        },
-          child: Container(decoration: BoxDecoration(
-            color: Color(0xFFF3E64FF),
-            borderRadius: BorderRadius.circular(6)
-            
-          ),height:60,width: 364,child: Center(child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 24,fontWeight: FontWeight.bold),)), )),
-      )
-        ]),
+        ),
       ),
     );
   }
