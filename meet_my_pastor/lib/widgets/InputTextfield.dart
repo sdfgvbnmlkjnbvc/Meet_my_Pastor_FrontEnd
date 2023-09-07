@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
     String hintText,
     bool isObscureText,
     Icon isObscureTextIcon,
-    String ValidateText,
+    String? validateText,
     Function() onPressed,
   ) {
     return Padding(
@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
         obscureText: isObscureText,
         decoration: InputDecoration(
           hintText: hintText,
-          errorText: ValidateText,
+          errorText: validateText,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
           suffixIcon: IconButton(
             onPressed: onPressed,

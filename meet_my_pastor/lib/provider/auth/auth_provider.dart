@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meet_my_pastor/controller/baseurl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
@@ -69,7 +70,7 @@ class Authentication extends ChangeNotifier {
         final userId = res['user']['public_id'];
         final userName = res['user']['name'];
         final token = res['auth_token'];
-        pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
+        pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
         ShowToast.vitaToast(message: "Authenticated", warn: state, long: true);
         _isLoading = false;
         notifyListeners();

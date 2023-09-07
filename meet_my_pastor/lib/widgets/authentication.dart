@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildRegisterButton(BuildContext context, Function()? onTap) {
-  
+Widget buildRegisterButton(BuildContext context, Function()? onTap,Color? color1,var BtnTitle) {
+ 
     return InkWell(
       splashColor: Colors.transparent,
       onTap:onTap,
@@ -10,14 +10,14 @@ Widget buildRegisterButton(BuildContext context, Function()? onTap) {
       // },
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF3E64FF),
+          color:  color1,
           borderRadius: BorderRadius.circular(6),
         ),
         height: 60,
         width: 364,
-        child: const Center(
+        child:  Center(
           child: Text(
-            "Register",
+            BtnTitle,
             style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),

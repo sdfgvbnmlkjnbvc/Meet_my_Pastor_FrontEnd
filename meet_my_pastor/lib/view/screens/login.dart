@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/view/screens/reset_password.dart';
+import 'package:meet_my_pastor/widgets/validators.dart';
 import 'package:provider/provider.dart';
 
 import '../../pageNavigator.dart';
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
                 _emailController,
                 "Email",
                 false,
-                const Icon(Icons.alternate_email, color: Colors.black),
+                const Icon(Icons.alternate_email, color: Colors.black),errorText(_emailController),
                 () {},
               ),
               buildTextField(
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
                 !_isPasswordVisible,
                 _isPasswordVisible
                     ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black)
-                    : const Icon(Icons.visibility_off, color: Colors.black),
+                    : const Icon(Icons.visibility_off, color: Colors.black),errorPassword(_passwordController),
                 () {
                   setState(() {
                     _isPasswordVisible = !_isPasswordVisible;
@@ -74,7 +75,10 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 60),
               Material(
-                child: Consumer<Authentication>(
+                child:
+                
+                
+                 Consumer<Authentication>(
                   builder: (context, auth, child) {
                     return buildRegisterButton(
                       context,
@@ -85,10 +89,11 @@ class _LoginState extends State<Login> {
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                      },
+                      },Color(0xFF3E64FF),"Login"
                     );
                   },
                 ),
+                
               ),
             ],
           ),

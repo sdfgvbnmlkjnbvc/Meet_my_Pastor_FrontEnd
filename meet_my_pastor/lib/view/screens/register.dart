@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../pageNavigator.dart';
 import '../../widgets/InputTextfield.dart';
 import '../../widgets/authentication.dart';
+import '../../widgets/validators.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -42,15 +43,15 @@ class _RegisterState extends State<Register> {
                 child: Image.asset("images/Register.png", width: 105, height: 101),
               ),
               const SizedBox(height: 60),
-              buildTextField(_nameController, "Full name", false,const Icon(Icons.person_pin_circle_outlined, color: Colors.black), () {}),
-              buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black),_validate ? 'Field cannot be Empty': null , () {}),
-              buildTextField(_contactController, "Contact", false,const Icon(Icons.phone_iphone_outlined, color: Colors.black),() {}),
-              buildTextField(_passwordController, "Password", _eye,_eye? const Icon(Icons.remove_red_eye_outlined, color: Colors.black) : const Icon(Icons.visibility_off,color: Colors.black,),() {
+              buildTextField(_nameController, "Full name", false,const Icon(Icons.person_pin_circle_outlined, color: Colors.black),validName(_nameController) ,() {}),
+              buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(_emailController), () {}),
+              buildTextField(_contactController, "Contact", false,const Icon(Icons.phone_iphone_outlined, color: Colors.black),validContact(_contactController),() {}),
+              buildTextField(_passwordController, "Password", _eye,_eye? const Icon(Icons.remove_red_eye_outlined, color: Colors.black) : const Icon(Icons.visibility_off,color: Colors.black,),errorPassword(_passwordController),() {
                 setState(() {
                   _eye = !_eye;
                 });
               }),
-              buildTextField(_confirmPasswordController, "Confirm Password", _ceye,_ceye ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black) : const Icon(Icons.visibility_off,color: Colors.black,), () {
+              buildTextField(_confirmPasswordController, "Confirm Password", _ceye,_ceye ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black) : const Icon(Icons.visibility_off,color: Colors.black,), confirmPassword(_confirmPasswordController, _passwordController),() {
                 setState(() {
                   _ceye = !_ceye;
                 });
@@ -59,6 +60,12 @@ class _RegisterState extends State<Register> {
               Material(
                 child: Consumer<Authentication>(
                   builder: (context, auth, child) {
+                    if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty || _contactController.value.text.isEmpty || _passwordController.value.text.isEmpty){
+return buildRegisterButton(context,(){
+},Colors.red[300],"Register");
+                  } else{
+
+
                     return buildRegisterButton(context,(){
 
                          final auth = Provider.of<Authentication>(context, listen: false);
@@ -69,7 +76,9 @@ class _RegisterState extends State<Register> {
           password: _passwordController.text,
           name: _nameController.text,
         );
-                    });
+
+                    },Color(0xFF3E64FF),"Register");
+                  }
                   },
                 ),
               ),
