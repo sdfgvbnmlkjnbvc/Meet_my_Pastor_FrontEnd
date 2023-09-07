@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
                 child: Image.asset("images/Register.png", width: 105, height: 101),
               ),
               const SizedBox(height: 60),
-              buildTextField(_nameController, "Full name", false,const Icon(Icons.person_pin_circle_outlined, color: Colors.black),validName(_nameController) ,() {}),
+              Container(child: buildTextField(_nameController, "Full name", false,const Icon(Icons.person_pin_circle_outlined, color: Colors.black),validName(_nameController) ,() {})),
               buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(_emailController), () {}),
               buildTextField(_contactController, "Contact", false,const Icon(Icons.phone_iphone_outlined, color: Colors.black),validContact(_contactController),() {}),
               buildTextField(_passwordController, "Password", _eye,_eye? const Icon(Icons.remove_red_eye_outlined, color: Colors.black) : const Icon(Icons.visibility_off,color: Colors.black,),errorPassword(_passwordController),() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
+import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
-import 'package:meet_my_pastor/view/screens/login.dart';
-import 'package:meet_my_pastor/view/screens/register.dart';
+
 import 'package:provider/provider.dart';
 
 void main() {
@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => Authentication()),
-          // Add other providers as needed
+      
         ],
         child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: AppointmentDetail(),
       ),
     );
   }

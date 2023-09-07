@@ -20,9 +20,7 @@ import 'package:flutter/material.dart';
           suffixIcon: IconButton(
             onPressed: onPressed,
             icon: isObscureTextIcon,
-            // isObscureText
-                // ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black)
-                // : const Icon(Icons.visibility_off, color: Colors.black),
+            
           ),
         ),
       ),

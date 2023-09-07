@@ -1,139 +1,183 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
+import 'package:meet_my_pastor/widgets/authentication.dart';
+import 'package:provider/provider.dart';
 
-class AppointmentDetail extends StatelessWidget {
-  
-  AppointmentDetail({super.key});
-  DateTime selectedDate = DateTime.now();
-     List<DateTime?> _rangeDatePickerWithActionButtonsWithValue = [
-    DateTime.now(),
-    // DateTime.now().add(const Duration(days: 5)),
-  ];
-  _selectDate(BuildContext context) async {
-  //   final DateTime picked = await showDatePicker(
-  //     context: context,
-  //  initialDate: selectedDate,
-  //  firstDate: DateTime.utc(2021,10,16),
-  //  lastDate: DateTime.utc(2023,10,16),
-  //     );
-//  final Datepicked = await  TableCalendar(
-//   firstDay: DateTime.utc(2010, 10, 16),
-//   lastDay: DateTime.utc(2030, 3, 14),
-//   focusedDay: DateTime.now(),);
-  AlertDialog(title: Text("Date"),content: Text("Hello world"));
+import '../../provider/auth/auth_provider.dart';
+import '../../widgets/InputTextfield.dart';
+import '../../widgets/validators.dart';
 
-Container(
-          height: 250,
-          width: double.infinity,
-          //  color:Colors.blueGrey,
-          margin: EdgeInsets.all(20),
-        child:   
-        CalendarDatePicker2(
-          onValueChanged: ((value) {
-            print(value);
-          }),
-  config: CalendarDatePicker2Config(dayTextStyle: TextStyle(color: Color(0xff3E64FF),fontWeight: FontWeight.w900),
-  
-  weekdayLabelTextStyle: TextStyle(color: Color(0xff3E64FF),fontWeight: FontWeight.w900),
-  controlsTextStyle: TextStyle(color: Color(0xff3E64FF),fontWeight: FontWeight.w900),lastMonthIcon: Icon(Icons.arrow_back_ios_sharp,color: Color(0xff3E64FF),),
-nextMonthIcon:  Icon(Icons.arrow_forward_ios,color: Color(0xff3E64FF),),
+class EmailInput extends StatelessWidget {
+  final String labelText;
+  var height;
+  var width;
+   TextEditingController controller =TextEditingController();
+   TextStyle? labelTextStyle;
+   EmailInput({required this.labelText,this.width,this.height,labelTextStyle,controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 40, right: 40),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        boxShadow: kInputBoxShadow,
+      ),
+      width: width,
+      height:height,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child:
+          //  buildTextField(emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(emailController), () {}),
+          TextField(
+            controller: controller,
+          expands: true,
+           maxLines:null,
+           minLines:null,
+            decoration: InputDecoration(
+           
+             
+              border: InputBorder.none,
+              labelText: labelText,
+              labelStyle:labelTextStyle ,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+const List<BoxShadow> kInputBoxShadow = [
+  BoxShadow(
+    color: Colors.grey,
+    offset: const Offset(2.0, 2.0),
+    blurRadius: 2.0,
+    spreadRadius: 2.0,
   ),
-  initialValue: _rangeDatePickerWithActionButtonsWithValue 
-),
-        
-        );
+  BoxShadow(
+    color: Colors.white,
+    offset: const Offset(0.0, 0.0),
+    blurRadius: 0.0,
+    spreadRadius: 0.0,
+  ),
+];
+
+class AppointmentDetail extends StatefulWidget {
+  AppointmentDetail({Key? key}) : super(key: key);
+
+  @override
+  _AppointmentDetailState createState() => _AppointmentDetailState();
+}
+
+class _AppointmentDetailState extends State<AppointmentDetail> {
+  final TextEditingController dateInput = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController();
+  bool isDateSelected = false;
+
+  @override
+  void initState() {
+    dateInput.text = "";
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      body: Column(
-        children: [
-      Container(margin: EdgeInsets.only(left:20,right:20),
-decoration: BoxDecoration(          borderRadius:BorderRadius.circular(6),color:Colors.white,
-boxShadow:  [BoxShadow(
-                      color:Colors.grey,
-                      offset: const Offset(
-                        2.0,
-                        2.0,
-                      ),
-                      blurRadius: 2.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                    BoxShadow(
-                      color: Colors.white,
-                      offset: const Offset(0.0, 0.0),
-
-
-
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                    ),]
-),          //  clipBehavior: Clip.antiAlias,
-       
-          width: 363,height: 50,
-            
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(left:8.0),
-                child: TextField(clipBehavior: Clip.antiAlias,
-                  decoration: InputDecoration(border: InputBorder.none,
-                    labelText: "Email",labelStyle: TextStyle(fontSize:24,fontWeight: FontWeight.bold )
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+           const SizedBox(height: 30,),
+          //  buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(_emailController), () {}),
+         EmailInput(width: 363,height: 50,labelText: "Email"),
+            Container(
+               margin:const EdgeInsets.only(top: 10,left: 40, right: 40,bottom: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Colors.white,
+                boxShadow: kInputBoxShadow,
+              ),
+              // padding:const EdgeInsets.all(15),
+              width: 363,
+              height: 40,
+              child: Center(
+                child: TextField(
+                  style: TextStyle(fontSize: 18),
+                  controller: dateInput,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: InputDecoration(
+                    
+                    icon: const Icon(Icons.calendar_today),
+                    border: InputBorder.none,
+                    labelText: isDateSelected ? "" : "Enter Date",
+                    labelStyle: !isDateSelected ?  TextStyle(fontSize: 18, fontWeight: FontWeight.bold):TextStyle(fontSize: 0, fontWeight: FontWeight.bold),
                   ),
-                 ),
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      lastDate: DateTime(2100),
+                    );
+            
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      setState(() {
+                        isDateSelected = true;
+                        dateInput.text = formattedDate;
+                      });
+                    }
+                  },
+                ),
               ),
             ),
+              
+           EmailInput(width: 363,height: 50,labelText: "Time"),
+          const  SizedBox(height: 30,),
+           EmailInput(height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
+          
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: buildRegisterButton(context, () => null,Color(0xFF3E64FF), "Book now"),
+
           ),
-       Padding(
-         padding: const EdgeInsets.all(8.0),
-         child:  Material(
-        child: InkWell(splashColor: Colors.transparent,onTap: (){
-          _selectDate(context);
-        },
-          child: Container(decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(6)
-            
-          ),height:60,width: 360,child: Text("Date",style: TextStyle(color: Colors.black,fontSize: 24,fontWeight: FontWeight.bold),), )),
-      )
-       ),
-          Container(margin: EdgeInsets.only(left:20,right:20),
-decoration: BoxDecoration(          borderRadius:BorderRadius.circular(6),color:Colors.white,
-boxShadow:  [BoxShadow(
-                      color:Colors.grey,
-                      offset: const Offset(
-                        2.0,
-                        2.0,
-                      ),
-                      blurRadius: 2.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                    BoxShadow(
-                      color: Colors.white,
-                      offset: const Offset(0.0, 0.0),
-                      blurRadius: 0.0,
-                      spreadRadius: 0.0,
-                    ),]
-),          //  clipBehavior: Clip.antiAlias,
-       
-          width: 363,height: 50,
-            
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(left:8.0),
-                child: TextField(clipBehavior: Clip.antiAlias,
-                  decoration: InputDecoration(border: InputBorder.none,
-                    labelText: "Email",labelStyle: TextStyle(fontSize:24,fontWeight: FontWeight.bold )
-                  ),
-                 ),
+           Material(
+                child: Consumer<Authentication>(
+                  builder: (context, auth, child) {
+                    if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty || _contactController.value.text.isEmpty || _passwordController.value.text.isEmpty){
+return buildRegisterButton(context,(){
+},Colors.red[300],"Book now");
+                  } else{
+
+
+                    return buildRegisterButton(context,(){
+
+                         final auth = Provider.of<Authentication>(context, listen: false);
+        auth.signup(
+          context: context,
+          contact: _contactController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          name: _nameController.text,
+        );
+
+                    },Color(0xFF3E64FF),"Book now");
+                  }
+                  },
+                ),
               ),
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
