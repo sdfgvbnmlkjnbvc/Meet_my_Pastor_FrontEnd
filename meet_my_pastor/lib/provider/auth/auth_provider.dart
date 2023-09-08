@@ -13,8 +13,10 @@ import 'package:meet_my_pastor/widgets/meettoast.dart';
 class Authentication extends ChangeNotifier {
   bool _isLoading = false;
   bool _state = false;
+  int? _itemCount;
   Map<String, dynamic> respData = {};
 
+int? get itemCount =>_itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
 
@@ -49,6 +51,83 @@ class Authentication extends ChangeNotifier {
       handleDioError(e, context);
     } catch (e) {
       handleGenericError(e, context);
+    }
+  }
+ Future<void> bookAppointment({
+    required String name,
+    required String email,
+    required String userId,
+    required String date,
+     required String reason,
+    required String time,
+     required String pastor,
+    required BuildContext context,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+    final body = {"user-id": userId, "pastor": pastor,"name": name, "email": email, "date": date, "time": time,"reason":reason};
+
+    try {
+      var  dio = Dio();
+      Response response = await dio.post("http://127.0.0.1:5000/api/appointment", data: body);
+      respData = response.data;
+
+      if (respData['status'] == 201) {
+        ShowToast.vitaToast(message: "Appointment booked", warn: false);
+        _isLoading = false;
+        notifyListeners();
+        pageNavigator(ctx: context).nextPage(page: const Login());
+      } else {
+        ShowToast.vitaToast(message: "User Already Exists", warn: false);
+        _isLoading = false;
+        _state = true;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      handleDioError(e, context);
+    } catch (e) {
+      handleGenericError(e, context);
+    }
+  }
+
+  Stream<Map> pastors(
+    // {
+    // required String name,
+    // required String email,
+    // required String password,
+    // required String contact,
+    //  required BuildContext context,
+  // /}
+  ) async* {
+    _isLoading = true;
+    notifyListeners();
+    // final body = {"name": name, "email": email, "contact": contact, "password": password};
+
+    try {
+      var  dio = Dio();
+      Response response = await dio.get("${APPBASEURL.baseUrl}pastors");
+      respData = response.data;
+     print("--------- ${respData['pastor'].length} --------------") ;
+  //  _itemCount=respData['pastor'].length;
+       print(_itemCount);
+      if (respData['status'] == 200) {
+       _itemCount=respData['pastor'].length;
+       print(_itemCount);
+        _isLoading = false;
+        notifyListeners();
+
+      } else {
+
+        _isLoading = false;
+        _state = true;
+        notifyListeners();
+      }
+    } on DioError catch (e) {
+      // handleDioError(e, context);
+      print(e);
+    } catch (e) {
+      // handleGenericError(e, context);
+        print(e);
     }
   }
 
@@ -92,9 +171,7 @@ class Authentication extends ChangeNotifier {
       final dio = Dio();
 
       final response = await dio.get('https://meet-my-pastor.onrender.com/api/users');
-      // dio.options.headers['content-Type'] = 'text/plain; charset=UTF-8';
-      // dio.options.headers['Access-Control-Allow-Origin'] = '*';
-      // dio.options.headers['Access-Control-Allow-Methods'] = 'GET , POST';
+  
       respData = response.data;
       print(respData);
       ShowToast.vitaToast(message: "${response.statusMessage}", warn: true);
@@ -151,3 +228,6 @@ class Authentication extends ChangeNotifier {
     }
   }
 }
+
+// 20@Nhana!
+// nhana@admin.com

@@ -11,9 +11,9 @@ class EmailInput extends StatelessWidget {
   final String labelText;
   var height;
   var width;
-   TextEditingController controller =TextEditingController();
+  TextEditingController controller;
    TextStyle? labelTextStyle;
-   EmailInput({required this.labelText,this.width,this.height,labelTextStyle,controller});
+   EmailInput({required this.labelText,this.width,this.height,labelTextStyle,required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +75,11 @@ class AppointmentDetail extends StatefulWidget {
 class _AppointmentDetailState extends State<AppointmentDetail> {
   final TextEditingController dateInput = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+  final TextEditingController _timeController =
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _contactController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   bool isDateSelected = false;
 
   @override
@@ -90,13 +90,14 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
 
   @override
   Widget build(BuildContext context) {
+    bool inactive=false;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
            const SizedBox(height: 30,),
           //  buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(_emailController), () {}),
-         EmailInput(width: 363,height: 50,labelText: "Email"),
+         EmailInput(controller:_emailController,width: 363,height: 50,labelText: "Email"),
             Container(
                margin:const EdgeInsets.only(top: 10,left: 40, right: 40,bottom: 10),
               decoration: BoxDecoration(
@@ -141,38 +142,44 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               ),
             ),
               
-           EmailInput(width: 363,height: 50,labelText: "Time"),
+           EmailInput(controller:_timeController,width: 363,height: 50,labelText: "Time"),
           const  SizedBox(height: 30,),
-           EmailInput(height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
+           EmailInput(controller:_messageController ,height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
           
           SizedBox(height: 30,),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: buildRegisterButton(context, () => null,Color(0xFF3E64FF), "Book now"),
+          // Padding(
+          //   padding: const EdgeInsets.all(30.0),
+          //   child: 
+          //   // buildRegisterButton(context, () => null,Color(0xFF3E64FF), "Book now"),
 
-          ),
+          // ),
            Material(
                 child: Consumer<Authentication>(
                   builder: (context, auth, child) {
-                    if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty || _contactController.value.text.isEmpty || _passwordController.value.text.isEmpty){
-return buildRegisterButton(context,(){
-},Colors.red[300],"Book now");
-                  } else{
+  
 
 
                     return buildRegisterButton(context,(){
-
-                         final auth = Provider.of<Authentication>(context, listen: false);
-        auth.signup(
+  if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty ||  dateInput.value.text.isEmpty || _messageController.value.text.isEmpty){
+    setState(() {
+      inactive=true;
+    });}else if (inactive == false){
+                  final auth = Provider.of<Authentication>(context, listen: false);
+        auth.bookAppointment(
           context: context,
-          contact: _contactController.text,
-          email: _emailController.text,
-          password: _passwordController.text,
+          userId: "5f8e7fc5-1508-4bca-8706-041193680363",
+          pastor:"Apostle" ,
+          time:  _timeController.text,
+          date: dateInput.value.text,
+          email: _emailController.value.text,
+          reason: _messageController.value.text,
           name: _nameController.text,
         );
 
-                    },Color(0xFF3E64FF),"Book now");
-                  }
+    }
+       
+                    },inactive? Color(0xFF3E64FF): Colors.red[300],"Book now");
+                  
                   },
                 ),
               ),
