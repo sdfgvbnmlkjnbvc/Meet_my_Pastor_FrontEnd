@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
 
@@ -7,48 +9,6 @@ import '../../provider/auth/auth_provider.dart';
 import '../../widgets/InputTextfield.dart';
 import '../../widgets/validators.dart';
 
-class EmailInput extends StatelessWidget {
-  final String labelText;
-  var height;
-  var width;
-  TextEditingController controller;
-   TextStyle? labelTextStyle;
-   EmailInput({required this.labelText,this.width,this.height,labelTextStyle,required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: Colors.white,
-        boxShadow: kInputBoxShadow,
-      ),
-      width: width,
-      height:height,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child:
-          //  buildTextField(emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(emailController), () {}),
-          TextField(
-            controller: controller,
-          expands: true,
-           maxLines:null,
-           minLines:null,
-            decoration: InputDecoration(
-           
-             
-              border: InputBorder.none,
-              labelText: labelText,
-              labelStyle:labelTextStyle ,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 const List<BoxShadow> kInputBoxShadow = [
   BoxShadow(
@@ -153,18 +113,20 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
           //   // buildRegisterButton(context, () => null,Color(0xFF3E64FF), "Book now"),
 
           // ),
-           Material(
-                child: Consumer<Authentication>(
-                  builder: (context, auth, child) {
+           Row(
+             children: [
+               Material(
+                    child: Consumer<Authentication>(
+                      builder: (context, auth, child) {
   
 
 
-                    return buildRegisterButton(context,(){
+                        return buildRegisterButton(context,(){
   if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty ||  dateInput.value.text.isEmpty || _messageController.value.text.isEmpty){
     setState(() {
       inactive=true;
     });}else if (inactive == false){
-                  final auth = Provider.of<Authentication>(context, listen: false);
+                      final auth = Provider.of<Authentication>(context, listen: false);
         auth.bookAppointment(
           context: context,
           userId: "5f8e7fc5-1508-4bca-8706-041193680363",
@@ -178,11 +140,31 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
 
     }
        
-                    },inactive? Color(0xFF3E64FF): Colors.red[300],"Book now");
+                        },inactive? Color(0xFF3E64FF): Colors.red[300],"Book now");
+                      
+                      },
+                    ),
+                  ),
+
+                    SizedBox(width: 20,),
+
+               Material(
+                child:
+                
+                
+            buildRegisterButton(
+                      context,
+                      () {
+                       pageNavigator(ctx: context).nextPage(page:Admin());
+                      },Color(0xFF3E64FF),"Admin"
+                    )
                   
-                  },
                 ),
-              ),
+                
+              
+             ],
+           ),
+
           ],
         ),
       ),

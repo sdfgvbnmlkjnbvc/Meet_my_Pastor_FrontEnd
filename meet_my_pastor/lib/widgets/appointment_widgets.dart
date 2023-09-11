@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String? sourceLink;
@@ -68,7 +70,7 @@ class AppointmentCard extends StatelessWidget {
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    print("Hello, world");
+                   pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
                   },
                   child: Container(
                     decoration: BoxDecoration(
