@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
+import 'package:meet_my_pastor/provider/auth/sendimage.dart';
+import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
+import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -15,12 +19,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => Authentication()),
+           ChangeNotifierProvider(
+            create:(_)=> CloudImage(),
+          ),
+           ChangeNotifierProvider(
+            create:(_)=> FetchImage(),
+          )
       
         ],
         child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomePage(),
+      home:SafeArea(child: Admin()),
       ),
     );
   }
 }
+
+

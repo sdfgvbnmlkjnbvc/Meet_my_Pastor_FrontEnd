@@ -28,45 +28,38 @@ import 'package:flutter/material.dart';
   }
 
 
-  class EmailInput extends StatelessWidget {
-  final String labelText;
-  var height;
-  var width;
+  class FieldInput extends StatelessWidget {
+ String? labelText;
+  double? height;
+  double? width;
   TextEditingController controller;
    TextStyle? labelTextStyle;
-   EmailInput({required this.labelText,this.width,this.height,labelTextStyle,required this.controller});
+   FieldInput({required this.labelText,this.width,this.height,labelTextStyle,required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 40, right: 40),
+      margin: EdgeInsets.only(top: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: Colors.white,
-        // boxShadow: kInputBoxShadow,
       ),
       width: width,
       height:height,
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child:
-          //  buildTextField(emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(emailController), () {}),
-          TextField(
-            controller: controller,
-          expands: true,
-           maxLines:null,
-           minLines:null,
-            decoration: InputDecoration(
-           
-             
-              border: InputBorder.none,
-              labelText: labelText,
-              labelStyle:labelTextStyle ,
-            ),
+        child: Material(child: TextField(
+          controller: controller,
+        expands: true,
+         maxLines:null,
+         minLines:null,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            labelText: labelText,
+            labelStyle:labelTextStyle ,
           ),
         ),
-      ),
-    );
+        ),
+    ),)
+    ;
   }
 }

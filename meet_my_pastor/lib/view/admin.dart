@@ -1,9 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:intl/intl.dart';
+import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
+import 'package:meet_my_pastor/provider/auth/sendimage.dart';
+import 'package:meet_my_pastor/provider/testupload.dart';
+
 import 'package:meet_my_pastor/widgets/InputTextfield.dart';
-import '../widgets/meettoast.dart';
+import 'package:meet_my_pastor/widgets/authentication.dart';
+import 'package:provider/provider.dart';
+
+
+
+
+
 
 class Admin extends StatefulWidget {
   const Admin({super.key});
@@ -13,64 +23,45 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
-  final cloudinary = CloudinaryPublic('dam1p1eyw', 'UPLOAD_PRESET', cache: false);
-  File? _imageFile;
-  String? _imageUrl;
+   List<String> list = <String>["Select Option",'Testimony', 'Event', 'Appointment', 'Pastor'];
+
+bool inactive=false;
    final TextEditingController dateInput = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _timeController =
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   bool isDateSelected = false;
-
-
-  Future<void> _pickImage(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: source);
-    setState(() {
-      if (pickedFile != null) _imageFile = File(pickedFile.path);
-      print(pickedFile);
-    });
-  }
-
-  Future<void> _uploadImage() async {
-    if (_imageFile == null) {
-      // Handle case when no image is selected
-      ShowToast.vitaToast(message: "No image selected", warn: true, long: true);
-      return;
-    }
-
-    try {
-      CloudinaryResponse response = await cloudinary.uploadFile(
-        CloudinaryFile.fromFile(_imageFile?.path ?? " ", resourceType: CloudinaryResourceType.Image),
-      );
-      
-      setState(() {
-        _imageUrl = response.secureUrl;
-      });
-
-      // Image uploaded successfully
-      ShowToast.vitaToast(message: "Image added successfully", warn: false, long: true);
-    } on CloudinaryException catch (e) {
-      // Handle Cloudinary exceptions
-      print(e.message);
-      print(e.request);
-      ShowToast.vitaToast(message: "Error uploading image: ${e.message}", warn: true, long: true);
-    }
+ void initState() {
+    dateInput.text = "";
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+     String dropdownValue = list.first;
+       final files = Provider.of<FetchImage>(context);
+    final response = Provider.of<CloudImage>(context);
+    final Uploaded= Provider.of<CloudImage>(context,listen: true).upload;
+        return Column(
+            children: [
         SizedBox(
           height: 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Uploaded == false ?
+              Container(
+              width: 159,
+              height: 187,
+
+              child:Image.network(response.url,fit: BoxFit.contain,),
+            )
+            :
+        
             Container(
               width: 159,
               height: 187,
@@ -103,8 +94,9 @@ class _AdminState extends State<Admin> {
                         height: 30,
                         width: 30,
                         child: InkWell(
-                          onTap: () {
-                            _pickImage(ImageSource.gallery);
+                          onTap: () async {
+                           await files.int();
+             
                           },
                           child: Icon(
                             Icons.add_circle_outline,
@@ -117,100 +109,131 @@ class _AdminState extends State<Admin> {
                 ],
               ),
             ),
+       
+            
             Container(
               height: 187,
               width: 192,
-              color: Color(0xffD9D9D9),
-              child: Column(
+        
+              child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Add widgets as needed
-                ],
+Flexible(
+  child:   Material(
+  
+    child:   DropdownButton(value: dropdownValue,icon: const Icon(Icons.arrow_downward,color: Colors.red,),onChanged:(String? value) {
+  
+    
+  
+        
+  
+    
+  
+          setState(() {
+  
+    
+  
+            dropdownValue = value!;
+  
+    
+  
+          });}, items:list.map<DropdownMenuItem<String>>((String value) {
+  
+    
+  
+          return DropdownMenuItem<String>(
+  
+    
+  
+            value: value,
+  
+    
+  
+            child: Text(value),
+  
+    
+  
+          );
+  
+    
+  
+        }).toList(),),
+  
+  ),
+)    ,
+
+Flexible(child: FieldInput(controller:_nameController,height: MediaQuery.of(context).size.width / 4,labelText: "Full Name")),
+        Flexible(
+          child: Container(
+             margin: EdgeInsets.only(top: 8),
+            height: MediaQuery.of(context).size.width / 4,
+            child: Center(
+              child: Material(
+                child: TextField(
+                  controller: dateInput,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: "Enter Date",
+                  ),
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      lastDate: DateTime(2100),
+                    );
+              
+                    if (pickedDate != null) {
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      setState(() {
+                        dateInput.text = formattedDate;
+                      });
+                    }
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+        Flexible(child: FieldInput(controller: _timeController,height: MediaQuery.of(context).size.width / 4,labelText: "time")),
+
+        ],
               ),
             )
           ],
         ),
-        // SizedBox(
-        //   height: 20,
-        // ),
-        // Material(
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       color: Colors.amberAccent,
-        //       borderRadius: BorderRadius.circular(100),
-        //     ),
-        //     height: 30,
-        //     width: 100,
-        //     child: InkWell(
-        //       onTap: _uploadImage,
-        //       child: Center(child: Text("Upload")),
-        //     ),
-        //   ),
-        // ),
-
-        // EmailInput(controller:_emailController,width: 363,height: 50,labelText: "Email"),
-        //     Container(
-        //        margin:const EdgeInsets.only(top: 10,left: 40, right: 40,bottom: 10),
-        //       decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(6),
-        //         color: Colors.white,
-        //         // boxShadow: kInputBoxShadow,
-        //       ),
-        //       // padding:const EdgeInsets.all(15),
-        //       width: 363,
-        //       height: 40,
-        //       child: Center(
-        //         child:Text("Hello") 
-            
-        //       )   
-        //       ),
-            
-                   
+        SizedBox(
+          height: 20,
+        ),
+       
+        Container(margin: EdgeInsets.all(20),
+        child: FieldInput(labelText:"Kindly Type here" , height: MediaQuery.of(context).size.height*0.4179 ,controller: _messageController))
+        
+         , SizedBox(height: 30,),
+         
+         Row(crossAxisAlignment: CrossAxisAlignment.center,
+         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+           children: [
+             buildRegisterButton(context,() async {
+                  
+                  await response.upload(files.file!,"name");
+                              },Color(0xFF3E64FF),"Add",170,59
+                
+                ),
+                buildRegisterButton(context,()  {
                   
                
-              
-          //  EmailInput(controller:_timeController,width: 363,height: 50,labelText: "Time"),
-          // const  SizedBox(height: 30,),
-          //  EmailInput(controller:_messageController ,height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
-          
-          // SizedBox(height: 30,),
-          // Padding(
-          //   padding: const EdgeInsets.all(30.0),
-          //   child: 
-          //   // buildRegisterButton(context, () => null,Color(0xFF3E64FF), "Book now"),
-
-          // ),
-          //  Material(
-          //       child: Consumer<Authentication>(
-          //         builder: (context, auth, child) {
-  
-
-
-  //                   return buildRegisterButton(context,(){
-  // // if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty ||  dateInput.value.text.isEmpty || _messageController.value.text.isEmpty){
-  // //   setState(() {
-  // //     inactive=true;
-  // //   });}else if (inactive == false){
-  // //                 final auth = Provider.of<Authentication>(context, listen: false);
-  // //       auth.bookAppointment(
-  // //         context: context,
-  // //         userId: "5f8e7fc5-1508-4bca-8706-041193680363",
-  // //         pastor:"Apostle" ,
-  // //         time:  _timeController.text,
-  // //         date: dateInput.value.text,
-  // //         email: _emailController.value.text,
-  // //         reason: _messageController.value.text,
-  // //         name: _nameController.text,
-  // //       );
-
-  //   }
-       
-  //                   },
-  //                   // inactive? Color(0xFF3E64FF): Colors.red[300],"Book now");
-                  
-  //                 },
-  //               ),
-              // )/,
-      ],
-    );
+                              },Color(0xFF3E64FF),"Cancel",170,59
+                
+                ),
+           ],
+         ),
+            
+            
+        
+            ],
+          );
   }
 }

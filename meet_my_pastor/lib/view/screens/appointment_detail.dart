@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
-import 'package:meet_my_pastor/view/admin.dart';
+
+
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/auth/auth_provider.dart';
 import '../../widgets/InputTextfield.dart';
-import '../../widgets/validators.dart';
+
 
 
 const List<BoxShadow> kInputBoxShadow = [
@@ -56,8 +56,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
         child: Column(
           children: [
            const SizedBox(height: 30,),
-          //  buildTextField(_emailController, "Email", false,const Icon(Icons.alternate_email, color: Colors.black), errorText(_emailController), () {}),
-         EmailInput(controller:_emailController,width: 363,height: 50,labelText: "Email"),
+       FieldInput(controller:_emailController,width: 363,height: 50,labelText: "Email"),
             Container(
                margin:const EdgeInsets.only(top: 10,left: 40, right: 40,bottom: 10),
               decoration: BoxDecoration(
@@ -65,7 +64,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                 color: Colors.white,
                 boxShadow: kInputBoxShadow,
               ),
-              // padding:const EdgeInsets.all(15),
+             
               width: 363,
               height: 40,
               child: Center(
@@ -102,9 +101,9 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               ),
             ),
               
-           EmailInput(controller:_timeController,width: 363,height: 50,labelText: "Time"),
+           FieldInput(controller:_timeController,width: 363,height: 50,labelText: "Time"),
           const  SizedBox(height: 30,),
-           EmailInput(controller:_messageController ,height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
+           FieldInput(controller:_messageController ,height: 269,width: 363,labelText: "Please lets us know in more details your reason for this apointment",labelTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,),),
           
           SizedBox(height: 30,),
           // Padding(
@@ -115,51 +114,55 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
           // ),
            Row(
              children: [
-               Material(
-                    child: Consumer<Authentication>(
-                      builder: (context, auth, child) {
-  
-
-
-                        return buildRegisterButton(context,(){
-  if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty ||  dateInput.value.text.isEmpty || _messageController.value.text.isEmpty){
-    setState(() {
-      inactive=true;
-    });}else if (inactive == false){
-                      final auth = Provider.of<Authentication>(context, listen: false);
-        auth.bookAppointment(
-          context: context,
-          userId: "5f8e7fc5-1508-4bca-8706-041193680363",
-          pastor:"Apostle" ,
-          time:  _timeController.text,
-          date: dateInput.value.text,
-          email: _emailController.value.text,
-          reason: _messageController.value.text,
-          name: _nameController.text,
-        );
-
-    }
-       
-                        },inactive? Color(0xFF3E64FF): Colors.red[300],"Book now");
+               Flexible(
+                 child: Material(
+                      child: Consumer<Authentication>(
+                        builder: (context, auth, child) {
+                 
+               
+               
+                          return buildRegisterButton(context,(){
+                 if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty ||  dateInput.value.text.isEmpty || _messageController.value.text.isEmpty){
+                   setState(() {
+                     inactive=true;
+                   });}else if (inactive == false){
+                        final auth = Provider.of<Authentication>(context, listen: false);
+                       auth.bookAppointment(
+                         context: context,
+                         userId: "5f8e7fc5-1508-4bca-8706-041193680363",
+                         pastor:"Apostle" ,
+                         time:  _timeController.text,
+                         date: dateInput.value.text,
+                         email: _emailController.value.text,
+                         reason: _messageController.value.text,
+                         name: _nameController.text,
+                       );
+               
+                   }
                       
-                      },
+                          },inactive? Color(0xFF3E64FF): Colors.red[300],"Book now",363,60);
+                        
+                        },
+                      ),
                     ),
-                  ),
+               ),
 
-                    SizedBox(width: 20,),
+              //       SizedBox(width: 20,),
 
-               Material(
-                child:
-                
-                
-            buildRegisterButton(
-                      context,
-                      () {
-                       pageNavigator(ctx: context).nextPage(page:Admin());
-                      },Color(0xFF3E64FF),"Admin"
-                    )
+              //  Flexible(
+              //    child: Material(
+              //     child:
                   
-                ),
+                  
+              //              buildRegisterButton(
+              //           context,
+              //           () {
+              //            pageNavigator(ctx: context).nextPage(page:Admin());
+              //           },Color(0xFF3E64FF),"Admin"
+              //         )
+                    
+              //     ),
+              //  ),
                 
               
              ],

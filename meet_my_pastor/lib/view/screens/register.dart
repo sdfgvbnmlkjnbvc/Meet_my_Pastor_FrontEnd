@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
                   builder: (context, auth, child) {
                     if (_nameController.value.text.isEmpty || _emailController.value.text.isEmpty || _contactController.value.text.isEmpty || _passwordController.value.text.isEmpty){
 return buildRegisterButton(context,(){
-},Colors.red[300],"Register");
+},Colors.red[300],"Register",363,60);
                   } else{
 
 
@@ -77,7 +77,7 @@ return buildRegisterButton(context,(){
           name: _nameController.text,
         );
 
-                    },Color(0xFF3E64FF),"Register");
+                    },Color(0xFF3E64FF),"Register",363,60);
                   }
                   },
                 ),

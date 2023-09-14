@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                      },Color(0xFF3E64FF),"Login"
+                      },Color(0xFF3E64FF),"Login",363,60
                     );
                   },
                 ),
