@@ -53,15 +53,15 @@ bool inactive=false;
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Uploaded == false ?
+            // Uploaded ==true ?
               Container(
               width: 159,
               height: 187,
 
-              child:Image.network(response.url,fit: BoxFit.contain,),
+              child:Image.network("https://res.cloudinary.com/dmbjvvuu8/image/upload/v1695051268/public/Mireille.heic",fit: BoxFit.contain,),
             )
-            :
-        
+            // :
+        ,
             Container(
               width: 159,
               height: 187,
@@ -218,7 +218,7 @@ Flexible(child: FieldInput(controller:_nameController,height: MediaQuery.of(cont
            children: [
              buildRegisterButton(context,() async {
                   
-                  await response.upload(files.file!,"name");
+                  await response.upload(files.file!,"Mireille");
                               },Color(0xFF3E64FF),"Add",170,59
                 
                 ),
