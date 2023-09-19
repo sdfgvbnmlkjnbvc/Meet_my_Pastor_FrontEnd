@@ -24,11 +24,11 @@ final cloudinary = Cloudinary.unsignedConfig(
 );
 class CloudImage with ChangeNotifier{
  dynamic _response;
- String _url = "";
+ String? _url ;
  bool _isloading = true ;
  bool _uploaded =false;
  bool get uploaded =>_uploaded;
-dynamic get url => _url;
+String? get url => _url;
  String get response => _response;
  bool get isloading => _isloading;
 Future<void> upload(XFile filePAth,String name) async{
@@ -50,6 +50,11 @@ print(
  _response = response;
  print(_response.isSuccessful);
   ShowToast.vitaToast(message: "Uploaded image", warn: false, long: true);
+  if(response.isSuccessful) {
+print('Get your image from with ${response.secureUrl}');
+
+   _url=response.secureUrl;
+}
  print(_response.secureUrl);
  notifyListeners();
  if(_response==null){

@@ -10,11 +10,6 @@ import 'package:meet_my_pastor/widgets/InputTextfield.dart';
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
 
-
-
-
-
-
 class Admin extends StatefulWidget {
   const Admin({super.key});
 
@@ -23,183 +18,171 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
-   List<String> list = <String>["Select Option",'Testimony', 'Event', 'Appointment', 'Pastor'];
+  List<String> list = <String>[
+    "Select Option",
+    'Testimony',
+    'Event',
+    'Appointment',
+    'Pastor'
+  ];
 
-bool inactive=false;
-   final TextEditingController dateInput = TextEditingController();
+  bool inactive = false;
+  final TextEditingController dateInput = TextEditingController();
 
-  final TextEditingController _timeController =
-      TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   bool isDateSelected = false;
- void initState() {
+  void initState() {
     dateInput.text = "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-     String dropdownValue = list.first;
-       final files = Provider.of<FetchImage>(context);
+    String dropdownValue = list.first;
+    final files = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
-    final Uploaded= Provider.of<CloudImage>(context,listen: true).upload;
-        return Column(
-            children: [
+    final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
+    return Column(
+      children: [
         SizedBox(
           height: 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Uploaded ==true ?
-              Container(
-              width: 159,
-              height: 187,
-
-              child:Image.network("https://res.cloudinary.com/dmbjvvuu8/image/upload/v1695051268/public/Mireille.heic",fit: BoxFit.contain,),
-            )
-            // :
-        ,
-            Container(
-              width: 159,
-              height: 187,
-              color: Color(0xffD9D9D9),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
+            Uploaded == false
+                ? Container(
+                    width: 159,
+                    height: 187,
+                    child: Image.network(
+                      response.url!,
+                      fit: BoxFit.contain,
                     ),
-                    width: 120,
-                    height: 120,
-                  ),
-                  Image.asset(
-                    "images/camera.png",
-                    width: 96,
-                    height: 98,
-                  ),
-                  Positioned(
-                    bottom: 30,
-                    right: 30,
-                    child: Material(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(100),
+                  )
+                : Container(
+                    width: 159,
+                    height: 187,
+                    color: Color(0xffD9D9D9),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          width: 120,
+                          height: 120,
                         ),
-                        height: 30,
-                        width: 30,
-                        child: InkWell(
-                          onTap: () async {
-                           await files.int();
-             
-                          },
-                          child: Icon(
-                            Icons.add_circle_outline,
-                            size: 25,
+                        Image.asset(
+                          "images/camera.png",
+                          width: 96,
+                          height: 98,
+                        ),
+                        Positioned(
+                          bottom: 30,
+                          right: 30,
+                          child: Material(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              height: 30,
+                              width: 30,
+                              child: InkWell(
+                                onTap: () async {
+                                  await files.int();
+                                },
+                                child: Icon(
+                                  Icons.add_circle_outline,
+                                  size: 25,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+            Container(
+              height: 187,
+              width: 192,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(
+                    child: Material(
+                      child: DropdownButton(
+                        value: dropdownValue,
+                        icon: const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                        ),
+                        onChanged: (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                          });
+                        },
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                      child: FieldInput(
+                          controller: _nameController,
+                          height: MediaQuery.of(context).size.width / 4,
+                          labelText: "Full Name")),
+                  Flexible(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 8),
+                      height: MediaQuery.of(context).size.width / 4,
+                      child: Center(
+                        child: Material(
+                          child: TextField(
+                            controller: dateInput,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.calendar_today),
+                              labelText: "Enter Date",
+                            ),
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime(2100),
+                              );
+
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                setState(() {
+                                  dateInput.text = formattedDate;
+                                });
+                              }
+                            },
                           ),
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-       
-            
-            Container(
-              height: 187,
-              width: 192,
-        
-              child: Column(crossAxisAlignment:CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-Flexible(
-  child:   Material(
-  
-    child:   DropdownButton(value: dropdownValue,icon: const Icon(Icons.arrow_downward,color: Colors.red,),onChanged:(String? value) {
-  
-    
-  
-        
-  
-    
-  
-          setState(() {
-  
-    
-  
-            dropdownValue = value!;
-  
-    
-  
-          });}, items:list.map<DropdownMenuItem<String>>((String value) {
-  
-    
-  
-          return DropdownMenuItem<String>(
-  
-    
-  
-            value: value,
-  
-    
-  
-            child: Text(value),
-  
-    
-  
-          );
-  
-    
-  
-        }).toList(),),
-  
-  ),
-)    ,
-
-Flexible(child: FieldInput(controller:_nameController,height: MediaQuery.of(context).size.width / 4,labelText: "Full Name")),
-        Flexible(
-          child: Container(
-             margin: EdgeInsets.only(top: 8),
-            height: MediaQuery.of(context).size.width / 4,
-            child: Center(
-              child: Material(
-                child: TextField(
-                  controller: dateInput,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.calendar_today),
-                    labelText: "Enter Date",
                   ),
-                  readOnly: true,
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
-                      lastDate: DateTime(2100),
-                    );
-              
-                    if (pickedDate != null) {
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      setState(() {
-                        dateInput.text = formattedDate;
-                      });
-                    }
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        Flexible(child: FieldInput(controller: _timeController,height: MediaQuery.of(context).size.width / 4,labelText: "time")),
-
-        ],
+                  Flexible(
+                      child: FieldInput(
+                          controller: _timeController,
+                          height: MediaQuery.of(context).size.width / 4,
+                          labelText: "time")),
+                ],
               ),
             )
           ],
@@ -207,33 +190,28 @@ Flexible(child: FieldInput(controller:_nameController,height: MediaQuery.of(cont
         SizedBox(
           height: 20,
         ),
-       
-        Container(margin: EdgeInsets.all(20),
-        child: FieldInput(labelText:"Kindly Type here" , height: MediaQuery.of(context).size.height*0.4179 ,controller: _messageController))
-        
-         , SizedBox(height: 30,),
-         
-         Row(crossAxisAlignment: CrossAxisAlignment.center,
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-           children: [
-             buildRegisterButton(context,() async {
-                  
-                  await response.upload(files.file!,"Mireille");
-                              },Color(0xFF3E64FF),"Add",170,59
-                
-                ),
-                buildRegisterButton(context,()  {
-                  
-               
-                              },Color(0xFF3E64FF),"Cancel",170,59
-                
-                ),
-           ],
-         ),
-            
-            
-        
-            ],
-          );
+        Container(
+            margin: EdgeInsets.all(20),
+            child: FieldInput(
+                labelText: "Kindly Type here",
+                height: MediaQuery.of(context).size.height * 0.4179,
+                controller: _messageController)),
+        SizedBox(
+          height: 30,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildRegisterButton(context, () async {
+               print("checkInMy${response.url}");
+               await response.upload(files.file!,"${_nameController.value.text}");
+            }, Color(0xFF3E64FF), "Add", 170, 59),
+            buildRegisterButton(
+                context, () {}, Color(0xFF3E64FF), "Cancel", 170, 59),
+          ],
+        ),
+      ],
+    );
   }
 }
