@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -8,48 +8,46 @@ import 'package:meet_my_pastor/provider/testupload.dart';
 
 import 'package:meet_my_pastor/widgets/InputTextfield.dart';
 import 'package:meet_my_pastor/widgets/authentication.dart';
+import 'package:meet_my_pastor/widgets/meettoast.dart';
 import 'package:provider/provider.dart';
 
+
 class Admin extends StatefulWidget {
-  const Admin({super.key});
+  const Admin({Key? key});
 
   @override
   State<Admin> createState() => _AdminState();
 }
 
+
+
 class _AdminState extends State<Admin> {
-  List<String> list = <String>[
-    "Select Option",
-    'Testimony',
-    'Event',
-    'Appointment',
-    'Pastor'
-  ];
-
-  bool inactive = false;
   final TextEditingController dateInput = TextEditingController();
-
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
+
+  List<String> list = ["Select Option", 'Testimony', 'Event', 'Appointment', 'Pastor'];
   bool isDateSelected = false;
-  void initState() {
-    dateInput.text = "";
-    super.initState();
-  }
+  String? dropdownValue = "Select Option";
 
   @override
+  void initState() {
+    super.initState();
+    dateInput.text = "";
+  }
+
   Widget build(BuildContext context) {
-    String dropdownValue = list.first;
     final files = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
+    final addPastor=Provider.of<Authentication>(context,listen:false);
     final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
+
     return Column(
       children: [
-        SizedBox(
-          height: 30,
-        ),
+        SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -66,152 +64,314 @@ class _AdminState extends State<Admin> {
                     width: 159,
                     height: 187,
                     color: Color(0xffD9D9D9),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          width: 120,
-                          height: 120,
-                        ),
-                        Image.asset(
-                          "images/camera.png",
-                          width: 96,
-                          height: 98,
-                        ),
-                        Positioned(
-                          bottom: 30,
-                          right: 30,
-                          child: Material(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              height: 30,
-                              width: 30,
-                              child: InkWell(
-                                onTap: () async {
-                                  await files.int();
-                                },
-                                child: Icon(
-                                  Icons.add_circle_outline,
-                                  size: 25,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    child: buildImagePlaceholder(files),
                   ),
-            Container(
-              height: 187,
-              width: 192,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Flexible(
-                    child: Material(
-                      child: DropdownButton(
-                        value: dropdownValue,
-                        icon: const Icon(
-                          Icons.arrow_downward,
-                          color: Colors.red,
-                        ),
-                        onChanged: (String? value) {
-                          setState(() {
-                            dropdownValue = value!;
-                          });
-                        },
-                        items:
-                            list.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                      child: FieldInput(
-                          controller: _nameController,
-                          height: MediaQuery.of(context).size.width / 4,
-                          labelText: "Full Name")),
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 8),
-                      height: MediaQuery.of(context).size.width / 4,
-                      child: Center(
-                        child: Material(
-                          child: TextField(
-                            controller: dateInput,
-                            decoration: InputDecoration(
-                              icon: Icon(Icons.calendar_today),
-                              labelText: "Enter Date",
-                            ),
-                            readOnly: true,
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime(2100),
-                              );
-
-                              if (pickedDate != null) {
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                                setState(() {
-                                  dateInput.text = formattedDate;
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                      child: FieldInput(
-                          controller: _timeController,
-                          height: MediaQuery.of(context).size.width / 4,
-                          labelText: "time")),
-                ],
+            Flexible(
+              child: Container(
+                height: 187,
+                width: 192,
+                child: buildDropdownAndFields(),
               ),
             )
           ],
         ),
-        SizedBox(
-          height: 20,
-        ),
+        SizedBox(height: 20),
+        dropdownValue=="Pastor"?Text(""):
         Container(
-            margin: EdgeInsets.all(20),
-            child: FieldInput(
-                labelText: "Kindly Type here",
-                height: MediaQuery.of(context).size.height * 0.4179,
-                controller: _messageController)),
-        SizedBox(
-          height: 30,
+          margin: EdgeInsets.all(20),
+          child: FieldInput(
+            labelText: "Kindly Type here",
+            height: MediaQuery.of(context).size.height * 0.4179,
+            controller: _messageController,
+          ),
         ),
+      
+        SizedBox(height: 30),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildRegisterButton(context, () async {
-               print("checkInMy${response.url}");
-               await response.upload(files.file!,"${_nameController.value.text}");
-            }, Color(0xFF3E64FF), "Add", 170, 59),
+            if (dropdownValue == 'Pastor')...[
+
             buildRegisterButton(
-                context, () {}, Color(0xFF3E64FF), "Cancel", 170, 59),
+              context,
+              () async {
+                if (_nameController.value.text.isEmpty ==true || _titleController.value.text.isEmpty ==true || _contactController.value.text.isEmpty ==true ){
+               ShowToast.vitaToast(message: "provide data for all fields", warn: true, long: true);
+                }else{
+
+                await response.upload(files.file!, "${_nameController.value.text}");
+                print("checkInMy${response.response?.secureUrl}");
+                addPastor.pastor(name: _nameController.value.text,title:  _titleController.value.text,contact:  _contactController.value.text,imageUrl: "${response.response?.secureUrl}",context: context );
+                }
+              },
+              Color(0xFF3E64FF),
+              "Add",
+              170,
+              59,
+            ),
+            buildRegisterButton(
+              context,
+              () {
+                print("Checking");
+                // _nameController.value.text.isEmpty ==true || _titleController.value.text.isEmpty ==true || _contactController.value.text.isEmpty ==true
+                addPastor.pastor(name: _nameController.value.text,title:  _titleController.value.text,contact:  _contactController.value.text,imageUrl: "${response.response?.secureUrl}",context: context );
+               print("done Checking");
+              },
+              Color(0xFF3E64FF),
+              "Cancel",
+              170,
+              59,
+            ),
+            ]  else if (dropdownValue == 'Appointment')...[
+
+            buildRegisterButton(
+              context,
+              () async {
+              
+                if (_nameController.value.text.isEmpty == true){
+               ShowToast.vitaToast(message: "provide data for all fields", warn: true, long: true);
+                }else{
+
+                await response.upload(files.file!, "${_nameController.value.text}");
+                  print("checkInMy${response.url}");
+                }
+              },
+              Color(0xFF3E64FF),
+              "Add",
+              170,
+              59,
+            ),
+            buildRegisterButton(
+              context,
+              () {},
+              Color(0xFF3E64FF),
+              "Cancel",
+              170,
+              59,
+            ),
+            ]
+
+            else if (dropdownValue == 'Event')...[
+
+            buildRegisterButton(
+              context,
+              () async {
+                print("checkInMy${response.url}");
+                if (_nameController.value.text ==null ){
+               ShowToast.vitaToast(message: "provide data for all fields", warn: true, long: true);
+                }
+                await response.upload(files.file!, "${_nameController.value.text}");
+              },
+              Color(0xFF3E64FF),
+              "Add",
+              170,
+              59,
+            ),
+            buildRegisterButton(
+              context,
+              () {
+
+               
+              },
+              Color(0xFF3E64FF),
+              "Cancel",
+              170,
+              59,
+            ),
+            ]
+            else if (dropdownValue == 'Testimony')...[
+
+            buildRegisterButton(
+              context,
+              () async {
+                print("checkInMy${response.url}");
+                if (_nameController.value.text ==null ){
+               ShowToast.vitaToast(message: "provide data for all fields", warn: true, long: true);
+                }
+                await response.upload(files.file!, "${_nameController.value.text}");
+              },
+              Color(0xFF3E64FF),
+              "Add",
+              170,
+              59,
+            ),
+            buildRegisterButton(
+              context,
+              () {},
+              Color(0xFF3E64FF),
+              "Cancel",
+              170,
+              59,
+            ),
+            ]
+
+
+            
           ],
         ),
       ],
     );
   }
+
+  Widget buildDropdownAndFields() {
+    return Flexible(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Flexible(
+            child: buildDropdown(),
+          ),
+          if (dropdownValue == "appointment") ...[
+            Flexible(
+              child: FieldInput(
+                controller: _nameController,
+                height: MediaQuery.of(context).size.width / 4,
+                labelText: "Full Name",
+              ),
+            ),
+            Flexible(
+              child: buildDateInput(),
+            ),
+            Flexible(
+              child: FieldInput(
+                controller: _timeController,
+                height: MediaQuery.of(context).size.width / 4,
+                labelText: "Time",
+              ),
+            ),
+          ] else if (dropdownValue == "Testimony") ...[
+            Text("Yet to add Testimonies"),
+            Text("Yet to add Testimonies"),
+          ] else if (dropdownValue == "Event") ...[
+            Text("Yet to add Event"),
+            Text("Yet to add Event"),
+          ] else if (dropdownValue == "Pastor") ...[
+            FieldInput(
+              controller: _titleController,
+              height:40,
+              labelText: "Title",
+            ),
+            FieldInput(
+              controller: _nameController,
+              height:40,
+              labelText: "Full Name",
+            ),
+            FieldInput(
+              controller: _contactController,
+              height:40,
+              labelText: "Contact",
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget buildDropdown() {
+    return Material(
+      child: DropdownButton(
+        value: dropdownValue,
+        icon: const Icon(
+          Icons.arrow_downward,
+          color: Colors.red,
+        ),
+        onChanged: (String? value) {
+          setState(() {
+            dropdownValue = value!;
+          });
+        },
+        items: list.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget buildDateInput() {
+    return Container(
+      margin: EdgeInsets.only(top: 8),
+      height: MediaQuery.of(context).size.width / 4,
+      child: Center(
+        child: Material(
+          child: TextField(
+            controller: dateInput,
+            decoration: InputDecoration(
+              icon: Icon(Icons.calendar_today),
+              hintText: "Enter Date",
+            ),
+            readOnly: true,
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1950),
+                lastDate: DateTime(2100),
+              );
+
+              if (pickedDate != null) {
+                String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                setState(() {
+                  dateInput.text = formattedDate;
+                });
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
 }
+
+ Widget buildImagePlaceholder(FetchImage files) {
+    return Container(
+      width: 159,
+      height: 187,
+      color: Color(0xffD9D9D9),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            width: 120,
+            height: 120,
+          ),
+          Image.asset(
+            "images/camera.png",
+            width: 96,
+            height: 98,
+          ),
+          Positioned(
+            bottom: 30,
+            right: 30,
+            child: Material(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                height: 30,
+                width: 30,
+                child: InkWell(
+                  onTap: () async {
+                    await files.int();
+                  },
+                  child: Icon(
+                    Icons.add_circle_outline,
+                    size: 25,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }

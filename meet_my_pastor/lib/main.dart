@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
 import 'package:meet_my_pastor/view/admin.dart';
+import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:SafeArea(child: Admin()),
+      home:SafeArea(child: Appointment()),
       ),
     );
   }

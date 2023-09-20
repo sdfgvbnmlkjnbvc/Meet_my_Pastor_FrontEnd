@@ -90,18 +90,11 @@ int? get itemCount =>_itemCount;
     }
   }
 
-  Stream<Map> pastors(
-    // {
-    // required String name,
-    // required String email,
-    // required String password,
-    // required String contact,
-    //  required BuildContext context,
-  // /}
-  ) async* {
+
+Stream<Map> pastors()async* {
     _isLoading = true;
     notifyListeners();
-    // final body = {"name": name, "email": email, "contact": contact, "password": password};
+    
 
     try {
       var  dio = Dio();
@@ -122,6 +115,35 @@ int? get itemCount =>_itemCount;
         _state = true;
         notifyListeners();
       }
+    } on DioError catch (e) {
+      // handleDioError(e, context);
+      print(e);
+    } catch (e) {
+      // handleGenericError(e, context);
+        print(e);
+    }
+  }
+  Future<void> pastor(
+    {
+    required String name,
+    required String title,
+    required String contact,
+    required String imageUrl,
+     required BuildContext context,
+  }
+  ) async {
+    _isLoading = true;
+    notifyListeners();
+    final body = {"user-id":"5f8e7fc5-1508-4bca-8706-041193680363","Pastor-Name": name, "Contact": contact, "title": title, "Image": imageUrl};
+
+    try {
+      var  dio = Dio();
+      Response response = await dio.post("${APPBASEURL.baseUrl}pastor",data:body);
+      respData = response.data;
+     print("--------- ${respData['pastor']} --------------") ;
+  //  _itemCount=respData['pastor'].length;
+      
+       
     } on DioError catch (e) {
       // handleDioError(e, context);
       print(e);

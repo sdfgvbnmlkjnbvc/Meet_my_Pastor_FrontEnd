@@ -23,13 +23,13 @@ final cloudinary = Cloudinary.unsignedConfig(
   cloudName: cloudName,
 );
 class CloudImage with ChangeNotifier{
- dynamic _response;
+CloudinaryResponse  _response =CloudinaryResponse();
  String? _url ;
  bool _isloading = true ;
  bool _uploaded =false;
  bool get uploaded =>_uploaded;
 String? get url => _url;
- String get response => _response;
+ CloudinaryResponse? get response => _response;
  bool get isloading => _isloading;
 Future<void> upload(XFile filePAth,String name) async{
 List<int> varb =await filePAth.readAsBytes();
@@ -48,14 +48,14 @@ print(
 'Uploading image from file with progress: $count/$total');
 });
  _response = response;
- print(_response.isSuccessful);
+//  print(_response.isSuccessful);
   ShowToast.vitaToast(message: "Uploaded image", warn: false, long: true);
   if(response.isSuccessful) {
 print('Get your image from with ${response.secureUrl}');
 
    _url=response.secureUrl;
 }
- print(_response.secureUrl);
+//  print(_response.secureUrl);
  notifyListeners();
  if(_response==null){
  ShowToast.vitaToast(message: "Error uploading image", warn: true, long: true);

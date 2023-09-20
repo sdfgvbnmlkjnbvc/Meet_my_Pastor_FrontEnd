@@ -54,8 +54,8 @@ import 'package:flutter/material.dart';
          minLines:null,
           decoration: InputDecoration(
             border: InputBorder.none,
-            labelText: labelText,
-            labelStyle:labelTextStyle ,
+             hintText: labelText,
+            hintStyle:labelTextStyle ,
           ),
         ),
         ),
