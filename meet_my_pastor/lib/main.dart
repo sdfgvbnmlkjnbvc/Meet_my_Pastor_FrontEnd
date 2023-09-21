@@ -7,7 +7,6 @@ import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -18,22 +17,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => Authentication()),
-           ChangeNotifierProvider(
-            create:(_)=> CloudImage(),
-          ),
-           ChangeNotifierProvider(
-            create:(_)=> FetchImage(),
-          )
-      
-        ],
-        child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:SafeArea(child: Appointment()),
+      providers: [
+        ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(
+          create: (_) => CloudImage(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FetchImage(),
+        )
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SafeArea(child: HomePage()),
       ),
     );
   }
 }
-
-

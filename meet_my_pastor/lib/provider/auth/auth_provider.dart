@@ -1,25 +1,24 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meet_my_pastor/controller/baseurl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 
-
 class Authentication extends ChangeNotifier {
   bool _isLoading = false;
   bool _state = false;
   int? _itemCount;
+  bool _admin = false;
   Map<String, dynamic> respData = {};
 
-int? get itemCount =>_itemCount;
+  int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
-
+  bool get admin => _admin;
   Future<void> signup({
     required String name,
     required String email,
@@ -29,11 +28,17 @@ int? get itemCount =>_itemCount;
   }) async {
     _isLoading = true;
     notifyListeners();
-    final body = {"name": name, "email": email, "contact": contact, "password": password};
+    final body = {
+      "name": name,
+      "email": email,
+      "contact": contact,
+      "password": password
+    };
 
     try {
-      var  dio = Dio();
-      Response response = await dio.post("${APPBASEURL.baseUrl}user", data: body);
+      var dio = Dio();
+      Response response =
+          await dio.post("${APPBASEURL.baseUrl}user", data: body);
       respData = response.data;
 
       if (respData['status'] == 201) {
@@ -53,23 +58,33 @@ int? get itemCount =>_itemCount;
       handleGenericError(e, context);
     }
   }
- Future<void> bookAppointment({
+
+  Future<void> bookAppointment({
     required String name,
     required String email,
     required String userId,
     required String date,
-     required String reason,
+    required String reason,
     required String time,
-     required String pastor,
+    required String pastor,
     required BuildContext context,
   }) async {
     _isLoading = true;
     notifyListeners();
-    final body = {"user-id": userId, "pastor": pastor,"name": name, "email": email, "date": date, "time": time,"reason":reason};
+    final body = {
+      "user-id": userId,
+      "pastor": pastor,
+      "name": name,
+      "email": email,
+      "date": date,
+      "time": time,
+      "reason": reason
+    };
 
     try {
-      var  dio = Dio();
-      Response response = await dio.post("http://127.0.0.1:5000/api/appointment", data: body);
+      var dio = Dio();
+      Response response =
+          await dio.post("http://127.0.0.1:5000/api/appointment", data: body);
       respData = response.data;
 
       if (respData['status'] == 201) {
@@ -90,27 +105,23 @@ int? get itemCount =>_itemCount;
     }
   }
 
-
-Stream<Map> pastors()async* {
+  Stream<Map> pastors() async* {
     _isLoading = true;
     notifyListeners();
-    
 
     try {
-      var  dio = Dio();
+      var dio = Dio();
       Response response = await dio.get("${APPBASEURL.baseUrl}pastors");
       respData = response.data;
-     print("--------- ${respData['pastor'].length} --------------") ;
-  //  _itemCount=respData['pastor'].length;
-       print(_itemCount);
+      print("--------- ${respData['pastor'].length} --------------");
+      //  _itemCount=respData['pastor'].length;
+      print(_itemCount);
       if (respData['status'] == 200) {
-       _itemCount=respData['pastor'].length;
-       print(_itemCount);
+        _itemCount = respData['pastor'].length;
+        print(_itemCount);
         _isLoading = false;
         notifyListeners();
-
       } else {
-
         _isLoading = false;
         _state = true;
         notifyListeners();
@@ -120,36 +131,40 @@ Stream<Map> pastors()async* {
       print(e);
     } catch (e) {
       // handleGenericError(e, context);
-        print(e);
+      print(e);
     }
   }
-  Future<void> pastor(
-    {
+
+  Future<void> pastor({
     required String name,
     required String title,
     required String contact,
     required String imageUrl,
-     required BuildContext context,
-  }
-  ) async {
+    required BuildContext context,
+  }) async {
     _isLoading = true;
     notifyListeners();
-    final body = {"user-id":"5f8e7fc5-1508-4bca-8706-041193680363","Pastor-Name": name, "Contact": contact, "title": title, "Image": imageUrl};
+    final body = {
+      "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
+      "Pastor-Name": name,
+      "Contact": contact,
+      "title": title,
+      "Image": imageUrl
+    };
 
     try {
-      var  dio = Dio();
-      Response response = await dio.post("${APPBASEURL.baseUrl}pastor",data:body);
+      var dio = Dio();
+      Response response =
+          await dio.post("${APPBASEURL.baseUrl}pastor", data: body);
       respData = response.data;
-     print("--------- ${respData['pastor']} --------------") ;
-  //  _itemCount=respData['pastor'].length;
-      
-       
+      print("--------- ${respData['pastor']} --------------");
+      //  _itemCount=respData['pastor'].length;
     } on DioError catch (e) {
       // handleDioError(e, context);
       print(e);
     } catch (e) {
       // handleGenericError(e, context);
-        print(e);
+      print(e);
     }
   }
 
@@ -168,17 +183,30 @@ Stream<Map> pastors()async* {
 
       if (response.data['status'] == 200) {
         final res = response.data;
+        print("User data: ${res}");
         final userId = res['user']['public_id'];
         final userName = res['user']['name'];
         final token = res['auth_token'];
-        pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
-        ShowToast.vitaToast(message: "Authenticated", warn: state, long: true);
-        _isLoading = false;
-        notifyListeners();
+        _admin = res['user']['admin'];
+        print("admin: $_admin");
+        if (res['user']['admin'] == true) {
+          pageNavigator(ctx: context).nextPageOnly(page: const Admin());
+          ShowToast.vitaToast(
+              message: "Authenticated", warn: state, long: true);
+          _isLoading = false;
+          notifyListeners();
+        } else {
+          pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
+          ShowToast.vitaToast(
+              message: "Authenticated", warn: state, long: true);
+          _isLoading = false;
+          notifyListeners();
+        }
       } else {
         _isLoading = false;
         _state = true;
-        ShowToast.vitaToast(message: "Wrong Credentials", warn: true, long: true);
+        ShowToast.vitaToast(
+            message: "Wrong Credentials", warn: true, long: true);
         notifyListeners();
       }
     } on DioError catch (e) {
@@ -192,8 +220,9 @@ Stream<Map> pastors()async* {
     try {
       final dio = Dio();
 
-      final response = await dio.get('https://meet-my-pastor.onrender.com/api/users');
-  
+      final response =
+          await dio.get('https://meet-my-pastor.onrender.com/api/users');
+
       respData = response.data;
       print(respData);
       ShowToast.vitaToast(message: "${response.statusMessage}", warn: true);
@@ -210,10 +239,10 @@ Stream<Map> pastors()async* {
       }
     } on DioError catch (e) {
       handleDioError(e);
-       print(e);
+      print(e);
     } catch (e) {
       handleGenericError(e);
-       print(e);
+      print(e);
     }
   }
 
@@ -226,7 +255,9 @@ Stream<Map> pastors()async* {
       final statusCode = response?.statusCode;
       final statusMessage = response?.statusMessage;
       ShowToast.vitaToast(message: "$statusCode: $statusMessage", warn: true);
-    } else if (e.type == DioErrorType.connectTimeout || e.type == DioErrorType.sendTimeout || e.type == DioErrorType.receiveTimeout) {
+    } else if (e.type == DioErrorType.connectTimeout ||
+        e.type == DioErrorType.sendTimeout ||
+        e.type == DioErrorType.receiveTimeout) {
       ShowToast.vitaToast(message: "Network Timeout", warn: true);
     } else if (e.type == DioErrorType.cancel) {
       ShowToast.vitaToast(message: "Request Cancelled", warn: true);

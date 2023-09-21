@@ -22,80 +22,81 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 120),
-              Center(
-                child: Image.asset(
-                  "images/login.png",
-                  width: 236,
-                  height: 254,
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 120),
+                Center(
+                  child: Image.asset(
+                    "images/login.png",
+                    width: 236,
+                    height: 254,
+                  ),
                 ),
-              ),
-              buildTextField(
-                _emailController,
-                "Email",
-                false,
-                const Icon(Icons.alternate_email, color: Colors.black),errorText(_emailController),
-                () {},
-              ),
-              buildTextField(
-                _passwordController,
-                "Password",
-                !_isPasswordVisible,
-                _isPasswordVisible
-                    ? const Icon(Icons.remove_red_eye_outlined, color: Colors.black)
-                    : const Icon(Icons.visibility_off, color: Colors.black),errorPassword(_passwordController),
-                () {
-                  setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 12),
-                child: Row(
-                  children: [
-                    const Text("Forgot Password ? "),
-                    InkWell(
-                      onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: const ResetPassword());
-                      },
-                      child: const Text(
-                        "Reset",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                buildTextField(
+                  _emailController,
+                  "Email",
+                  false,
+                  const Icon(Icons.alternate_email, color: Colors.black),
+                  errorText(_emailController),
+                  () {},
+                ),
+                buildTextField(
+                  _passwordController,
+                  "Password",
+                  !_isPasswordVisible,
+                  _isPasswordVisible
+                      ? const Icon(Icons.remove_red_eye_outlined,
+                          color: Colors.black)
+                      : const Icon(Icons.visibility_off, color: Colors.black),
+                  errorPassword(_passwordController),
+                  () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 12),
+                  child: Row(
+                    children: [
+                      const Text("Forgot Password ? "),
+                      InkWell(
+                        onTap: () {
+                          pageNavigator(ctx: context)
+                              .nextPage(page: const ResetPassword());
+                        },
+                        child: const Text(
+                          "Reset",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 60),
-              Material(
-                child:
-                
-                
-                 Consumer<Authentication>(
-                  builder: (context, auth, child) {
-                    return buildRegisterButton(
-                      context,
-                      () {
-                        final auth = Provider.of<Authentication>(context, listen: false);
+                const SizedBox(height: 60),
+                Material(
+                  child: Consumer<Authentication>(
+                    builder: (context, auth, child) {
+                      return buildRegisterButton(context, () {
+                        final auth =
+                            Provider.of<Authentication>(context, listen: false);
                         auth.loginUser(
                           context: context,
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                      },Color(0xFF3E64FF),"Login",363,60
-                    );
-                  },
+                      }, Color(0xFF3E64FF), "Login", 363, 60);
+                    },
+                  ),
                 ),
-                
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
