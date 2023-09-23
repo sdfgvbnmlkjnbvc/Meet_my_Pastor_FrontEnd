@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:meet_my_pastor/provider/Apointment.dart';
 
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
@@ -154,8 +155,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               children: [
                 Flexible(
                   child: Material(
-                    child: Consumer<Authentication>(
-                      builder: (context, auth, child) {
+                    child: Consumer<AppointmentProvider>(
+                      builder: (context, Appoint, child) {
                         return buildRegisterButton(context, () {
                           if (_nameController.value.text.isEmpty ||
                               _emailController.value.text.isEmpty ||
@@ -165,9 +166,10 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                               inactive = true;
                             });
                           } else if (inactive == false) {
-                            final auth = Provider.of<Authentication>(context,
+                            final Appoint = Provider.of<AppointmentProvider>(
+                                context,
                                 listen: false);
-                            auth.bookAppointment(
+                            Appoint.bookAppointment(
                               context: context,
                               userId: "5f8e7fc5-1508-4bca-8706-041193680363",
                               pastor: "Apostle",

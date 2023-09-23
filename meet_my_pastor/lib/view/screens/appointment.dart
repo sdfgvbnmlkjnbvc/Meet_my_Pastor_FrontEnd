@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
+import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/widgets/appointment_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,7 @@ class _AppointmentState extends State<Appointment> {
   @override
   Widget build(BuildContext context) {
     late AnimationController controller;
-    Authentication pastors = context.watch<Authentication>();
+    PastorProvider pastors = context.watch<PastorProvider>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
