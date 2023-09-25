@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +48,8 @@ class _AdminState extends State<Admin> {
   }
 
   Widget build(BuildContext context) {
-    final files = Provider.of<FetchImage>(context);
+    final files = Provider.of<FetchImage>(context,listen: true);
+     final file = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
     final addPastor = Provider.of<Authentication>(context, listen: false);
     final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
@@ -81,21 +84,59 @@ class _AdminState extends State<Admin> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Uploaded == false
-                    ? Container(
-                        width: 159,
-                        height: 187,
-                        child: Image.network(
-                          response.url!,
-                          fit: BoxFit.contain,
+               files.picked ==true
+                    ? Flexible(
+                      child: 
+
+                      Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+                    width: 159,
+                          height: 187,
+                          child: 
+                          // Text("${response.response?.secureUrl.toString()}")
+                          Image.file(
+            files.imageFile,
+            height: MediaQuery.of(context).size.width * 0.75,
+            scale: 1.0,
+            fit: BoxFit.cover,),
+            ),
+        Positioned(
+          bottom: -10,
+          right: 0,
+          child: Material(
+            child: Container(
+              decoration: BoxDecoration(
+                // color: Colors.blue,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              height: 50,
+              width: 50,
+              child: InkWell(
+                onTap: () async {
+                  await files.int();
+                },
+                child: Icon( color: Colors.blue,
+                  Icons.add_circle_outline,
+                  size: 55,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    ),
+
+                    
+                    ): Flexible(
+                      child: Container(
+                          width: 159,
+                          height: 187,
+                          color: Color(0xffD9D9D9),
+                          child: buildImagePlaceholder(files),
                         ),
-                      )
-                    : Container(
-                        width: 159,
-                        height: 187,
-                        color: Color(0xffD9D9D9),
-                        child: buildImagePlaceholder(files),
-                      ),
+                    ),
                 Flexible(
                   child: Container(
                     height: 187,
@@ -108,14 +149,19 @@ class _AdminState extends State<Admin> {
             SizedBox(height: 20),
             dropdownValue == "Pastor"
                 ? Text("")
-                : Container(
-                    margin: EdgeInsets.all(20),
-                    child: FieldInput(
-                      labelText: "Kindly Type here",
-                      height: MediaQuery.of(context).size.height * 0.4179,
-                      controller: _messageController,
+                : Flexible(
+                  child: Container(
+                      margin: EdgeInsets.all(20),
+                      child: FieldInput(  expand:true,
+                      maxLines: null,
+                      minLines: null,
+                
+                        labelText: "Kindly Type here",
+                        height: MediaQuery.of(context).size.height * 0.4179,
+                        controller: _messageController,
+                      ),
                     ),
-                  ),
+                ),
             SizedBox(height: 30),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -270,6 +316,8 @@ class _AdminState extends State<Admin> {
           if (dropdownValue == "appointment") ...[
             Flexible(
               child: FieldInput(
+                 expand: false,
+                 maxLines: 1,
                 controller: _nameController,
                 height: MediaQuery.of(context).size.width / 4,
                 labelText: "Full Name",
@@ -280,6 +328,8 @@ class _AdminState extends State<Admin> {
             ),
             Flexible(
               child: FieldInput(
+                expand: false,
+                  maxLines: 1,
                 controller: _timeController,
                 height: MediaQuery.of(context).size.width / 4,
                 labelText: "Time",
@@ -293,16 +343,22 @@ class _AdminState extends State<Admin> {
             Text("Yet to add Event"),
           ] else if (dropdownValue == "Pastor") ...[
             FieldInput(
+               expand: false,
+               maxLines: 1,
               controller: _titleController,
               height: 40,
               labelText: "Title",
             ),
             FieldInput(
+             expand: false,
+             maxLines: 1,
               controller: _nameController,
               height: 40,
               labelText: "Full Name",
             ),
-            FieldInput(
+            FieldInput( 
+expand: false,
+maxLines: 1,
               controller: _contactController,
               height: 40,
               labelText: "Contact",

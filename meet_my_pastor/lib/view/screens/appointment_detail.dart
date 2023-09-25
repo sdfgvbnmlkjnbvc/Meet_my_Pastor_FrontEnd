@@ -80,6 +80,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               height: 30,
             ),
             FieldInput(
+                expand:false ,
                 controller: _emailController,
                 width: 363,
                 height: 50,
@@ -129,6 +130,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               ),
             ),
             FieldInput(
+                expand:false ,
                 controller: _timeController,
                 width: 363,
                 height: 50,
@@ -137,6 +139,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               height: 30,
             ),
             FieldInput(
+                expand:true,
+
               controller: _messageController,
               height: 269,
               width: 363,

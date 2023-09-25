@@ -114,11 +114,10 @@ class Authentication extends ChangeNotifier {
       Response response = await dio.get("${APPBASEURL.baseUrl}pastors");
       respData = response.data;
       print("--------- ${respData['pastor'].length} --------------");
-      //  _itemCount=respData['pastor'].length;
+    
       print(_itemCount);
       if (respData['status'] == 200) {
         _itemCount = respData['pastor'].length;
-        print(_itemCount);
         _isLoading = false;
         notifyListeners();
       } else {
@@ -157,13 +156,11 @@ class Authentication extends ChangeNotifier {
       Response response =
           await dio.post("${APPBASEURL.baseUrl}pastor", data: body);
       respData = response.data;
-      print("--------- ${respData['pastor']} --------------");
-      //  _itemCount=respData['pastor'].length;
+
+  
     } on DioError catch (e) {
-      // handleDioError(e, context);
       print(e);
     } catch (e) {
-      // handleGenericError(e, context);
       print(e);
     }
   }
