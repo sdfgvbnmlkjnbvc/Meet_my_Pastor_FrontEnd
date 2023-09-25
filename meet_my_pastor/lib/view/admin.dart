@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
+import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
@@ -51,7 +52,7 @@ class _AdminState extends State<Admin> {
     final files = Provider.of<FetchImage>(context,listen: true);
      final file = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
-    final addPastor = Provider.of<Authentication>(context, listen: false);
+    final addPastor = Provider.of<PastorProvider>(context, listen: false);
     final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
 
     return SafeArea(

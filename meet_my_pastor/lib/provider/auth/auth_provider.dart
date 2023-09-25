@@ -32,7 +32,8 @@ class Authentication extends ChangeNotifier {
       "name": name,
       "email": email,
       "contact": contact,
-      "password": password
+      "password": password,
+      "admin": false
     };
 
     try {
@@ -56,112 +57,6 @@ class Authentication extends ChangeNotifier {
       handleDioError(e, context);
     } catch (e) {
       handleGenericError(e, context);
-    }
-  }
-
-  Future<void> bookAppointment({
-    required String name,
-    required String email,
-    required String userId,
-    required String date,
-    required String reason,
-    required String time,
-    required String pastor,
-    required BuildContext context,
-  }) async {
-    _isLoading = true;
-    notifyListeners();
-    final body = {
-      "user-id": userId,
-      "pastor": pastor,
-      "name": name,
-      "email": email,
-      "date": date,
-      "time": time,
-      "reason": reason
-    };
-
-    try {
-      var dio = Dio();
-      Response response =
-          await dio.post("http://127.0.0.1:5000/api/appointment", data: body);
-      respData = response.data;
-
-      if (respData['status'] == 201) {
-        ShowToast.vitaToast(message: "Appointment booked", warn: false);
-        _isLoading = false;
-        notifyListeners();
-        pageNavigator(ctx: context).nextPage(page: const Login());
-      } else {
-        ShowToast.vitaToast(message: "User Already Exists", warn: false);
-        _isLoading = false;
-        _state = true;
-        notifyListeners();
-      }
-    } on DioError catch (e) {
-      handleDioError(e, context);
-    } catch (e) {
-      handleGenericError(e, context);
-    }
-  }
-
-  Stream<Map> pastors() async* {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      var dio = Dio();
-      Response response = await dio.get("${APPBASEURL.baseUrl}pastors");
-      respData = response.data;
-      print("--------- ${respData['pastor'].length} --------------");
-    
-      print(_itemCount);
-      if (respData['status'] == 200) {
-        _itemCount = respData['pastor'].length;
-        _isLoading = false;
-        notifyListeners();
-      } else {
-        _isLoading = false;
-        _state = true;
-        notifyListeners();
-      }
-    } on DioError catch (e) {
-      // handleDioError(e, context);
-      print(e);
-    } catch (e) {
-      // handleGenericError(e, context);
-      print(e);
-    }
-  }
-
-  Future<void> pastor({
-    required String name,
-    required String title,
-    required String contact,
-    required String imageUrl,
-    required BuildContext context,
-  }) async {
-    _isLoading = true;
-    notifyListeners();
-    final body = {
-      "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
-      "Pastor-Name": name,
-      "Contact": contact,
-      "title": title,
-      "Image": imageUrl
-    };
-
-    try {
-      var dio = Dio();
-      Response response =
-          await dio.post("${APPBASEURL.baseUrl}pastor", data: body);
-      respData = response.data;
-
-  
-    } on DioError catch (e) {
-      print(e);
-    } catch (e) {
-      print(e);
     }
   }
 
