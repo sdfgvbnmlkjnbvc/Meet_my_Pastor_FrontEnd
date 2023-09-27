@@ -36,7 +36,7 @@ class _AdminState extends State<Admin> {
     "Select Option",
     'Testimony',
     'Event',
-    'Appointment',
+    // 'Appointment',
     'Pastor'
   ];
   bool isDateSelected = false;
@@ -140,7 +140,7 @@ class _AdminState extends State<Admin> {
                     ),
                 Flexible(
                   child: Container(
-                    height: 187,
+                    height: 200,
                     width: 192,
                     child: buildDropdownAndFields(),
                   ),
@@ -214,35 +214,38 @@ class _AdminState extends State<Admin> {
                     170,
                     59,
                   ),
-                ] else if (dropdownValue == 'Appointment') ...[
-                  buildRegisterButton(
-                    context,
-                    () async {
-                      if (_nameController.value.text.isEmpty == true) {
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      } else {
-                        await response.upload(
-                            files.file!, "${_nameController.value.text}");
-                        print("checkInMy${response.url}");
-                      }
-                    },
-                    Color(0xFF3E64FF),
-                    "Add",
-                    170,
-                    59,
-                  ),
-                  buildRegisterButton(
-                    context,
-                    () {},
-                    Color(0xFF3E64FF),
-                    "Cancel",
-                    170,
-                    59,
-                  ),
-                ] else if (dropdownValue == 'Event') ...[
+                ] 
+                // else if (dropdownValue == 'Appointment') ...[
+                //   buildRegisterButton(
+                //     context,
+                //     () async {
+                //       if (_nameController.value.text.isEmpty == true) {
+                //         ShowToast.vitaToast(
+                //             message: "provide data for all fields",
+                //             warn: true,
+                //             long: true);
+                //       } 
+                //       else {
+                //         await response.upload(
+                //             files.file!, "${_nameController.value.text}");
+                //         print("checkInMy${response.url}");
+                //       }
+                //     },
+                //     Color(0xFF3E64FF),
+                //     "Add",
+                //     170,
+                //     59,
+                //   ),
+                //   buildRegisterButton(
+                //     context,
+                //     () {},
+                //     Color(0xFF3E64FF),
+                //     "Cancel",
+                //     170,
+                //     59,
+                //   ),
+                // ] 
+                else if (dropdownValue == 'Event') ...[
                   buildRegisterButton(
                     context,
                     () async {
@@ -314,34 +317,71 @@ class _AdminState extends State<Admin> {
           Flexible(
             child: buildDropdown(),
           ),
-          if (dropdownValue == "appointment") ...[
-            Flexible(
-              child: FieldInput(
-                 expand: false,
-                 maxLines: 1,
-                controller: _nameController,
-                height: MediaQuery.of(context).size.width / 4,
-                labelText: "Full Name",
-              ),
-            ),
-            Flexible(
-              child: buildDateInput(),
-            ),
-            Flexible(
-              child: FieldInput(
-                expand: false,
-                  maxLines: 1,
-                controller: _timeController,
-                height: MediaQuery.of(context).size.width / 4,
-                labelText: "Time",
-              ),
-            ),
-          ] else if (dropdownValue == "Testimony") ...[
-            Text("Yet to add Testimonies"),
-            Text("Yet to add Testimonies"),
+          // if (dropdownValue == "appointment") ...[
+          //   Flexible(
+          //     child: FieldInput(
+          //        expand: false,
+          //        maxLines: 1,
+          //       controller: _nameController,
+          //       height: MediaQuery.of(context).size.width / 4,
+          //       labelText: "Full Name",
+          //     ),
+          //   ),
+          //   Flexible(
+          //     child: buildDateInput(),
+          //   ),
+          //   Flexible(
+          //     child: FieldInput(
+          //       expand: false,
+          //         maxLines: 1,
+          //       controller: _timeController,
+          //       height: MediaQuery.of(context).size.width / 4,
+          //       labelText: "Time",
+          //     ),
+          //   ),
+          // ] 
+         if (dropdownValue == "Testimony") ...[
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Testimony title",
+           ), FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Full name",
+           ),
+          Expanded(child: buildDateInput())
+           
+      
+         
           ] else if (dropdownValue == "Event") ...[
-            Text("Yet to add Event"),
-            Text("Yet to add Event"),
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Event Name",
+           ), FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Location",
+           ),
+          Expanded(child: buildDateInput()),
+           
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Time",
+           )
+         
           ] else if (dropdownValue == "Pastor") ...[
             FieldInput(
                expand: false,
@@ -358,8 +398,8 @@ class _AdminState extends State<Admin> {
               labelText: "Full Name",
             ),
             FieldInput( 
-expand: false,
-maxLines: 1,
+          expand: false,
+          maxLines: 1,
               controller: _contactController,
               height: 40,
               labelText: "Contact",
@@ -395,7 +435,7 @@ maxLines: 1,
 
   Widget buildDateInput() {
     return Container(
-      margin: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: 2),
       height: MediaQuery.of(context).size.width / 4,
       child: Center(
         child: Material(

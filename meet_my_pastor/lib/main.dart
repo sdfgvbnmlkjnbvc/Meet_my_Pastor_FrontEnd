@@ -12,6 +12,8 @@ import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
 
+import 'view/admin.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:SafeArea(child: 
      
-      HomePage()
+      Admin()
       ))
       
       
