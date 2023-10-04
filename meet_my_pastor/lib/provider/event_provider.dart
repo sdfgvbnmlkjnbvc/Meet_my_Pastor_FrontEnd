@@ -47,19 +47,23 @@ class EventProvider extends ChangeNotifier {
 
   Future<void> event({
     required String name,
-    required String title,
-    required String contact,
+    required String date,
+    required String location,
+    required String time,
     required String imageUrl,
+     required String eventDescription,
     required BuildContext context,
   }) async {
     _isLoading = true;
     notifyListeners();
     final body = {
       "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
-      "event-Name": name,
-      "Contact": contact,
-      "title": title,
-      "Image": imageUrl
+      "name": name,
+      "date": date,
+      "time":time,
+      "location":location,
+      "image": imageUrl,
+      "eventDescription":eventDescription
     };
 
     try {

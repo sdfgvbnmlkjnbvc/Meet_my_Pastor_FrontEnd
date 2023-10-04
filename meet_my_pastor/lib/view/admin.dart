@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
+import 'package:meet_my_pastor/provider/event_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
@@ -27,6 +28,7 @@ class Admin extends StatefulWidget {
 class _AdminState extends State<Admin> {
   final TextEditingController dateInput = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
@@ -52,6 +54,7 @@ class _AdminState extends State<Admin> {
     final files = Provider.of<FetchImage>(context,listen: true);
      final file = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
+    final addEvent =Provider.of<EventProvider>(context,listen: false);
     final addPastor = Provider.of<PastorProvider>(context, listen: false);
     final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
 
@@ -94,7 +97,7 @@ class _AdminState extends State<Admin> {
       children: [
         Container(
                     width: 159,
-                          height: 187,
+                          height: 210,
                           child: 
                           // Text("${response.response?.secureUrl.toString()}")
                           Image.file(
@@ -133,7 +136,7 @@ class _AdminState extends State<Admin> {
                     ): Flexible(
                       child: Container(
                           width: 159,
-                          height: 187,
+                          height: 210,
                           color: Color(0xffD9D9D9),
                           child: buildImagePlaceholder(files),
                         ),
@@ -206,6 +209,7 @@ class _AdminState extends State<Admin> {
                           title: _titleController.value.text,
                           contact: _contactController.value.text,
                           imageUrl: "${response.response?.secureUrl}",
+                         
                           context: context);
                       print("done Checking");
                     },
@@ -258,6 +262,16 @@ class _AdminState extends State<Admin> {
                       }
                       await response.upload(
                           files.file!, "${_nameController.value.text}");
+                         addEvent.event(
+                            name: _nameController.value.text,
+                           location: _locationController.value.text,
+                            date: _contactController.value.text,
+                            time:_timeController.value.text,
+                            imageUrl: "${response.response?.secureUrl}",
+                             eventDescription:_messageController.value.text,
+                            context: context);
+                      
+                     
                     },
                     Color(0xFF3E64FF),
                     "Add",
@@ -368,7 +382,7 @@ class _AdminState extends State<Admin> {
            ), FieldInput(
           expand: false,
           maxLines: 1,
-           controller: _nameController,
+           controller: _locationController,
            height: 40,
            labelText: "Location",
            ),
@@ -377,7 +391,7 @@ class _AdminState extends State<Admin> {
           FieldInput(
           expand: false,
           maxLines: 1,
-           controller: _nameController,
+           controller: _timeController,
            height: 40,
            labelText: "Time",
            )

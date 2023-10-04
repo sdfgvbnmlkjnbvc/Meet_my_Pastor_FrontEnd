@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:meet_my_pastor/widgets/testimony_widgets.dart';
 
 import '../controller/baseurl.dart';
 
@@ -15,7 +16,7 @@ class TestimonyProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get admin => _admin;
 
-  Stream<Map> pastors() async* {
+  Stream<Map>testimonies() async* {
     _isLoading = true;
     notifyListeners();
 
@@ -24,7 +25,7 @@ class TestimonyProvider extends ChangeNotifier {
       Response response = await dio.get("${APPBASEURL.baseUrl}testimonies");
       respData = response.data;
       print("--------- ${respData['testimony'].length} --------------");
-      //  _itemCount=respData['pastor'].length;
+      
       print(_itemCount);
       if (respData['status'] == 200) {
         _itemCount = respData['testimonies'].length;
@@ -37,18 +38,18 @@ class TestimonyProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on DioError catch (e) {
-      // handleDioError(e, context);
+      
       print(e);
     } catch (e) {
-      // handleGenericError(e, context);
+     
       print(e);
     }
   }
 
   Future<void> testimony({
     required String name,
-    required String title,
-    required String contact,
+    required String date,
+    required String message,
     required String imageUrl,
     required BuildContext context,
   }) async {
@@ -57,8 +58,8 @@ class TestimonyProvider extends ChangeNotifier {
     final body = {
       "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
       "Pastor-Name": name,
-      "Contact": contact,
-      "title": title,
+      "message": message,
+      "date": date,
       "Image": imageUrl
     };
 
@@ -78,3 +79,5 @@ class TestimonyProvider extends ChangeNotifier {
     }
   }
 }
+
+

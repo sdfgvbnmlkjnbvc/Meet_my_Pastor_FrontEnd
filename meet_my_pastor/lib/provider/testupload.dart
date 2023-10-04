@@ -17,7 +17,7 @@ bool _picked=false;
   Future<void> int() async{
 
    _file=await selectImageFromGallery();
-  // print("Testing");
+
   
  notifyListeners();
   print("tESTING ${file?.path}");
