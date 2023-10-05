@@ -9,6 +9,7 @@ import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
 import 'package:meet_my_pastor/provider/event_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
+import 'package:meet_my_pastor/provider/testimony_provider.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
@@ -52,11 +53,12 @@ class _AdminState extends State<Admin> {
 
   Widget build(BuildContext context) {
     final files = Provider.of<FetchImage>(context,listen: true);
-     final file = Provider.of<FetchImage>(context);
+    //  final file = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
     final addEvent =Provider.of<EventProvider>(context,listen: false);
+    final addTestimony =Provider.of<TestimonyProvider>(context,listen: false);
     final addPastor = Provider.of<PastorProvider>(context, listen: false);
-    final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
+    // final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
 
     return SafeArea(
       child: Scaffold(
@@ -253,21 +255,21 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      print("checkInMy${response.url}");
-                      if (_nameController.value.text == null) {
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      }
-                      await response.upload(
-                          files.file!, "${_nameController.value.text}");
-                         addEvent.event(
+                      // print("checkInMy${response.url}");
+                      // if (_nameController.value.text == null) {
+                      //   ShowToast.vitaToast(
+                      //       message: "provide data for all fields",
+                      //       warn: true,
+                      //       long: true);
+                      // }
+                      // await response.upload(
+                      //     files.file!, "${_nameController.value.text}");
+                        await addEvent.event(
                             name: _nameController.value.text,
                            location: _locationController.value.text,
-                            date: _contactController.value.text,
+                            date:dateInput.value.text,
                             time:_timeController.value.text,
-                            imageUrl: "${response.response?.secureUrl}",
+                            imageUrl: "{response.response?.secureUrl}",
                              eventDescription:_messageController.value.text,
                             context: context);
                       
@@ -297,8 +299,9 @@ class _AdminState extends State<Admin> {
                             warn: true,
                             long: true);
                       }
-                      await response.upload(
-                          files.file!, "${_nameController.value.text}");
+                      // await response.upload(
+                      //     files.file!, "${_nameController.value.text}");
+                   await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "https://live.staticflickr.com/65535/52865825745_0262283cb7_h.jpg", context: context);
                     },
                     Color(0xFF3E64FF),
                     "Add",
@@ -358,7 +361,7 @@ class _AdminState extends State<Admin> {
           FieldInput(
           expand: false,
           maxLines: 1,
-           controller: _nameController,
+           controller: _titleController,
            height: 40,
            labelText: "Testimony title",
            ), FieldInput(

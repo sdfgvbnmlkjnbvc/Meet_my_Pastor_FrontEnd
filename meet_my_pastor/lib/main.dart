@@ -13,6 +13,7 @@ import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
 
 import 'view/admin.dart';
+import 'view/screens/testimonies.dart';
 
 
 void main() {
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:SafeArea(child: 
      
-      Admin()
+      Testimonies()
       ))
       
       
@@ -54,3 +55,6 @@ class MyApp extends StatelessWidget {
 
 
 
+  //  final getTestimony =Provider.of<TestimonyProvider>(context);
+  //                    print("--check2--${getTestimony.itemCount}");
+  //   print("--check2--${getTestimony.Data}");

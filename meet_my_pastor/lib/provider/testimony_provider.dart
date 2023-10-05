@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meet_my_pastor/widgets/testimony_widgets.dart';
+
 
 import '../controller/baseurl.dart';
 
@@ -10,13 +10,14 @@ class TestimonyProvider extends ChangeNotifier {
   int? _itemCount;
   bool _admin = false;
   Map<String, dynamic> respData = {};
-
+Map<String, dynamic> _Data = {};
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
+Map<String, dynamic> get Data =>_Data;
 
-  Stream<Map>testimonies() async* {
+  Future<Map>testimonies() async {
     _isLoading = true;
     notifyListeners();
 
@@ -24,11 +25,13 @@ class TestimonyProvider extends ChangeNotifier {
       var dio = Dio();
       Response response = await dio.get("${APPBASEURL.baseUrl}testimonies");
       respData = response.data;
-      print("--------- ${respData['testimony'].length} --------------");
+      print("-----Checking Testimony---- ${respData['testimony'].length} --------------");
       
       print(_itemCount);
       if (respData['status'] == 200) {
         _itemCount = respData['testimonies'].length;
+       _Data = respData['testimony'];
+
         print(_itemCount);
         _isLoading = false;
         notifyListeners();
@@ -44,12 +47,14 @@ class TestimonyProvider extends ChangeNotifier {
      
       print(e);
     }
+    return {"no Data":"no Data"};
   }
 
   Future<void> testimony({
     required String name,
     required String date,
     required String message,
+    required String title,
     required String imageUrl,
     required BuildContext context,
   }) async {
@@ -57,9 +62,10 @@ class TestimonyProvider extends ChangeNotifier {
     notifyListeners();
     final body = {
       "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
-      "Pastor-Name": name,
+      "name": name,
       "message": message,
       "date": date,
+      "title":title,
       "Image": imageUrl
     };
 
@@ -68,7 +74,7 @@ class TestimonyProvider extends ChangeNotifier {
       Response response =
           await dio.post("${APPBASEURL.baseUrl}testimony", data: body);
       respData = response.data;
-      print("--------- ${respData['pastor']} --------------");
+      print("--------- ${respData['testimony']} --------------");
       //  _itemCount=respData['pastor'].length;
     } on DioError catch (e) {
       // handleDioError(e, context);

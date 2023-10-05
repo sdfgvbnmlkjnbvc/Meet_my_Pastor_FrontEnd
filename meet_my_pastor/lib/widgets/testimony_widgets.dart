@@ -1,19 +1,24 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/provider/testimony_provider.dart';
+import 'package:provider/provider.dart';
 
 class Testimony extends StatelessWidget {
   const Testimony({super.key});
 
   @override
   Widget build(BuildContext context) {
+    //  final getTestimony =Provider.of<TestimonyProvider>(context);
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           
-              itemCount: 10,
+              itemCount:10,
+              // getTestimony.itemCount,
               itemBuilder: (context, index){
-    
+    //             print(getTestimony.itemCount);
+    // print(getTestimony.Data);
     return Padding(
     padding: const EdgeInsets.all(8.0),
     child:   Column(
