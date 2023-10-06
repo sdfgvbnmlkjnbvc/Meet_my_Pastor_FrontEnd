@@ -5,32 +5,30 @@ import 'package:flutter/cupertino.dart';
 import '../controller/baseurl.dart';
 
 class TestimonyProvider extends ChangeNotifier {
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool _state = false;
   int? _itemCount;
   bool _admin = false;
   Map<String, dynamic> respData = {};
-Map<String, dynamic> _Data = {};
+List<dynamic> _Data = [];
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
-Map<String, dynamic> get Data =>_Data;
+List<dynamic> get Data =>_Data;
 
   Future<Map>testimonies() async {
-    _isLoading = true;
-    notifyListeners();
 
     try {
       var dio = Dio();
-      Response response = await dio.get("${APPBASEURL.baseUrl}testimonies");
+      Response response = await dio.get("https://meet-my-pastor.onrender.com/api/testimonies");
       respData = response.data;
-      print("-----Checking Testimony---- ${respData['testimony'].length} --------------");
-      
-      print(_itemCount);
+     
+      print("-----Checking Testimony---- ${respData['Testimony'].length} --------------");
+   
       if (respData['status'] == 200) {
-        _itemCount = respData['testimonies'].length;
-       _Data = respData['testimony'];
+        _itemCount = respData['Testimony'].length;
+       _Data = respData['Testimony'];
 
         print(_itemCount);
         _isLoading = false;

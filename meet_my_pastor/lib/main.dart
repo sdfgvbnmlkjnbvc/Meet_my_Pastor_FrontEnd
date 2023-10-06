@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home:SafeArea(child: 
      
-      Testimonies()
+     Admin()
       ))
       
       

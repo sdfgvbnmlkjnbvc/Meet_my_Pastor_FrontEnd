@@ -255,15 +255,15 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      // print("checkInMy${response.url}");
-                      // if (_nameController.value.text == null) {
-                      //   ShowToast.vitaToast(
-                      //       message: "provide data for all fields",
-                      //       warn: true,
-                      //       long: true);
-                      // }
-                      // await response.upload(
-                      //     files.file!, "${_nameController.value.text}");
+                      print("checkInMy${response.url}");
+                      if (_nameController.value.text == null) {
+                        ShowToast.vitaToast(
+                            message: "provide data for all fields",
+                            warn: true,
+                            long: true);
+                      }
+                      await response.upload(
+                          files.file!, "${_nameController.value.text}");
                         await addEvent.event(
                             name: _nameController.value.text,
                            location: _locationController.value.text,
@@ -299,8 +299,8 @@ class _AdminState extends State<Admin> {
                             warn: true,
                             long: true);
                       }
-                      // await response.upload(
-                      //     files.file!, "${_nameController.value.text}");
+                      await response.upload(
+                          files.file!, "${_nameController.value.text}");
                    await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "https://live.staticflickr.com/65535/52865825745_0262283cb7_h.jpg", context: context);
                     },
                     Color(0xFF3E64FF),
