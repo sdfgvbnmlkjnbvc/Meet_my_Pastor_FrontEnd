@@ -10,11 +10,10 @@ import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
+import 'package:meet_my_pastor/view/screens/testimonies.dart';
 import 'package:provider/provider.dart';
 
-import 'view/admin.dart';
-import 'view/screens/testimonies.dart';
-
+import 'view/screens/Testimony_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,16 +38,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ContactProvider()),
         ChangeNotifierProvider(create: (_) => PastorProvider()),
         ChangeNotifierProvider(create: (_) => TestimonyProvider())
-      
-        ],
-        child: MaterialApp(title: "MmP",
-      debugShowCheckedModeBanner: false,
-      home:SafeArea(child: 
-     
-     Admin()
-      ))
-      
-      
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SafeArea(child: Testimonies())),
     );
   }
 }
