@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class TestimonyView extends StatefulWidget {
   Text title;
   Text body;
-  TestimonyView({Key? key, required this.title, required this.body})
+   String urln;
+  TestimonyView({Key? key, required this.title, required this.body, required this.urln})
       : super(key: key);
 
   @override
@@ -20,8 +21,8 @@ class _TestimonyViewState extends State<TestimonyView> {
             width: double.infinity,
             height: 220,
             color: Colors.amber,
-            child: Image.asset(
-              "images/Image.png",
+            child: Image.network(
+                 widget.urln,
               fit: BoxFit.cover,
             ),
           ),

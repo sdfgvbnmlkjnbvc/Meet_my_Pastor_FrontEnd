@@ -5,11 +5,13 @@ class EventView extends StatefulWidget {
   Text time;
   Text Date;
   Text body;
+  String urln;
   EventView(
       {Key? key,
       required this.title,
       required this.time,
       required this.Date,
+      required this.urln,
       required this.body})
       : super(key: key);
 
@@ -28,8 +30,8 @@ class _EventViewState extends State<EventView> {
               Container(
                 width: double.infinity,
                 height: 400,
-                child: Image.asset(
-                  "images/Event.png",
+                child: Image.network(
+                 widget.urln,
                   fit: BoxFit.cover,
                 ),
               ),

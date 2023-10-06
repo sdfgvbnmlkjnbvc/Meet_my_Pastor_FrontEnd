@@ -6,6 +6,7 @@ import 'package:meet_my_pastor/provider/contact_provider.dart';
 import 'package:meet_my_pastor/provider/event_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/provider/testimony_provider.dart';
+import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 
 import 'package:meet_my_pastor/view/screens/home.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SafeArea(child: Testimonies())),
+          home: SafeArea(child: Admin())),
     );
   }
 }
