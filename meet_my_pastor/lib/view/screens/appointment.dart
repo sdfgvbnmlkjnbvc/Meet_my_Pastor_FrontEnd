@@ -72,7 +72,7 @@ class _AppointmentState extends State<Appointment> {
                                 ),
                               );
                             } else {
-                              return Text("loading");
+                              return Text("");
                             }
                           },
                         );

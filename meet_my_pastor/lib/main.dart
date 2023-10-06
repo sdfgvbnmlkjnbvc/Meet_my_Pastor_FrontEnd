@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Authentication()),
+        providers: [
+      ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(
           create: (_) => CloudImage(),
         ),
@@ -45,3 +45,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+  //  final getTestimony =Provider.of<TestimonyProvider>(context);
+  //                    print("--check2--${getTestimony.itemCount}");
+  //   print("--check2--${getTestimony.Data}");

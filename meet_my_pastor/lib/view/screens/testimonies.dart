@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:meet_my_pastor/provider/testimony_provider.dart';
 import 'package:meet_my_pastor/widgets/event_widgets.dart';
 import 'package:meet_my_pastor/widgets/testimony_widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../../pageNavigator.dart';
 import 'appointment.dart';
@@ -11,6 +13,7 @@ class Testimonies extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -50,7 +53,7 @@ class Testimonies extends StatelessWidget {
                 ),
               ),
               Testimony(),
-              // SizedBox(height: 10,),
+
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

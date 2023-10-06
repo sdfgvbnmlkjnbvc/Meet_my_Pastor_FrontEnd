@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
+import 'package:meet_my_pastor/provider/event_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
+import 'package:meet_my_pastor/provider/testimony_provider.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
@@ -25,6 +29,7 @@ class Admin extends StatefulWidget {
 class _AdminState extends State<Admin> {
   final TextEditingController dateInput = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
@@ -34,7 +39,7 @@ class _AdminState extends State<Admin> {
     "Select Option",
     'Testimony',
     'Event',
-    'Appointment',
+    // 'Appointment',
     'Pastor'
   ];
   bool isDateSelected = false;
@@ -47,10 +52,13 @@ class _AdminState extends State<Admin> {
   }
 
   Widget build(BuildContext context) {
-    final files = Provider.of<FetchImage>(context);
+    final files = Provider.of<FetchImage>(context,listen: true);
+    //  final file = Provider.of<FetchImage>(context);
     final response = Provider.of<CloudImage>(context);
+    final addEvent =Provider.of<EventProvider>(context,listen: false);
+    final addTestimony =Provider.of<TestimonyProvider>(context,listen: false);
     final addPastor = Provider.of<PastorProvider>(context, listen: false);
-    final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
+    // final Uploaded = Provider.of<CloudImage>(context, listen: true).upload;
 
     return SafeArea(
       child: Scaffold(
@@ -82,24 +90,62 @@ class _AdminState extends State<Admin> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Uploaded == false
-                    ? Container(
-                        width: 159,
-                        height: 187,
-                        child: Image.network(
-                          response.url!,
-                          fit: BoxFit.contain,
+               files.picked ==true
+                    ? Flexible(
+                      child: 
+
+                      Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+                    width: 159,
+                          height: 210,
+                          child: 
+                          // Text("${response.response?.secureUrl.toString()}")
+                          Image.file(
+            files.imageFile,
+            height: MediaQuery.of(context).size.width * 0.75,
+            scale: 1.0,
+            fit: BoxFit.cover,),
+            ),
+        Positioned(
+          bottom: -10,
+          right: 0,
+          child: Material(
+            child: Container(
+              decoration: BoxDecoration(
+                // color: Colors.blue,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              height: 50,
+              width: 50,
+              child: InkWell(
+                onTap: () async {
+                  await files.int();
+                },
+                child: Icon( color: Colors.blue,
+                  Icons.add_circle_outline,
+                  size: 55,
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    ),
+
+                    
+                    ): Flexible(
+                      child: Container(
+                          width: 159,
+                          height: 210,
+                          color: Color(0xffD9D9D9),
+                          child: buildImagePlaceholder(files),
                         ),
-                      )
-                    : Container(
-                        width: 159,
-                        height: 187,
-                        color: Color(0xffD9D9D9),
-                        child: buildImagePlaceholder(files),
-                      ),
+                    ),
                 Flexible(
                   child: Container(
-                    height: 187,
+                    height: 200,
                     width: 192,
                     child: buildDropdownAndFields(),
                   ),
@@ -109,14 +155,19 @@ class _AdminState extends State<Admin> {
             SizedBox(height: 20),
             dropdownValue == "Pastor"
                 ? Text("")
-                : Container(
-                    margin: EdgeInsets.all(20),
-                    child: FieldInput(
-                      labelText: "Kindly Type here",
-                      height: MediaQuery.of(context).size.height * 0.4179,
-                      controller: _messageController,
+                : Flexible(
+                  child: Container(
+                      margin: EdgeInsets.all(20),
+                      child: FieldInput(  expand:true,
+                      maxLines: null,
+                      minLines: null,
+                
+                        labelText: "Kindly Type here",
+                        height: MediaQuery.of(context).size.height * 0.4179,
+                        controller: _messageController,
+                      ),
                     ),
-                  ),
+                ),
             SizedBox(height: 30),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,6 +211,7 @@ class _AdminState extends State<Admin> {
                           title: _titleController.value.text,
                           contact: _contactController.value.text,
                           imageUrl: "${response.response?.secureUrl}",
+                         
                           context: context);
                       print("done Checking");
                     },
@@ -168,35 +220,38 @@ class _AdminState extends State<Admin> {
                     170,
                     59,
                   ),
-                ] else if (dropdownValue == 'Appointment') ...[
-                  buildRegisterButton(
-                    context,
-                    () async {
-                      if (_nameController.value.text.isEmpty == true) {
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      } else {
-                        await response.upload(
-                            files.file!, "${_nameController.value.text}");
-                        print("checkInMy${response.url}");
-                      }
-                    },
-                    Color(0xFF3E64FF),
-                    "Add",
-                    170,
-                    59,
-                  ),
-                  buildRegisterButton(
-                    context,
-                    () {},
-                    Color(0xFF3E64FF),
-                    "Cancel",
-                    170,
-                    59,
-                  ),
-                ] else if (dropdownValue == 'Event') ...[
+                ] 
+                // else if (dropdownValue == 'Appointment') ...[
+                //   buildRegisterButton(
+                //     context,
+                //     () async {
+                //       if (_nameController.value.text.isEmpty == true) {
+                //         ShowToast.vitaToast(
+                //             message: "provide data for all fields",
+                //             warn: true,
+                //             long: true);
+                //       } 
+                //       else {
+                //         await response.upload(
+                //             files.file!, "${_nameController.value.text}");
+                //         print("checkInMy${response.url}");
+                //       }
+                //     },
+                //     Color(0xFF3E64FF),
+                //     "Add",
+                //     170,
+                //     59,
+                //   ),
+                //   buildRegisterButton(
+                //     context,
+                //     () {},
+                //     Color(0xFF3E64FF),
+                //     "Cancel",
+                //     170,
+                //     59,
+                //   ),
+                // ] 
+                else if (dropdownValue == 'Event') ...[
                   buildRegisterButton(
                     context,
                     () async {
@@ -209,6 +264,16 @@ class _AdminState extends State<Admin> {
                       }
                       await response.upload(
                           files.file!, "${_nameController.value.text}");
+                        await addEvent.event(
+                            name: _nameController.value.text,
+                           location: _locationController.value.text,
+                            date:dateInput.value.text,
+                            time:_timeController.value.text,
+                            imageUrl: "{response.response?.secureUrl}",
+                             eventDescription:_messageController.value.text,
+                            context: context);
+                      
+                     
                     },
                     Color(0xFF3E64FF),
                     "Add",
@@ -236,6 +301,7 @@ class _AdminState extends State<Admin> {
                       }
                       await response.upload(
                           files.file!, "${_nameController.value.text}");
+                   await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "https://live.staticflickr.com/65535/52865825745_0262283cb7_h.jpg", context: context);
                     },
                     Color(0xFF3E64FF),
                     "Add",
@@ -268,42 +334,89 @@ class _AdminState extends State<Admin> {
           Flexible(
             child: buildDropdown(),
           ),
-          if (dropdownValue == "appointment") ...[
-            Flexible(
-              child: FieldInput(
-                controller: _nameController,
-                height: MediaQuery.of(context).size.width / 4,
-                labelText: "Full Name",
-              ),
-            ),
-            Flexible(
-              child: buildDateInput(),
-            ),
-            Flexible(
-              child: FieldInput(
-                controller: _timeController,
-                height: MediaQuery.of(context).size.width / 4,
-                labelText: "Time",
-              ),
-            ),
-          ] else if (dropdownValue == "Testimony") ...[
-            Text("Yet to add Testimonies"),
-            Text("Yet to add Testimonies"),
+          // if (dropdownValue == "appointment") ...[
+          //   Flexible(
+          //     child: FieldInput(
+          //        expand: false,
+          //        maxLines: 1,
+          //       controller: _nameController,
+          //       height: MediaQuery.of(context).size.width / 4,
+          //       labelText: "Full Name",
+          //     ),
+          //   ),
+          //   Flexible(
+          //     child: buildDateInput(),
+          //   ),
+          //   Flexible(
+          //     child: FieldInput(
+          //       expand: false,
+          //         maxLines: 1,
+          //       controller: _timeController,
+          //       height: MediaQuery.of(context).size.width / 4,
+          //       labelText: "Time",
+          //     ),
+          //   ),
+          // ] 
+         if (dropdownValue == "Testimony") ...[
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _titleController,
+           height: 40,
+           labelText: "Testimony title",
+           ), FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Full name",
+           ),
+          Expanded(child: buildDateInput())
+           
+      
+         
           ] else if (dropdownValue == "Event") ...[
-            Text("Yet to add Event"),
-            Text("Yet to add Event"),
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _nameController,
+           height: 40,
+           labelText: "Event Name",
+           ), FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _locationController,
+           height: 40,
+           labelText: "Location",
+           ),
+          Expanded(child: buildDateInput()),
+           
+          FieldInput(
+          expand: false,
+          maxLines: 1,
+           controller: _timeController,
+           height: 40,
+           labelText: "Time",
+           )
+         
           ] else if (dropdownValue == "Pastor") ...[
             FieldInput(
+               expand: false,
+               maxLines: 1,
               controller: _titleController,
               height: 40,
               labelText: "Title",
             ),
             FieldInput(
+             expand: false,
+             maxLines: 1,
               controller: _nameController,
               height: 40,
               labelText: "Full Name",
             ),
-            FieldInput(
+            FieldInput( 
+          expand: false,
+          maxLines: 1,
               controller: _contactController,
               height: 40,
               labelText: "Contact",
@@ -339,7 +452,7 @@ class _AdminState extends State<Admin> {
 
   Widget buildDateInput() {
     return Container(
-      margin: EdgeInsets.only(top: 8),
+      margin: EdgeInsets.only(top: 2),
       height: MediaQuery.of(context).size.width / 4,
       child: Center(
         child: Material(

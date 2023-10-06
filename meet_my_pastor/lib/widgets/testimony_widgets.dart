@@ -1,78 +1,92 @@
+
+
+
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../pageNavigator.dart';
-import '../view/screens/Testimony_view.dart';
+import '../provider/testimony_provider.dart';
 
-class Testimony extends StatelessWidget {
+class Testimony extends StatefulWidget {
   const Testimony({super.key});
 
   @override
+  State<Testimony> createState() => _TestimonyState();
+
+}
+
+class _TestimonyState extends State<Testimony> {
+    @override
+  void initState(){
+    super.initState();
+          final getTestimony = Provider.of<TestimonyProvider>(context,listen: false);
+      getTestimony.testimonies();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Material(
-                child: InkWell(
-                  onTap: () {
-                    pageNavigator(ctx: context).nextPage(
-                      page: TestimonyView(
-                        title: Text(
-                          "Testimony of a faith tested through depression and ultimately redeemed:",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Color(
-                                0xff008098,
-                              )),
-                        ),
-                        body: Text(
-                          "While on their spiritual journey with Jesus, many people find the most compelling stories about Jesus come from the Christians they already know. If you’re looking for proof of Jesus’ ability, ask your peers about their own journey with Christ. Your own story can be just as compelling and is the most powerful tool you have to demonstrate the love of Jesus and show how He has changed you to other people. While on their spiritual journey with Jesus, many people find the most compelling stories about Jesus come from the Christians they already know. If you’re looking for proof of Jesus’ ability, ask your peers about their own journey with Christ. Your own story can be just as compelling and is the most powerful tool you have to demonstrate the love of Jesus and show how He has changed you to other people.",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
+    final getTestimony = Provider.of<TestimonyProvider>(context);
+    if(getTestimony.isLoading==false){
+
+  return Expanded(
+child:
+   
+        
+         
+            ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: getTestimony.itemCount,
+            itemBuilder: (context, index) {
+              final testimonyData = getTestimony.Data;
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: (){
+                        
+                      },
+                      child: ClipRRect(
                         child: Container(
                           color: Colors.amber,
                           height: 150,
                           width: 200,
-                          child: Image.asset(
-                            "images/Image.png",
+                          child: Image.network(
+                            testimonyData[index]["Image"],
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.fitWidth,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Michael",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w800),
-                      ),
-                      Text(
-                        "Rockson",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w800),
-                      )
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "${testimonyData[index]["name"]}",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      "Rockson",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                  ],
                 ),
-              ),
+              );
+            },
+          )
             );
-          }),
-    );
-  }
-}
+
+
+    }
+    else{
+return   Center(
+           
+            child: Text(
+              "No testimonies available",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          );
+     
+    }
+  }}

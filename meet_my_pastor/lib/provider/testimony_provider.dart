@@ -1,33 +1,35 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
+
 import '../controller/baseurl.dart';
 
 class TestimonyProvider extends ChangeNotifier {
-  bool _isLoading = false;
+  bool _isLoading = true;
   bool _state = false;
   int? _itemCount;
   bool _admin = false;
   Map<String, dynamic> respData = {};
-
+List<dynamic> _Data = [];
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
+List<dynamic> get Data =>_Data;
 
-  Stream<Map> pastors() async* {
-    _isLoading = true;
-    notifyListeners();
+  Future<Map>testimonies() async {
 
     try {
       var dio = Dio();
-      Response response = await dio.get("${APPBASEURL.baseUrl}testimonies");
+      Response response = await dio.get("https://meet-my-pastor.onrender.com/api/testimonies");
       respData = response.data;
-      print("--------- ${respData['testimony'].length} --------------");
-      //  _itemCount=respData['pastor'].length;
-      print(_itemCount);
+     
+      print("-----Checking Testimony---- ${respData['Testimony'].length} --------------");
+   
       if (respData['status'] == 200) {
-        _itemCount = respData['testimonies'].length;
+        _itemCount = respData['Testimony'].length;
+       _Data = respData['Testimony'];
+
         print(_itemCount);
         _isLoading = false;
         notifyListeners();
@@ -37,18 +39,20 @@ class TestimonyProvider extends ChangeNotifier {
         notifyListeners();
       }
     } on DioError catch (e) {
-      // handleDioError(e, context);
+      
       print(e);
     } catch (e) {
-      // handleGenericError(e, context);
+     
       print(e);
     }
+    return {"no Data":"no Data"};
   }
 
   Future<void> testimony({
     required String name,
+    required String date,
+    required String message,
     required String title,
-    required String contact,
     required String imageUrl,
     required BuildContext context,
   }) async {
@@ -56,9 +60,10 @@ class TestimonyProvider extends ChangeNotifier {
     notifyListeners();
     final body = {
       "user-id": "5f8e7fc5-1508-4bca-8706-041193680363",
-      "Pastor-Name": name,
-      "Contact": contact,
-      "title": title,
+      "name": name,
+      "message": message,
+      "date": date,
+      "title":title,
       "Image": imageUrl
     };
 
@@ -67,7 +72,7 @@ class TestimonyProvider extends ChangeNotifier {
       Response response =
           await dio.post("${APPBASEURL.baseUrl}testimony", data: body);
       respData = response.data;
-      print("--------- ${respData['pastor']} --------------");
+      print("--------- ${respData['testimony']} --------------");
       //  _itemCount=respData['pastor'].length;
     } on DioError catch (e) {
       // handleDioError(e, context);
@@ -78,3 +83,5 @@ class TestimonyProvider extends ChangeNotifier {
     }
   }
 }
+
+
