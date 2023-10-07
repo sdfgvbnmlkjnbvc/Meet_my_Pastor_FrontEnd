@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-      ChangeNotifierProvider(create: (_) => Authentication()),
+      providers: [
+        ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(
           create: (_) => CloudImage(),
         ),
@@ -41,8 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TestimonyProvider())
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: SafeArea(child: Admin())),
+          debugShowCheckedModeBanner: false, home: SafeArea(child: HomePage())),
     );
   }
 }
