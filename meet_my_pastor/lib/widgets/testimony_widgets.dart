@@ -39,14 +39,16 @@ class _TestimonyState extends State<Testimony> {
                 InkWell(
                   onTap: () {
                     pageNavigator(ctx: context).nextPage(
-                      page: TestimonyView(
-                        title:
-                            Text(getTestimony.Data[index]["title"].toString()),
-                        // time: Text(getTestimony.Data[index]["time"].toString()),
-                        // Date: Text(getTestimony.Data[index]["date"].toString()),
-                        urln: getTestimony.Data[index]["Image"].toString(),
-                        body: Text(
-                            getTestimony.Data[index]["message"].toString()),
+                      page: Flexible(
+                        child: TestimonyView(
+                          title:
+                              Text(getTestimony.Data[index]["title"].toString()),
+                          // time: Text(getTestimony.Data[index]["time"].toString()),
+                          // Date: Text(getTestimony.Data[index]["date"].toString()),
+                          urln: getTestimony.Data[index]["Image"].toString(),
+                          body: Text(
+                              getTestimony.Data[index]["message"].toString()),
+                        ),
                       ),
                     );
                   },
@@ -64,14 +66,18 @@ class _TestimonyState extends State<Testimony> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  "${testimonyData[index]["name"]}",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                SizedBox(height: 5),
+                Flexible(
+                  child: Text(
+                    "${testimonyData[index]["name"]}",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  ),
                 ),
-                Text(
-                  "Rockson",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                Flexible(
+                  child: Text(
+                    "Rockson",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  ),
                 ),
               ],
             ),

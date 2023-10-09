@@ -177,9 +177,12 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      if (_nameController.value.text.isEmpty == true ||
-                          _titleController.value.text.isEmpty == true ||
-                          _contactController.value.text.isEmpty == true) {
+                      if (_nameController.value.text.isEmpty ||
+                          _titleController.value.text.isEmpty ||
+                          _contactController.value.text.isEmpty
+                         
+                           ) {
+                              // || response.response?.secureUrl == null
                         ShowToast.vitaToast(
                             message: "provide data for all fields",
                             warn: true,
@@ -256,12 +259,14 @@ class _AdminState extends State<Admin> {
                     context,
                     () async {
                       print("checkInMy${response.url}");
-                      if (_nameController.value.text == null) {
+                      if (_nameController.value.text.isEmpty  ||_timeController.value.text.isEmpty  || _locationController .value.text.isEmpty  || dateInput.value.text.isEmpty   || _messageController.value.text .isEmpty) {
+                      //  || response.response?.secureUrl == null
                         ShowToast.vitaToast(
                             message: "provide data for all fields",
                             warn: true,
                             long: true);
-                      }
+                      }else{
+
                       await response.upload(
                           files.file!, "${_nameController.value.text}");
                         await addEvent.event(
@@ -269,10 +274,11 @@ class _AdminState extends State<Admin> {
                            location: _locationController.value.text,
                             date:dateInput.value.text,
                             time:_timeController.value.text,
-                            imageUrl: "{response.response?.secureUrl}",
+                            imageUrl: "${response.response?.secureUrl}",
                              eventDescription:_messageController.value.text,
                             context: context);
                       
+                      }
                      
                     },
                     Color(0xFF3E64FF),
@@ -293,16 +299,22 @@ class _AdminState extends State<Admin> {
                     context,
                     () async {
                       print("checkInMy${response.url}");
-                      if (_nameController.value.text == null) {
+                      
+                      if (_nameController.value.text.isEmpty  || _titleController .value.text.isEmpty  || dateInput.value.text.isEmpty   || _messageController.value.text .isEmpty ) {
+                      // || response.response?.secureUrl == null
+                      
+                        print(" || ${response.response?.secureUrl}");
                         ShowToast.vitaToast(
                             message: "provide data for all fields",
                             warn: true,
                             long: true);
-                      }
-                      await response.upload(
+                      }else{
+ await response.upload(
                           files.file!, "${_nameController.value.text}");
-                   await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "https://live.staticflickr.com/65535/52865825745_0262283cb7_h.jpg", context: context);
-                    },
+                     
+                   await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "${response.response?.secureUrl}", context: context);
+                    }
+                      },
                     Color(0xFF3E64FF),
                     "Add",
                     170,

@@ -61,17 +61,21 @@ class _EventsState extends State<Events> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "A Night of Praise and Adoration",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w800),
+                      Flexible(
+                        child: Text(
+                          "A Night of Praise and Adoration",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w800),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          "Date: ${getEvent.Data[index]["date"]}",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w800),
+                        child: Flexible(
+                          child: Text(
+                            "Date: ${getEvent.Data[index]["date"]}",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w800),
+                          ),
                         ),
                       ),
                     ],
