@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TestimonyProvider())
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false, home: SafeArea(child: Admin())),
+          debugShowCheckedModeBanner: false, home: SafeArea(child: HomePage())),
     );
   }
 }
