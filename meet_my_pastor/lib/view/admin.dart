@@ -109,23 +109,24 @@ class _AdminState extends State<Admin> {
             fit: BoxFit.cover,),
             ),
         Positioned(
-          bottom: -10,
-          right: 0,
-          child: Material(
-            child: Container(
-              decoration: BoxDecoration(
-                // color: Colors.blue,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              height: 50,
-              width: 50,
-              child: InkWell(
-                onTap: () async {
-                  await files.int();
-                },
-                child: Icon( color: Colors.blue,
-                  Icons.add_circle_outline,
-                  size: 55,
+          
+          child: Center(
+            child: Material(color: Colors.transparent,
+              child: Container(
+                decoration: BoxDecoration(
+                  // color: Colors.blue,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                height: 50,
+                width: 50,
+                child: InkWell(
+                  onTap: () async {
+                    await files.int();
+                  },
+                  child: Icon( color: Colors.blue,
+                    Icons.add_circle_outline,
+                    size: 55,
+                  ),
                 ),
               ),
             ),

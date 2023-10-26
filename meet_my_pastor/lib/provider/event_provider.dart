@@ -25,13 +25,11 @@ List<dynamic> _Data = [];
       var dio = Dio();
       Response response = await dio.get("${APPBASEURL.baseUrl}events");
       respData = response.data;
-      print("--------- ${respData['event'].length} --------------");
-
-      print(_itemCount);
+      print("--------- Event Provider ${respData['event'].length} --------------");
       if (respData['status'] == 200) {
         _itemCount = respData['event'].length;
         _Data=respData['event'];
-        print(_itemCount);
+        print(_Data);
         _isLoading = false;
         notifyListeners();
       } else {
