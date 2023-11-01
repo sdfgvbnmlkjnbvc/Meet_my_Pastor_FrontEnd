@@ -17,7 +17,7 @@ class Appointment extends StatefulWidget {
 class _AppointmentState extends State<Appointment> {
   @override
   Widget build(BuildContext context) {
-    late AnimationController controller;
+    // late AnimationController controller;
     PastorProvider pastors = context.watch<PastorProvider>();
     return SafeArea(
       child: Scaffold(
@@ -39,7 +39,7 @@ class _AppointmentState extends State<Appointment> {
                   margin: EdgeInsetsDirectional.all(30),
                   child: TextField(
                     decoration: InputDecoration(
-                        hintText: "Search for your favority postor or apostle",
+                        hintText: "Search for your favorite postor or apostle",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                           borderSide: BorderSide(width: 3, color: Colors.blue),

@@ -35,7 +35,6 @@ class AppointmentDetail extends StatefulWidget {
 
 class _AppointmentDetailState extends State<AppointmentDetail> {
   final TextEditingController dateInput = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -50,6 +49,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
 
   @override
   Widget build(BuildContext context) {
+    String User_id = Provider.of<Authentication>(context).user_id;
+    
     bool inactive = false;
     return Scaffold(
       appBar: AppBar(
@@ -162,6 +163,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                     child: Consumer<AppointmentProvider>(
                       builder: (context, Appoint, child) {
                         return buildRegisterButton(context, () {
+                          print("User id: $User_id");
                           if (_nameController.value.text.isEmpty ||
                               _emailController.value.text.isEmpty ||
                               dateInput.value.text.isEmpty ||
@@ -173,16 +175,16 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                             final Appoint = Provider.of<AppointmentProvider>(
                                 context,
                                 listen: false);
-                            Appoint.bookAppointment(
-                              context: context,
-                              userId: "5f8e7fc5-1508-4bca-8706-041193680363",
-                              pastor: "Apostle",
-                              time: _timeController.text,
-                              date: dateInput.value.text,
-                              email: _emailController.value.text,
-                              reason: _messageController.value.text,
-                              name: _nameController.text,
-                            );
+                            // Appoint.bookAppointment(
+                            //   context: context,
+                            //   userId: User_id,
+                            //   pastor: "Apostle",
+                            //   time: _timeController.text,
+                            //   date: dateInput.value.text,
+                            //   email: _emailController.value.text,
+                            //   reason: _messageController.value.text,
+                            //   name: _nameController.text,
+                            // );
                           }
                         }, inactive ? Color(0xFF3E64FF) : Colors.red[300],
                             "Book now", 363, 60);
@@ -198,3 +200,6 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
     );
   }
 }
+
+// akuetteh58@gmail.com
+// Admin@1234

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
 import 'package:meet_my_pastor/view/screens/about.dart';
+import 'package:meet_my_pastor/view/screens/contact_us.dart';
 import 'package:meet_my_pastor/view/screens/register.dart';
 import 'package:meet_my_pastor/view/screens/testimonies.dart';
 
@@ -53,7 +54,7 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        // pageNavigator(ctx: context).nextPage(page: AboutPage());
+                        pageNavigator(ctx: context).nextPage(page: contactUs());
                       },
                       child: Text(
                         "Contact us",

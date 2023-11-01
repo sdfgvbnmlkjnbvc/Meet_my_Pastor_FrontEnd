@@ -13,12 +13,16 @@ class Authentication extends ChangeNotifier {
   bool _state = false;
   int? _itemCount;
   bool _admin = false;
+  late String _user_id;
+  late String _userName;
   Map<String, dynamic> respData = {};
 
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
+  String get user_id => _user_id;
+  String get userName => _userName;
   Future<void> signup({
     required String name,
     required String email,
@@ -76,8 +80,8 @@ class Authentication extends ChangeNotifier {
       if (response.data['status'] == 200) {
         final res = response.data;
         print("User data: ${res}");
-        final userId = res['user']['public_id'];
-        final userName = res['user']['name'];
+         _user_id = res['user']['public_id'];
+     _userName = res['user']['name'];
         final token = res['auth_token'];
         _admin = res['user']['admin'];
         print("admin: $_admin");
