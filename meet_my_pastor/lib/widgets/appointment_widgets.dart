@@ -7,13 +7,15 @@ class AppointmentCard extends StatelessWidget {
   final String? name;
   final String? title;
   final String? contact;
+  void Function()? click;
 
-  const AppointmentCard({
+   AppointmentCard({
     Key? key,
     this.sourceLink,
     this.name,
     this.title,
     this.contact,
+   this.click
   }) : super(key: key);
 
   @override
@@ -69,9 +71,12 @@ class AppointmentCard extends StatelessWidget {
               Material(
                 child: InkWell(
                   splashColor: Colors.transparent,
-                  onTap: () {
-                   pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
-                  },
+                  onTap:click
+                  ,
+                  //  () {
+                  //  pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
+                  
+                  // },
                   child: Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFFF3E64FF),

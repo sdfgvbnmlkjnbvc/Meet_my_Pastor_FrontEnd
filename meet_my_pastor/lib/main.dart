@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       
           debugShowCheckedModeBanner: false, home: SafeArea(
             
-            child: contactUs(),),),
+            child: HomePage(),),),
     );
   }
 }

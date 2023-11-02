@@ -13,8 +13,8 @@ class Authentication extends ChangeNotifier {
   bool _state = false;
   int? _itemCount;
   bool _admin = false;
-  late String _user_id;
-  late String _userName;
+   String _user_id="";
+   String _userName="";
   Map<String, dynamic> respData = {};
 
   int? get itemCount => _itemCount;

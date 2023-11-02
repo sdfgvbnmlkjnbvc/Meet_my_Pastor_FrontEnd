@@ -27,7 +27,10 @@ const List<BoxShadow> kInputBoxShadow = [
 ];
 
 class AppointmentDetail extends StatefulWidget {
-  AppointmentDetail({Key? key}) : super(key: key);
+ final  String pastor_id;
+  final String title;
+  AppointmentDetail({Key? key,required this.pastor_id,required this.title}) : super(key: key
+  );
 
   @override
   _AppointmentDetailState createState() => _AppointmentDetailState();
@@ -50,7 +53,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
   @override
   Widget build(BuildContext context) {
     String User_id = Provider.of<Authentication>(context).user_id;
-    
+    print("User id: ${User_id}");
     bool inactive = false;
     return Scaffold(
       appBar: AppBar(
@@ -172,19 +175,19 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                               inactive = true;
                             });
                           } else if (inactive == false) {
-                            final Appoint = Provider.of<AppointmentProvider>(
-                                context,
-                                listen: false);
-                            // Appoint.bookAppointment(
-                            //   context: context,
-                            //   userId: User_id,
-                            //   pastor: "Apostle",
-                            //   time: _timeController.text,
-                            //   date: dateInput.value.text,
-                            //   email: _emailController.value.text,
-                            //   reason: _messageController.value.text,
-                            //   name: _nameController.text,
-                            // );
+                            // final Appoint = Provider.of<AppointmentProvider>(
+                            //     context,
+                            //     listen: false);
+                            Appoint.bookAppointment(
+                              context: context,
+                              userId:widget.pastor_id,
+                              pastor: widget.title,
+                              time: _timeController.text,
+                              date: dateInput.value.text,
+                              email: _emailController.value.text,
+                              reason: _messageController.value.text,
+                              name: _nameController.text,
+                            );
                           }
                         }, inactive ? Color(0xFF3E64FF) : Colors.red[300],
                             "Book now", 363, 60);

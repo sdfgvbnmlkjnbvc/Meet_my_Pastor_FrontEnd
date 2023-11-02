@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/provider/Apointment.dart';
+import 'package:meet_my_pastor/provider/contact_provider.dart';
 
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,7 @@ super.dispose();
 
   @override
   Widget build(BuildContext context) {
+    final contactData = Provider.of<ContactProvider>(context);
     bool inactive = false;
     return Scaffold(
       appBar: AppBar(
@@ -130,10 +132,12 @@ super.dispose();
             Center(
               child: buildRegisterButton( 
                 context, () {
-                  print("First Name: ${_firstNameController.value.text} Last Name: ${_lastNameController.value.text}  phone: ${_phoneController.value.text} email: ${_emailController.value.text}" );
+                  // print("First Name: ${_firstNameController.value.text} Last Name: ${_lastNameController.value.text}  phone: ${_phoneController.value.text} email: ${_emailController.value.text}" );
+                  contactData.contact(context: context,Phone:_phoneController.value.text,FirstName:_firstNameController.value.text,LastName:_lastNameController.value.text,Email:_emailController.value.text,Message: _messageController.value.text );
                   pageNavigator(ctx: context).nextPageOnly(page: HomePage());
+                 
                 },
-                              Color(0xFF3E64FF), "Register", 363, 60
+                              Color(0xFF3E64FF), "Send", 250, 60
                 
               ),
             ),

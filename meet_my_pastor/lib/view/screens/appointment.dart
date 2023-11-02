@@ -5,16 +5,25 @@ import 'package:meet_my_pastor/widgets/appointment_widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../pageNavigator.dart';
+import 'appointment_detail.dart';
 import 'home.dart';
-
-class Appointment extends StatefulWidget {
+ class Appointment extends StatefulWidget {
   const Appointment({super.key});
+
 
   @override
   State<Appointment> createState() => _AppointmentState();
 }
 
+
 class _AppointmentState extends State<Appointment> {
+ 
+ @override
+  void dispose() {
+    // Close the StreamController when the widget is disposed
+    
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     // late AnimationController controller;
@@ -26,6 +35,7 @@ class _AppointmentState extends State<Appointment> {
           actions: [
             IconButton(
                 onPressed: () {
+                   pastors.dispose();
                   pageNavigator(ctx: context).nextPageOnly(page: HomePage());
                 },
                 icon: Icon(color: Colors.blue, Icons.exit_to_app))
@@ -65,6 +75,10 @@ class _AppointmentState extends State<Appointment> {
                                   pastors.respData['pastor'][index];
                               return Flexible(
                                 child: AppointmentCard(
+                                  click: (){
+                                    pastors.dispose();
+                                     pageNavigator(ctx: context).nextPage(page: AppointmentDetail(pastor_id:pastorData["user_id"],title:pastorData["title"]));
+                                  },
                                   sourceLink: pastorData["Image"],
                                   name: pastorData["name"],
                                   title: pastorData["title"],
