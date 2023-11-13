@@ -1,27 +1,29 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+
 import 'package:meet_my_pastor/controller/baseurl.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/page_navigator.dart';
 import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
-import 'package:meet_my_pastor/view/screens/home.dart';
+
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 
 class Authentication extends ChangeNotifier {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   bool _state = false;
   int? _itemCount;
   bool _admin = false;
-   String _user_id="";
-   String _userName="";
+  String userId = "";
+  String _userName = "";
   Map<String, dynamic> respData = {};
 
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
-  String get user_id => _user_id;
+  String get user_id => userId;
   String get userName => _userName;
   Future<void> signup({
     required String name,
@@ -50,7 +52,8 @@ class Authentication extends ChangeNotifier {
         ShowToast.vitaToast(message: "Account created", warn: false);
         _isLoading = false;
         notifyListeners();
-        pageNavigator(ctx: context).nextPage(page: const Login());
+        PageNavigator(ctx: _scaffoldKey.currentState?.context)
+            .nextPage(page: const Login());
       } else {
         ShowToast.vitaToast(message: "User Already Exists", warn: false);
         _isLoading = false;
@@ -67,7 +70,6 @@ class Authentication extends ChangeNotifier {
   Future<void> loginUser({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -79,36 +81,34 @@ class Authentication extends ChangeNotifier {
 
       if (response.data['status'] == 200) {
         final res = response.data;
-        print("User data: ${res}");
-         _user_id = res['user']['public_id'];
-     _userName = res['user']['name'];
-        final token = res['auth_token'];
+        // print("User data: $res");
+        userId = res['user']['public_id'];
+        _userName = res['user']['name'];
+        // final token = res['auth_token'];
         _admin = res['user']['admin'];
-        print("admin: $_admin");
-        if (res['user']['admin'] == true) {
-          pageNavigator(ctx: context).nextPageOnly(page: const Admin());
-          ShowToast.vitaToast(
-              message: "Authenticated", warn: state, long: true);
-          _isLoading = false;
-          notifyListeners();
+        // print("admin: $_admin");
+
+        if (_admin == true) {
+          PageNavigator(ctx: _scaffoldKey.currentState?.context)
+              .nextPageOnly(page: const Admin());
         } else {
-          pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
-          ShowToast.vitaToast(
-              message: "Authenticated", warn: state, long: true);
-          _isLoading = false;
-          notifyListeners();
+          PageNavigator(ctx: _scaffoldKey.currentState?.context)
+              .nextPageOnly(page: const Appointment());
         }
+
+        ShowToast.vitaToast(message: "Authenticated", warn: state, long: true);
       } else {
-        _isLoading = false;
         _state = true;
         ShowToast.vitaToast(
             message: "Wrong Credentials", warn: true, long: true);
-        notifyListeners();
       }
     } on DioError catch (e) {
-      handleDioError(e, context);
+      handleDioError(e, _scaffoldKey.currentState?.context);
     } catch (e) {
-      handleGenericError(e, context);
+      handleGenericError(e, _scaffoldKey.currentState?.context);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -120,7 +120,7 @@ class Authentication extends ChangeNotifier {
           await dio.get('https://meet-my-pastor.onrender.com/api/users');
 
       respData = response.data;
-      print(respData);
+      // print(respData);
       ShowToast.vitaToast(message: "${response.statusMessage}", warn: true);
 
       if (respData['status'] == 201) {
@@ -135,10 +135,10 @@ class Authentication extends ChangeNotifier {
       }
     } on DioError catch (e) {
       handleDioError(e);
-      print(e);
+      // print(e);
     } catch (e) {
       handleGenericError(e);
-      print(e);
+      // print(e);
     }
   }
 

@@ -4,8 +4,8 @@ import 'package:meet_my_pastor/view/screens/reset_password.dart';
 import 'package:meet_my_pastor/widgets/validators.dart';
 import 'package:provider/provider.dart';
 
-import '../../pageNavigator.dart';
-import '../../widgets/InputTextfield.dart';
+import '../../page_navigator.dart';
+import '../../widgets/input_text_field.dart';
 import '../../widgets/authentication.dart';
 
 class Login extends StatefulWidget {
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 120),
+                const SizedBox(height: 120),
                 Center(
                   child: Image.asset(
                     "images/login.png",
@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                       const Text("Forgot Password ? "),
                       InkWell(
                         onTap: () {
-                          pageNavigator(ctx: context)
+                          PageNavigator(ctx: context)
                               .nextPage(page: const ResetPassword());
                         },
                         child: const Text(
@@ -87,11 +87,10 @@ class _LoginState extends State<Login> {
                         final auth =
                             Provider.of<Authentication>(context, listen: false);
                         auth.loginUser(
-                          context: context,
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                      }, Color(0xFF3E64FF), "Login", 363, 60);
+                      }, const Color(0xFF3E64FF), "Login", 363, 60);
                     },
                   ),
                 ),

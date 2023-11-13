@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
-import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String? sourceLink;
   final String? name;
   final String? title;
   final String? contact;
-  void Function()? click;
+  final void Function()? click;
 
-   AppointmentCard({
-    Key? key,
-    this.sourceLink,
-    this.name,
-    this.title,
-    this.contact,
-   this.click
-  }) : super(key: key);
+  const AppointmentCard(
+      {Key? key,
+      this.sourceLink,
+      this.name,
+      this.title,
+      this.contact,
+      this.click})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +22,16 @@ class AppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.grey,
-            offset: const Offset(5.0, 5.0),
+            offset: Offset(5.0, 5.0),
             blurRadius: 10.0,
             spreadRadius: 2.0,
           ),
           BoxShadow(
             color: Colors.white,
-            offset: const Offset(0.0, 0.0),
+            offset: Offset(0.0, 0.0),
             blurRadius: 0.0,
             spreadRadius: 0.0,
           ),
@@ -47,7 +45,7 @@ class AppointmentCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
-            child: Container(
+            child: SizedBox(
               width: 120,
               height: 150,
               child: Image.network(
@@ -71,20 +69,19 @@ class AppointmentCard extends StatelessWidget {
               Material(
                 child: InkWell(
                   splashColor: Colors.transparent,
-                  onTap:click
-                  ,
+                  onTap: click,
                   //  () {
                   //  pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
-                  
+
                   // },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3E64FF),
+                      color: const Color(0xFF3E64FF),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     height: 22,
                     width: 150,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Book appointment",
                         style: TextStyle(

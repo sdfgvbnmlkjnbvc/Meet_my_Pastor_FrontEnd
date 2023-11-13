@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/page_navigator.dart';
 import 'package:meet_my_pastor/view/screens/about.dart';
 import 'package:meet_my_pastor/view/screens/contact_us.dart';
 import 'package:meet_my_pastor/view/screens/register.dart';
@@ -28,9 +28,9 @@ class HomePage extends StatelessWidget {
                       width: 40,
                       height: 40,
                     ),
-                    Spacer(),
-                    Icon(Icons.menu_sharp, weight: 69),
-                    SizedBox(height: 10),
+                    const Spacer(),
+                    const Icon(Icons.menu_sharp, weight: 69),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -40,9 +40,10 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: AboutPage());
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const AboutPage());
                       },
-                      child: Text(
+                      child: const Text(
                         "About",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -54,9 +55,10 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: contactUs());
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const contactUs());
                       },
-                      child: Text(
+                      child: const Text(
                         "Contact us",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -68,10 +70,10 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context)
-                            .nextPage(page: Testimonies());
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const Testimonies());
                       },
-                      child: Text(
+                      child: const Text(
                         "Testimonies",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -82,27 +84,27 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Image.asset("images/text.png"),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Material(
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: Register());
+                    PageNavigator(ctx: context)
+                        .nextPageOnly(page: const Register());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFF3E64FF),
+                        color: const Color(0xFF3E64FF),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Register",
                         style: TextStyle(
@@ -114,23 +116,23 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Material(
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: Login());
+                    PageNavigator(ctx: context)
+                        .nextPageOnly(page: const Login());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFF3E64FF),
+                        color: const Color(0xFFF3E64FF),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Login",
                         style: TextStyle(
@@ -142,7 +144,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Image.asset("images/homePageImage.png")

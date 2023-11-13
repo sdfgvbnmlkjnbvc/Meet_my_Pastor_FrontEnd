@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../pageNavigator.dart';
+import '../page_navigator.dart';
 import '../provider/testimony_provider.dart';
 import '../view/screens/Testimony_view.dart';
 
@@ -38,11 +38,11 @@ class _TestimonyState extends State<Testimony> {
               children: [
                 InkWell(
                   onTap: () {
-                    pageNavigator(ctx: context).nextPage(
+                    PageNavigator(ctx: context).nextPage(
                       page: Flexible(
                         child: TestimonyView(
-                          title:
-                              Text(getTestimony.Data[index]["title"].toString()),
+                          title: Text(
+                              getTestimony.Data[index]["title"].toString()),
                           // time: Text(getTestimony.Data[index]["time"].toString()),
                           // Date: Text(getTestimony.Data[index]["date"].toString()),
                           urln: getTestimony.Data[index]["Image"].toString(),
@@ -66,14 +66,15 @@ class _TestimonyState extends State<Testimony> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Flexible(
                   child: Text(
                     "${testimonyData[index]["name"]}",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
-                Flexible(
+                const Flexible(
                   child: Text(
                     "Rockson",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
@@ -89,7 +90,7 @@ class _TestimonyState extends State<Testimony> {
         height: 150,
         width: 200,
         color: Colors.blueGrey,
-        child: Center(
+        child: const Center(
           child: Text(
             "No testimonies available",
             style: TextStyle(

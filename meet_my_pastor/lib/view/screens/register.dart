@@ -3,8 +3,8 @@ import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:provider/provider.dart';
 
-import '../../pageNavigator.dart';
-import '../../widgets/InputTextfield.dart';
+import '../../page_navigator.dart';
+import '../../widgets/input_text_field.dart';
 import '../../widgets/authentication.dart';
 import '../../widgets/validators.dart';
 
@@ -119,7 +119,7 @@ class _RegisterState extends State<Register> {
                             password: _passwordController.text,
                             name: _nameController.text,
                           );
-                        }, Color(0xFF3E64FF), "Register", 363, 60);
+                        }, const Color(0xFF3E64FF), "Register", 363, 60);
                       }
                     },
                   ),
@@ -129,12 +129,13 @@ class _RegisterState extends State<Register> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Have an account? "),
+                      const Text("Have an account? "),
                       InkWell(
                         onTap: () {
-                          pageNavigator(ctx: context).nextPage(page: Login());
+                          PageNavigator(ctx: context)
+                              .nextPage(page: const Login());
                         },
-                        child: Text(
+                        child: const Text(
                           "SignIn",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),

@@ -2,18 +2,17 @@ import 'package:flutter/widgets.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../pageNavigator.dart';
-
+import '../../page_navigator.dart';
 
 class DatabaseProvider extends ChangeNotifier {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
   String _token = "";
   String _userId = "";
-  String _userName="";
+  String _userName = "";
 
   String get token => _token;
   String get userId => _userId;
-  String get userName =>_userName;
+  String get userName => _userName;
   void savedToken(String token) async {
     SharedPreferences value = await _pref;
     value.setString('token', token);
@@ -23,7 +22,8 @@ class DatabaseProvider extends ChangeNotifier {
     SharedPreferences value = await _pref;
     value.setString('id', id);
   }
-    void savedUserName(String name) async {
+
+  void savedUserName(String name) async {
     SharedPreferences value = await _pref;
     value.setString('name', name);
   }
@@ -57,7 +57,8 @@ class DatabaseProvider extends ChangeNotifier {
       return "";
     }
   }
- Future<String> getUserName() async {
+
+  Future<String> getUserName() async {
     SharedPreferences value = await _pref;
     if (value.containsKey('name')) {
       String data = value.getString('name')!;
@@ -75,6 +76,8 @@ class DatabaseProvider extends ChangeNotifier {
   void logOut(BuildContext? context) async {
     final value = await _pref;
     value.clear();
-    pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
+    if (context != null && context.mounted) {
+      PageNavigator(ctx: context).nextPageOnly(page: const HomePage());
+    }
   }
 }
