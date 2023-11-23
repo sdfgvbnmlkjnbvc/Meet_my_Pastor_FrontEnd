@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _contactController = TextEditingController();
   bool _eye = true;
   bool _ceye = true;
-  bool _validate = false;
+  final bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,7 @@ class _RegisterState extends State<Register> {
                             password: _passwordController.text,
                             name: _nameController.text,
                           );
-                        }, Color(0xFF3E64FF), "Register", 363, 60);
+                        }, const Color(0xFF3E64FF), "Register", 363, 60);
                       }
                     },
                   ),
@@ -129,12 +129,12 @@ class _RegisterState extends State<Register> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Have an account? "),
+                      const Text("Have an account? "),
                       InkWell(
                         onTap: () {
-                          pageNavigator(ctx: context).nextPage(page: Login());
+                          pageNavigator(ctx: context).nextPage(page: const Login());
                         },
-                        child: Text(
+                        child: const Text(
                           "SignIn",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),

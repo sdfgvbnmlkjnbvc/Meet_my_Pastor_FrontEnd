@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 120),
+                const SizedBox(height: 120),
                 Center(
                   child: Image.asset(
                     "images/login.png",
@@ -91,7 +91,7 @@ class _LoginState extends State<Login> {
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                      }, Color(0xFF3E64FF), "Login", 363, 60);
+                      }, const Color(0xFF3E64FF), "Login", 363, 60);
                     },
                   ),
                 ),

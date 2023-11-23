@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/widgets/appointment_widgets.dart';
 import 'package:provider/provider.dart';
@@ -36,9 +35,9 @@ class _AppointmentState extends State<Appointment> {
             IconButton(
                 onPressed: () {
                    pastors.dispose();
-                  pageNavigator(ctx: context).nextPageOnly(page: HomePage());
+                  pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
                 },
-                icon: Icon(color: Colors.blue, Icons.exit_to_app))
+                icon: const Icon(color: Colors.blue, Icons.exit_to_app))
           ],
         ),
         body: Column(
@@ -46,28 +45,28 @@ class _AppointmentState extends State<Appointment> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Container(
-                  margin: EdgeInsetsDirectional.all(30),
+                  margin: const EdgeInsetsDirectional.all(30),
                   child: TextField(
                     decoration: InputDecoration(
                         hintText: "Search for your favorite postor or apostle",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: const BorderSide(width: 3, color: Colors.blue),
                         ),
                         suffixIcon: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.search))),
+                            onPressed: () {}, icon: const Icon(Icons.search))),
                   )),
             ),
             Expanded(
               child: pastors.itemCount == 0
-                  ? Text("No data")
+                  ? const Text("No data")
                   : ListView.builder(
                       itemCount: pastors.itemCount,
                       itemBuilder: (context, index) {
                         print("${pastors.itemCount}");
                         return StreamBuilder<Map>(
                           stream: pastors.pastors(),
-                          initialData: {},
+                          initialData: const {},
                           builder: (context, snapshot) {
                             if (snapshot.hasData == true &&
                                 pastors.respData['status'] == 200) {
@@ -86,7 +85,7 @@ class _AppointmentState extends State<Appointment> {
                                 ),
                               );
                             } else {
-                              return Text("");
+                              return const Text("");
                             }
                           },
                         );

@@ -43,8 +43,7 @@ class _TestimonyState extends State<Testimony> {
                         child: TestimonyView(
                           title:
                               Text(getTestimony.Data[index]["title"].toString()),
-                          // time: Text(getTestimony.Data[index]["time"].toString()),
-                          // Date: Text(getTestimony.Data[index]["date"].toString()),
+   
                           urln: getTestimony.Data[index]["Image"].toString(),
                           body: Text(
                               getTestimony.Data[index]["message"].toString()),
@@ -54,31 +53,27 @@ class _TestimonyState extends State<Testimony> {
                   },
                   child: ClipRRect(
                     child: Container(
-                      color: Colors.amber,
+                      color: Colors.grey,
                       height: 150,
                       width: 200,
                       child: Image.network(
-                        testimonyData[index]["Image"],
+                        testimonyData[index]["Image"].toString(),
+                       
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Flexible(
                   child: Text(
-                    "${testimonyData[index]["name"]}",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    testimonyData[index]["name"].toString(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
-                Flexible(
-                  child: Text(
-                    "Rockson",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-                  ),
-                ),
+  
               ],
             ),
           );
@@ -89,7 +84,7 @@ class _TestimonyState extends State<Testimony> {
         height: 150,
         width: 200,
         color: Colors.blueGrey,
-        child: Center(
+        child: const Center(
           child: Text(
             "No testimonies available",
             style: TextStyle(

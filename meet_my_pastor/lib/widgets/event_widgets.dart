@@ -12,6 +12,7 @@ class Events extends StatefulWidget {
 }
 
 class _EventsState extends State<Events> {
+  @override
   void initState() {
     super.initState();
     final getEvent = Provider.of<EventProvider>(context, listen: false);
@@ -45,44 +46,47 @@ class _EventsState extends State<Events> {
                         ),
                       );
                     },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 340,
-                          width: 395,
-                          child:Column(
-                            children: [
-                              
-                          Expanded(
-                            child: Image.network(
-                              getEvent.Data[index]["Image"],
-                              height: 340,
-                              width: 395,
-                              fit: BoxFit.fitWidth,
+                    child: 
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 340,
+                            width: 395,
+                            child:Column(
+                              children: [
+                                
+                            Expanded(
+                              child: Image.network(
+                                getEvent.Data[index]["Image"],
+                                height: 340,
+                                width: 395,
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
+                              ],
+                            ) 
                           ),
-                            ],
-                          ) 
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "A Night of Praise and Adoration",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w800),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            "Date: ${getEvent.Data[index]["date"]}",
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            "A Night of Praise and Adoration",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w800),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              "Date: ${getEvent.Data[index]["date"]}",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -94,7 +98,7 @@ class _EventsState extends State<Events> {
             height: 150,
             width: 200,
             color: Colors.blueGrey,
-            child: Center(
+            child: const Center(
               child: Text(
                 "No events available",
                 style: TextStyle(

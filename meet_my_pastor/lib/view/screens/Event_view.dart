@@ -27,7 +27,7 @@ class _EventViewState extends State<EventView> {
         children: [
           Stack(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 400,
                 child: Image.network(
@@ -36,25 +36,25 @@ class _EventViewState extends State<EventView> {
                 ),
               ),
               Positioned(
+                bottom: 20,
+                left: 10,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: widget.title,
                 ),
-                bottom: 20,
-                left: 10,
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [widget.time, Spacer(), widget.Date],
+              children: [widget.time, const Spacer(), widget.Date],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(

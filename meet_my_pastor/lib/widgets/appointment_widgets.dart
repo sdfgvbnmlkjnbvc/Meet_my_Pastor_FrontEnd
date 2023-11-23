@@ -24,16 +24,16 @@ class AppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.grey,
-            offset: const Offset(5.0, 5.0),
+            offset: Offset(5.0, 5.0),
             blurRadius: 10.0,
             spreadRadius: 2.0,
           ),
           BoxShadow(
             color: Colors.white,
-            offset: const Offset(0.0, 0.0),
+            offset: Offset(0.0, 0.0),
             blurRadius: 0.0,
             spreadRadius: 0.0,
           ),
@@ -47,7 +47,7 @@ class AppointmentCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
-            child: Container(
+            child: SizedBox(
               width: 120,
               height: 150,
               child: Image.network(
@@ -79,12 +79,12 @@ class AppointmentCard extends StatelessWidget {
                   // },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3E64FF),
+                      color: const Color(0xfff3e64ff),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     height: 22,
                     width: 150,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Book appointment",
                         style: TextStyle(

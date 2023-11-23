@@ -28,9 +28,9 @@ class HomePage extends StatelessWidget {
                       width: 40,
                       height: 40,
                     ),
-                    Spacer(),
-                    Icon(Icons.menu_sharp, weight: 69),
-                    SizedBox(height: 10),
+                    const Spacer(),
+                    const Icon(Icons.menu_sharp, weight: 69),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -40,9 +40,9 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: AboutPage());
+                        pageNavigator(ctx: context).nextPage(page: const AboutPage());
                       },
-                      child: Text(
+                      child: const Text(
                         "About",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -54,9 +54,9 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: contactUs());
+                        pageNavigator(ctx: context).nextPage(page: const contactUs());
                       },
-                      child: Text(
+                      child: const Text(
                         "Contact us",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -69,9 +69,9 @@ class HomePage extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         pageNavigator(ctx: context)
-                            .nextPage(page: Testimonies());
+                            .nextPage(page: const Testimonies());
                       },
-                      child: Text(
+                      child: const Text(
                         "Testimonies",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -82,11 +82,11 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Image.asset("images/text.png"),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Material(
@@ -94,15 +94,15 @@ class HomePage extends StatelessWidget {
                   splashColor: Colors.transparent,
                   onTap: () {
                     print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: Register());
+                    pageNavigator(ctx: context).nextPageOnly(page: const Register());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFF3E64FF),
+                        color: const Color(0xfff3e64ff),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Register",
                         style: TextStyle(
@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Material(
@@ -122,15 +122,15 @@ class HomePage extends StatelessWidget {
                   splashColor: Colors.transparent,
                   onTap: () {
                     print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: Login());
+                    pageNavigator(ctx: context).nextPageOnly(page: const Login());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Color(0xFFF3E64FF),
+                        color: const Color(0xfff3e64ff),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Login",
                         style: TextStyle(
@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Image.asset("images/homePageImage.png")

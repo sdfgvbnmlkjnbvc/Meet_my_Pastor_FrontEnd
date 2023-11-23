@@ -19,7 +19,7 @@ Widget buildRegisterButton(BuildContext context, Function()? onTap,Color? color1
           child:  Center(
             child: Text(
               BtnTitle,
-              style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
         ),

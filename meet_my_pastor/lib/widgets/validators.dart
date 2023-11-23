@@ -1,10 +1,10 @@
 String? errorText(emailController){
-  var status_in =false;
+  var statusIn =false;
   final email=emailController.value.text;
  
   if(email.isNotEmpty && !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
    
-    status_in=false;
+    statusIn=false;
     return " Enter a valid email address";
 
 
@@ -12,25 +12,25 @@ String? errorText(emailController){
     return null;
   }
   else {
-     status_in=true;
+     statusIn=true;
     return null;
   }}
   String? errorPassword(passwordController){
-   var  status_in=false;
+   var  statusIn=false;
      final password=passwordController.value.text;
  if(!password.isEmpty && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(password)){
-  status_in=false;
+  statusIn=false;
     return " Enter a stronger password. consider using upper Case,lower case numbers and Special Characters";
 
   }else if(password.isEmpty){
-    status_in=false;
+    statusIn=false;
     return null;
   }
   else if (password.length <8){
-    status_in=false;
+    statusIn=false;
     return "password should be longer than 8 Characters";
   }
-  status_in=true;
+  statusIn=true;
 return null;
 }
 String? confirmPassword(confirmPasswordController,passwordController){
@@ -42,6 +42,7 @@ String? confirmPassword(confirmPasswordController,passwordController){
   }else if(cpassword.isEmpty){
     return null;
   }
+ return null;
 }
 
 String? validContact(contactController){

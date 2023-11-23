@@ -1,14 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:meet_my_pastor/provider/Apointment.dart';
 import 'package:meet_my_pastor/provider/contact_provider.dart';
 
 import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:provider/provider.dart';
 
 import '../../pageNavigator.dart';
-import '../../provider/auth/auth_provider.dart';
 import '../../widgets/InputTextfield.dart';
 import 'appointment.dart';
 import 'home.dart';
@@ -16,20 +13,20 @@ import 'home.dart';
 const List<BoxShadow> kInputBoxShadow = [
   BoxShadow(
     color: Colors.grey,
-    offset: const Offset(2.0, 2.0),
+    offset: Offset(2.0, 2.0),
     blurRadius: 2.0,
     spreadRadius: 2.0,
   ),
   BoxShadow(
     color: Colors.white,
-    offset: const Offset(0.0, 0.0),
+    offset: Offset(0.0, 0.0),
     blurRadius: 0.0,
     spreadRadius: 0.0,
   ),
 ];
 
 class contactUs extends StatefulWidget {
-  contactUs({Key? key}) : super(key: key);
+  const contactUs({Key? key}) : super(key: key);
 
   @override
   _contactUsState createState() => _contactUsState();
@@ -62,21 +59,21 @@ super.dispose();
         leading: CircleAvatar(
           backgroundColor: Colors.white,
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.home,
               color: Colors.blue,
             ),
             onPressed: () {
-              pageNavigator(ctx: context).nextPageOnly(page: Appointment());
+              pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
             },
           ),
         ),
         actions: [
           IconButton(
               onPressed: () {
-                pageNavigator(ctx: context).nextPageOnly(page: HomePage());
+                pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
               },
-              icon: Icon(color: Colors.blue, Icons.exit_to_app))
+              icon: const Icon(color: Colors.blue, Icons.exit_to_app))
         ],
       ),
       body: SingleChildScrollView(
@@ -121,12 +118,12 @@ super.dispose();
               width: 363,
               labelText:
                   "Please lets us know in more details your reason for this apointment",
-              labelTextStyle: TextStyle(
+              labelTextStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Center(
@@ -134,10 +131,10 @@ super.dispose();
                 context, () {
                   // print("First Name: ${_firstNameController.value.text} Last Name: ${_lastNameController.value.text}  phone: ${_phoneController.value.text} email: ${_emailController.value.text}" );
                   contactData.contact(context: context,Phone:_phoneController.value.text,FirstName:_firstNameController.value.text,LastName:_lastNameController.value.text,Email:_emailController.value.text,Message: _messageController.value.text );
-                  pageNavigator(ctx: context).nextPageOnly(page: HomePage());
+                  pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
                  
                 },
-                              Color(0xFF3E64FF), "Send", 250, 60
+                              const Color(0xFF3E64FF), "Send", 250, 60
                 
               ),
             ),

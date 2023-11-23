@@ -8,7 +8,7 @@ class ContactProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool _state = false;
   int? _itemCount;
-  bool _admin = false;
+  final bool _admin = false;
   Map<String, dynamic> respData = {};
 
   int? get itemCount => _itemCount;

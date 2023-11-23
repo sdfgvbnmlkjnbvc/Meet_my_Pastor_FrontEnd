@@ -1,7 +1,6 @@
 
 import 'dart:async';
 
-import 'dart:io';
 
 import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';

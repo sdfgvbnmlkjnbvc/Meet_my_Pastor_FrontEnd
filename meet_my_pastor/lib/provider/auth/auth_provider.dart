@@ -4,7 +4,6 @@ import 'package:meet_my_pastor/controller/baseurl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
 import 'package:meet_my_pastor/view/admin.dart';
 import 'package:meet_my_pastor/view/screens/appointment.dart';
-import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 
@@ -79,12 +78,12 @@ class Authentication extends ChangeNotifier {
 
       if (response.data['status'] == 200) {
         final res = response.data;
-        print("User data: ${res}");
+        print("User data: $res");
          _user_id = res['user']['public_id'];
      _userName = res['user']['name'];
-        final token = res['auth_token'];
+        // final token = res['auth_token'];
         _admin = res['user']['admin'];
-        print("admin: $_admin");
+        // print("admin: $_admin");
         if (res['user']['admin'] == true) {
           pageNavigator(ctx: context).nextPageOnly(page: const Admin());
           ShowToast.vitaToast(

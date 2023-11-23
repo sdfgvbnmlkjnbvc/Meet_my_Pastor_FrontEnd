@@ -15,32 +15,38 @@ class _TestimonyViewState extends State<TestimonyView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 220,
-            color: Colors.amber,
-            child: Image.network(
-                 widget.urln,
-              fit: BoxFit.cover,
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child:SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.sizeOf(context).height*0.30,
+                color: Colors.grey,
+                child: Image.network(
+                     widget.urln ,
+                      // "https://live.staticflickr.com/65535/52865824615_f528de0315_z.jpg",
+                  fit: BoxFit.contain,
+                ),
+              ),
+             const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: widget.title,
+              ),
+             const  SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: widget.body,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: widget.title,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: widget.body,
-          ),
-        ],
+        ),
       ),
     );
   }

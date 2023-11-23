@@ -1,11 +1,7 @@
-import 'dart:io';
 
-import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/pageNavigator.dart';
-import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
 import 'package:meet_my_pastor/provider/event_provider.dart';
 import 'package:meet_my_pastor/provider/pastor_provider.dart';
@@ -20,7 +16,7 @@ import 'package:meet_my_pastor/widgets/meettoast.dart';
 import 'package:provider/provider.dart';
 
 class Admin extends StatefulWidget {
-  const Admin({Key? key});
+  const Admin({ super.key});
 
   @override
   State<Admin> createState() => _AdminState();
@@ -51,6 +47,7 @@ class _AdminState extends State<Admin> {
     dateInput.text = "";
   }
 
+  @override
   Widget build(BuildContext context) {
     final files = Provider.of<FetchImage>(context,listen: true);
     //  final file = Provider.of<FetchImage>(context);
@@ -67,26 +64,26 @@ class _AdminState extends State<Admin> {
           leading: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.home,
                 color: Colors.blue,
               ),
               onPressed: () {
-                pageNavigator(ctx: context).nextPageOnly(page: Appointment());
+                pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
               },
             ),
           ),
           actions: [
             IconButton(
                 onPressed: () {
-                  pageNavigator(ctx: context).nextPageOnly(page: HomePage());
+                  pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
                 },
-                icon: Icon(color: Colors.blue, Icons.exit_to_app))
+                icon: const Icon(color: Colors.blue, Icons.exit_to_app))
           ],
         ),
         body: Column(
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -97,7 +94,7 @@ class _AdminState extends State<Admin> {
                       Stack(
       alignment: Alignment.center,
       children: [
-        Container(
+        SizedBox(
                     width: 159,
                           height: 210,
                           child: 
@@ -123,7 +120,7 @@ class _AdminState extends State<Admin> {
                   onTap: () async {
                     await files.int();
                   },
-                  child: Icon( color: Colors.blue,
+                  child: const Icon( color: Colors.blue,
                     Icons.add_circle_outline,
                     size: 55,
                   ),
@@ -140,12 +137,12 @@ class _AdminState extends State<Admin> {
                       child: Container(
                           width: 159,
                           height: 210,
-                          color: Color(0xffD9D9D9),
+                          color: const Color(0xffD9D9D9),
                           child: buildImagePlaceholder(files),
                         ),
                     ),
                 Flexible(
-                  child: Container(
+                  child: SizedBox(
                     height: 200,
                     width: 192,
                     child: buildDropdownAndFields(),
@@ -153,12 +150,12 @@ class _AdminState extends State<Admin> {
                 )
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             dropdownValue == "Pastor"
-                ? Text("")
+                ? const Text("")
                 : Flexible(
                   child: Container(
-                      margin: EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(20),
                       child: FieldInput(  expand:true,
                       maxLines: null,
                       minLines: null,
@@ -169,7 +166,7 @@ class _AdminState extends State<Admin> {
                       ),
                     ),
                 ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -190,7 +187,7 @@ class _AdminState extends State<Admin> {
                             long: true);
                       } else {
                         await response.upload(
-                            files.file!, "${_nameController.value.text}");
+                            files.file!, _nameController.value.text);
                         print("checkInMy${response.response?.secureUrl}");
                         addPastor.pastor(
                             name: _nameController.value.text,
@@ -200,7 +197,7 @@ class _AdminState extends State<Admin> {
                             context: context);
                       }
                     },
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Add",
                     170,
                     59,
@@ -208,7 +205,7 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () {
-                      print("Checking");
+                  
                       // _nameController.value.text.isEmpty ==true || _titleController.value.text.isEmpty ==true || _contactController.value.text.isEmpty ==true
                       addPastor.pastor(
                           name: _nameController.value.text,
@@ -217,9 +214,9 @@ class _AdminState extends State<Admin> {
                           imageUrl: "${response.response?.secureUrl}",
                          
                           context: context);
-                      print("done Checking");
+      
                     },
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Cancel",
                     170,
                     59,
@@ -259,7 +256,7 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      print("checkInMy${response.url}");
+                      // print("checkInMy${response.url}");
                       if (_nameController.value.text.isEmpty  ||_timeController.value.text.isEmpty  || _locationController .value.text.isEmpty  || dateInput.value.text.isEmpty   || _messageController.value.text .isEmpty) {
                       //  || response.response?.secureUrl == null
                         ShowToast.vitaToast(
@@ -269,7 +266,7 @@ class _AdminState extends State<Admin> {
                       }else{
 
                       await response.upload(
-                          files.file!, "${_nameController.value.text}");
+                          files.file!, _nameController.value.text);
                         await addEvent.event(
                             name: _nameController.value.text,
                            location: _locationController.value.text,
@@ -282,7 +279,7 @@ class _AdminState extends State<Admin> {
                       }
                      
                     },
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Add",
                     170,
                     59,
@@ -290,7 +287,7 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () {},
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Cancel",
                     170,
                     59,
@@ -299,24 +296,24 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      print("checkInMy${response.url}");
+                      // print("checkInMy${response.url}");
                       
                       if (_nameController.value.text.isEmpty  || _titleController .value.text.isEmpty  || dateInput.value.text.isEmpty   || _messageController.value.text .isEmpty ) {
                       // || response.response?.secureUrl == null
                       
-                        print(" || ${response.response?.secureUrl}");
+                        // print(" || ${response.response?.secureUrl}");
                         ShowToast.vitaToast(
                             message: "provide data for all fields",
                             warn: true,
                             long: true);
                       }else{
  await response.upload(
-                          files.file!, "${_nameController.value.text}");
+                          files.file!, _nameController.value.text);
                      
                    await addTestimony.testimony(name: _nameController.value.text, title: _titleController.value.text,date: dateInput.value.text, message: _messageController.value.text, imageUrl: "${response.response?.secureUrl}", context: context);
                     }
                       },
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Add",
                     170,
                     59,
@@ -324,7 +321,7 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () {},
-                    Color(0xFF3E64FF),
+                    const Color(0xFF3E64FF),
                     "Cancel",
                     170,
                     59,
@@ -465,13 +462,13 @@ class _AdminState extends State<Admin> {
 
   Widget buildDateInput() {
     return Container(
-      margin: EdgeInsets.only(top: 2),
+      margin: const EdgeInsets.only(top: 2),
       height: MediaQuery.of(context).size.width / 4,
       child: Center(
         child: Material(
           child: TextField(
             controller: dateInput,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               icon: Icon(Icons.calendar_today),
               hintText: "Enter Date",
             ),
@@ -503,7 +500,7 @@ Widget buildImagePlaceholder(FetchImage files) {
   return Container(
     width: 159,
     height: 187,
-    color: Color(0xffD9D9D9),
+    color: const Color(0xffD9D9D9),
     child: Stack(
       alignment: Alignment.center,
       children: [
@@ -535,7 +532,7 @@ Widget buildImagePlaceholder(FetchImage files) {
                 onTap: () async {
                   await files.int();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.add_circle_outline,
                   size: 25,
                 ),

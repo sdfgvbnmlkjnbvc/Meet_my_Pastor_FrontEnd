@@ -26,7 +26,7 @@ bool _picked=false;
         _imageFile = File(_file!.path);
         _picked=true;
          notifyListeners();
-      };
+      }
 
   }
 

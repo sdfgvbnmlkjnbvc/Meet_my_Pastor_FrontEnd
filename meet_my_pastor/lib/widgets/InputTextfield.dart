@@ -37,12 +37,12 @@ import 'package:flutter/material.dart';
   int?  minLines;
   TextEditingController controller;
    TextStyle? labelTextStyle;
-   FieldInput({required this.labelText,this.width,this.height,labelTextStyle,required this.controller,required this.expand, this.maxLines, this.minLines});
+   FieldInput({super.key, required this.labelText,this.width,this.height,labelTextStyle,required this.controller,required this.expand, this.maxLines, this.minLines});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8),
+      margin: const EdgeInsets.only(top: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
          color: Colors.red
@@ -52,7 +52,7 @@ import 'package:flutter/material.dart';
       width: width,
       height:height,
       child: Center(
-        child: Material(child: TextField(style: TextStyle(color: Colors.black,fontSize: 16),
+        child: Material(child: TextField(style: const TextStyle(color: Colors.black,fontSize: 16),
           controller: controller,
         expands:expand,
          maxLines: maxLines,
