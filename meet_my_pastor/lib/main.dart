@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/provider/Apointment.dart';
+import 'package:meet_my_pastor/provider/apointment.dart';
 import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/provider/auth/sendimage.dart';
 import 'package:meet_my_pastor/provider/contact_provider.dart';
@@ -11,11 +11,8 @@ import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:meet_my_pastor/provider/testupload.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
-  runApp(
-    
-    const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,18 +35,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PastorProvider()),
         ChangeNotifierProvider(create: (_) => TestimonyProvider())
       ],
-      child: const MaterialApp(
-        
-      
-          debugShowCheckedModeBanner: false, home: SafeArea(
-            
-            child: HomePage(),),),
+      child: MaterialApp(
+        theme: ThemeData.light(useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        home: const SafeArea(
+          child: HomePage(),
+        ),
+      ),
     );
   }
 }
 
 
-
-  //  final getTestimony =Provider.of<TestimonyProvider>(context);
-  //                    print("--check2--${getTestimony.itemCount}");
-  //   print("--check2--${getTestimony.Data}");

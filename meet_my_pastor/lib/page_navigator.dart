@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class pageNavigator {
-  pageNavigator({this.ctx});
+class PageNavigator {
+  PageNavigator({this.ctx});
   BuildContext? ctx;
   Future nextPage({Widget? page}) {
     return Navigator.push(

@@ -3,26 +3,25 @@ import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/widgets/appointment_widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../pageNavigator.dart';
+import '../../page_navigator.dart';
 import 'appointment_detail.dart';
 import 'home.dart';
- class Appointment extends StatefulWidget {
-  const Appointment({super.key});
 
+class Appointment extends StatefulWidget {
+  const Appointment({super.key});
 
   @override
   State<Appointment> createState() => _AppointmentState();
 }
 
-
 class _AppointmentState extends State<Appointment> {
- 
- @override
+  @override
   void dispose() {
     // Close the StreamController when the widget is disposed
-    
+
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     // late AnimationController controller;
@@ -34,8 +33,9 @@ class _AppointmentState extends State<Appointment> {
           actions: [
             IconButton(
                 onPressed: () {
-                   pastors.dispose();
-                  pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
+                  pastors.dispose();
+                  PageNavigator(ctx: context)
+                      .nextPageOnly(page: const HomePage());
                 },
                 icon: const Icon(color: Colors.blue, Icons.exit_to_app))
           ],
@@ -51,7 +51,8 @@ class _AppointmentState extends State<Appointment> {
                         hintText: "Search for your favorite postor or apostle",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
-                          borderSide: const BorderSide(width: 3, color: Colors.blue),
+                          borderSide:
+                              const BorderSide(width: 3, color: Colors.blue),
                         ),
                         suffixIcon: IconButton(
                             onPressed: () {}, icon: const Icon(Icons.search))),
@@ -63,7 +64,6 @@ class _AppointmentState extends State<Appointment> {
                   : ListView.builder(
                       itemCount: pastors.itemCount,
                       itemBuilder: (context, index) {
-                        print("${pastors.itemCount}");
                         return StreamBuilder<Map>(
                           stream: pastors.pastors(),
                           initialData: const {},
@@ -74,9 +74,12 @@ class _AppointmentState extends State<Appointment> {
                                   pastors.respData['pastor'][index];
                               return Flexible(
                                 child: AppointmentCard(
-                                  click: (){
+                                  click: () {
                                     pastors.dispose();
-                                     pageNavigator(ctx: context).nextPage(page: AppointmentDetail(pastor_id:pastorData["user_id"],title:pastorData["title"]));
+                                    PageNavigator(ctx: context).nextPage(
+                                        page: AppointmentDetail(
+                                            pastorId: pastorData["user_id"],
+                                            title: pastorData["title"]));
                                   },
                                   sourceLink: pastorData["Image"],
                                   name: pastorData["name"],

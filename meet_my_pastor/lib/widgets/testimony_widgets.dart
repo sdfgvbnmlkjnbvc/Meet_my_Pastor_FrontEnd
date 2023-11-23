@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../pageNavigator.dart';
+import '../page_navigator.dart';
 import '../provider/testimony_provider.dart';
 import '../view/screens/Testimony_view.dart';
 
@@ -38,12 +38,11 @@ class _TestimonyState extends State<Testimony> {
               children: [
                 InkWell(
                   onTap: () {
-                    pageNavigator(ctx: context).nextPage(
+                    PageNavigator(ctx: context).nextPage(
                       page: Flexible(
                         child: TestimonyView(
-                          title:
-                              Text(getTestimony.Data[index]["title"].toString()),
-   
+                          title: Text(
+                              getTestimony.Data[index]["title"].toString()),
                           urln: getTestimony.Data[index]["Image"].toString(),
                           body: Text(
                               getTestimony.Data[index]["message"].toString()),
@@ -69,8 +68,15 @@ class _TestimonyState extends State<Testimony> {
                 const SizedBox(height: 5),
                 Flexible(
                   child: Text(
-                    testimonyData[index]["name"].toString(),
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    "${testimonyData[index]["name"]}",
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                const Flexible(
+                  child: Text(
+                    "Rockson",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
   

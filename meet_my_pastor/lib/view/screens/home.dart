@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
+import 'package:meet_my_pastor/page_navigator.dart';
 import 'package:meet_my_pastor/view/screens/about.dart';
 import 'package:meet_my_pastor/view/screens/contact_us.dart';
 import 'package:meet_my_pastor/view/screens/register.dart';
@@ -40,7 +40,8 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: const AboutPage());
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const AboutPage());
                       },
                       child: const Text(
                         "About",
@@ -54,7 +55,8 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context).nextPage(page: const contactUs());
+                        PageNavigator(ctx: context)
+                            .nextPage(page: const contactUs());
                       },
                       child: const Text(
                         "Contact us",
@@ -68,7 +70,7 @@ class HomePage extends StatelessWidget {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        pageNavigator(ctx: context)
+                        PageNavigator(ctx: context)
                             .nextPage(page: const Testimonies());
                       },
                       child: const Text(
@@ -93,12 +95,12 @@ class HomePage extends StatelessWidget {
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: const Register());
+                    PageNavigator(ctx: context)
+                        .nextPageOnly(page: const Register());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: const Color(0xfff3e64ff),
+                        color: const Color(0xFF3E64FF),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,
@@ -121,12 +123,12 @@ class HomePage extends StatelessWidget {
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    print("hello world");
-                    pageNavigator(ctx: context).nextPageOnly(page: const Login());
+                    PageNavigator(ctx: context)
+                        .nextPageOnly(page: const Login());
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: const Color(0xfff3e64ff),
+                        color: const Color(0xFFF3E64FF),
                         borderRadius: BorderRadius.circular(6)),
                     height: 60,
                     width: 264,

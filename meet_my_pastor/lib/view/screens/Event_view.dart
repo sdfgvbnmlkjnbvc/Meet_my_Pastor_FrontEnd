@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class EventView extends StatefulWidget {
   Text title;
   Text time;
-  Text Date;
+  Text date;
   Text body;
   String urln;
   EventView(
       {Key? key,
       required this.title,
       required this.time,
-      required this.Date,
+      required this.date,
       required this.urln,
       required this.body})
       : super(key: key);
@@ -31,7 +31,7 @@ class _EventViewState extends State<EventView> {
                 width: double.infinity,
                 height: 400,
                 child: Image.network(
-                 widget.urln,
+                  widget.urln,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -39,7 +39,7 @@ class _EventViewState extends State<EventView> {
                 bottom: 20,
                 left: 10,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: widget.title,
                 ),
               )
@@ -51,7 +51,7 @@ class _EventViewState extends State<EventView> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [widget.time, const Spacer(), widget.Date],
+              children: [widget.time, const Spacer(), widget.date],
             ),
           ),
           const SizedBox(

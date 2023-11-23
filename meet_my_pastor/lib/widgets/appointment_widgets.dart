@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:meet_my_pastor/pageNavigator.dart';
-import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String? sourceLink;
   final String? name;
   final String? title;
   final String? contact;
-  void Function()? click;
+  final void Function()? click;
 
-   AppointmentCard({
-    Key? key,
-    this.sourceLink,
-    this.name,
-    this.title,
-    this.contact,
-   this.click
-  }) : super(key: key);
+  const AppointmentCard(
+      {Key? key,
+      this.sourceLink,
+      this.name,
+      this.title,
+      this.contact,
+      this.click})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,15 +69,14 @@ class AppointmentCard extends StatelessWidget {
               Material(
                 child: InkWell(
                   splashColor: Colors.transparent,
-                  onTap:click
-                  ,
+                  onTap: click,
                   //  () {
                   //  pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
-                  
+
                   // },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xfff3e64ff),
+                      color: const Color(0xFF3E64FF),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     height: 22,

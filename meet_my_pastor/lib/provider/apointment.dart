@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 
-
 class AppointmentProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool _state = false;
@@ -47,7 +46,7 @@ class AppointmentProvider extends ChangeNotifier {
         ShowToast.vitaToast(message: "Appointment booked", warn: false);
         _isLoading = false;
         notifyListeners();
-        // pageNavigator(ctx: context).nextPage(page: const Login());
+ 
       } else {
         ShowToast.vitaToast(message: "User Already Exists", warn: false);
         _isLoading = false;
@@ -73,16 +72,7 @@ class AppointmentProvider extends ChangeNotifier {
           await dio.get("http://127.0.0.1:5000/api/appointment");
       respData = response.data;
 
-      // if (respData['status'] == 201) {
-      //   _isLoading = false;
-      //   notifyListeners();
-      //   pageNavigator(ctx: context).nextPage(page: const Login());
-      // } else {
-      //   ShowToast.vitaToast(message: "User Already Exists", warn: false);
-      //   _isLoading = false;
-      //   _state = true;
-      //   notifyListeners();
-      // }
+ 
     } on DioError catch (e) {
       handleDioError(e, context);
     } catch (e) {

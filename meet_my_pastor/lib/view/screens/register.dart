@@ -3,8 +3,8 @@ import 'package:meet_my_pastor/provider/auth/auth_provider.dart';
 import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:provider/provider.dart';
 
-import '../../pageNavigator.dart';
-import '../../widgets/InputTextfield.dart';
+import '../../page_navigator.dart';
+import '../../widgets/input_text_field.dart';
 import '../../widgets/authentication.dart';
 import '../../widgets/validators.dart';
 
@@ -132,7 +132,8 @@ class _RegisterState extends State<Register> {
                       const Text("Have an account? "),
                       InkWell(
                         onTap: () {
-                          pageNavigator(ctx: context).nextPage(page: const Login());
+                          PageNavigator(ctx: context)
+                              .nextPage(page: const Login());
                         },
                         child: const Text(
                           "SignIn",
@@ -151,5 +152,3 @@ class _RegisterState extends State<Register> {
     );
   }
 }
-// Admina@admin.com
-// Admin@1234
