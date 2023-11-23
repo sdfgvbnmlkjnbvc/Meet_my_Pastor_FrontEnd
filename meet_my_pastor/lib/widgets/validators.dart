@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-String? errorText(emailController){
-  var statusIn =false;
-  final email=emailController.value.text;
- 
-  if(email.isNotEmpty && !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
-   
-    statusIn=false;
-=======
 String? errorText(emailController) {
   // var status_in =false;
   final email = emailController.value.text;
@@ -14,7 +5,6 @@ String? errorText(emailController) {
   if (email.isNotEmpty &&
       !RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
     // status_in=false;
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
     return " Enter a valid email address";
   } else if (email.isEmpty) {
     return null;
@@ -22,29 +12,6 @@ String? errorText(emailController) {
     //  status_in=true;
     return null;
   }
-<<<<<<< HEAD
-  else {
-     statusIn=true;
-    return null;
-  }}
-  String? errorPassword(passwordController){
-   var  statusIn=false;
-     final password=passwordController.value.text;
- if(!password.isEmpty && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(password)){
-  statusIn=false;
-    return " Enter a stronger password. consider using upper Case,lower case numbers and Special Characters";
-
-  }else if(password.isEmpty){
-    statusIn=false;
-    return null;
-  }
-  else if (password.length <8){
-    statusIn=false;
-    return "password should be longer than 8 Characters";
-  }
-  statusIn=true;
-return null;
-=======
 }
 
 String? errorPassword(passwordController) {
@@ -64,7 +31,6 @@ String? errorPassword(passwordController) {
   }
   // status_in=true;
   return null;
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
 }
 
 String? confirmPassword(confirmPasswordController, passwordController) {

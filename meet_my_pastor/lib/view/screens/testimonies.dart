@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
 import 'package:meet_my_pastor/widgets/event_widgets.dart';
 import 'package:meet_my_pastor/widgets/testimony_widgets.dart';
 
@@ -26,35 +22,23 @@ class Testimonies extends StatelessWidget {
                 color: Colors.blue,
               ),
               onPressed: () {
-<<<<<<< HEAD
-                pageNavigator(ctx: context).nextPageOnly(page: const Appointment());
-=======
                 PageNavigator(ctx: context)
                     .nextPageOnly(page: const Appointment());
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
               },
             ),
           ),
           actions: [
             IconButton(
                 onPressed: () {
-<<<<<<< HEAD
-                  pageNavigator(ctx: context).nextPageOnly(page: const HomePage());
-=======
                   PageNavigator(ctx: context)
                       .nextPageOnly(page: const HomePage());
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
                 },
                 icon: const Icon(color: Colors.blue, Icons.exit_to_app))
           ],
         ),
         body: const SafeArea(
           child: Padding(
-<<<<<<< HEAD
-            padding: EdgeInsets.all(10.0),
-=======
             padding: EdgeInsets.all(8.0),
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -70,10 +54,6 @@ class Testimonies extends StatelessWidget {
                   ),
                 ),
                 Testimony(),
-<<<<<<< HEAD
-          
-=======
->>>>>>> 045705c4d45861a616606d76b4845c19c791672f
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
