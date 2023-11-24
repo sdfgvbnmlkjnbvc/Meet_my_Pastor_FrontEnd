@@ -6,7 +6,7 @@ Widget buildRegisterButton(BuildContext context, Function()? onTap,
     child: InkWell(
       splashColor: Colors.transparent,
       onTap: onTap,
-
+   
       child: Container(
         decoration: BoxDecoration(
           color: color1,

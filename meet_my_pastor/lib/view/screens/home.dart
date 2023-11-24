@@ -46,6 +46,7 @@ class HomePage extends StatelessWidget {
                       child: const Text(
                         "About",
                         style: TextStyle(
+                          fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
@@ -60,7 +61,8 @@ class HomePage extends StatelessWidget {
                       },
                       child: const Text(
                         "Contact us",
-                        style: TextStyle(
+                        style: TextStyle(  
+                          fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
@@ -74,8 +76,10 @@ class HomePage extends StatelessWidget {
                             .nextPage(page: const Testimonies());
                       },
                       child: const Text(
+                        
                         "Testimonies",
                         style: TextStyle(
+                            fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
@@ -108,6 +112,7 @@ class HomePage extends StatelessWidget {
                       child: Text(
                         "Register",
                         style: TextStyle(
+                            fontFamily: "Montserrat",
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),
@@ -136,6 +141,7 @@ class HomePage extends StatelessWidget {
                       child: Text(
                         "Login",
                         style: TextStyle(
+                            fontFamily: "Montserrat",
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold),

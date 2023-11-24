@@ -36,7 +36,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TestimonyProvider())
       ],
       child: MaterialApp(
-        theme: ThemeData.light(useMaterial3: true),
+        theme: ThemeData(useMaterial3: true,
+        brightness: Brightness.light,
+        fontFamily:"Montserrat",
+        
+        
+        ),
         debugShowCheckedModeBanner: false,
         home: const SafeArea(
           child: HomePage(),

@@ -46,7 +46,8 @@ class _AppointmentState extends State<Appointment> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                   margin: const EdgeInsetsDirectional.all(30),
-                  child: TextField(
+                  child: TextField(  style: const TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 18, fontWeight: FontWeight.normal),
                     decoration: InputDecoration(
                         hintText: "Search for your favorite postor or apostle",
                         border: OutlineInputBorder(
@@ -60,7 +61,8 @@ class _AppointmentState extends State<Appointment> {
             ),
             Expanded(
               child: pastors.itemCount == 0
-                  ? const Text("No data")
+                  ? const Text("No data",  style: TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 20, fontWeight: FontWeight.bold),)
                   : ListView.builder(
                       itemCount: pastors.itemCount,
                       itemBuilder: (context, index) {

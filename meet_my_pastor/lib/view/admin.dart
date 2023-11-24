@@ -187,7 +187,7 @@ class _AdminState extends State<Admin> {
                       } else {
                         String file1 = _nameController.value.text;
                         await response.upload(files.file!, "$file1");
-                        // print("checkInMy${response.response?.secureUrl}");
+                   
                         addPastor.pastor(
                             name: _nameController.value.text,
                             title: _titleController.value.text,
@@ -265,15 +265,13 @@ class _AdminState extends State<Admin> {
                   buildRegisterButton(
                     context,
                     () async {
-                      // print("checkInMy${response.url}");
+
 
                       if (_nameController.value.text.isEmpty ||
                           _titleController.value.text.isEmpty ||
                           dateInput.value.text.isEmpty ||
                           _messageController.value.text.isEmpty) {
-                        // || response.response?.secureUrl == null
-
-                        // print(" || ${response.response?.secureUrl}");
+          
                         ShowToast.vitaToast(
                             message: "provide data for all fields",
                             warn: true,

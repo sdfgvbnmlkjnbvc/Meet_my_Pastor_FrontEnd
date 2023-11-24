@@ -63,8 +63,7 @@ String? validName(nameController) {
   final name = nameController.value.text;
 
   if (name.isNotEmpty &&
-      !RegExp(r"(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})")
-          .hasMatch(name)) {
+      !RegExp(r"(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})").hasMatch(name)) {
     return " Enter a valid name ";
   } else if (name.isEmpty) {
     return null;

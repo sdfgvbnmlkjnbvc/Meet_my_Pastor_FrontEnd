@@ -155,10 +155,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               width: 363,
               labelText:
                   "Please lets us know in more details your reason for this apointment",
-              labelTextStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              labelTextStyle:   TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 20, fontWeight: FontWeight.normal),
             ),
             const SizedBox(
               height: 30,

@@ -70,10 +70,7 @@ class AppointmentCard extends StatelessWidget {
                 child: InkWell(
                   splashColor: Colors.transparent,
                   onTap: click,
-                  //  () {
-                  //  pageNavigator(ctx: context).nextPage(page: AppointmentDetail());
-
-                  // },
+        
                   child: Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFF3E64FF),

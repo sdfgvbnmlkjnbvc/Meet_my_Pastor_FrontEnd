@@ -38,7 +38,7 @@ class Testimonies extends StatelessWidget {
         ),
         body: const SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -50,7 +50,8 @@ class Testimonies extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Testimonies",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    style: TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Testimony(),
@@ -58,9 +59,11 @@ class Testimonies extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Up coming Events",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    style: TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
+                SizedBox(height: 10,),
                 Events()
               ],
             ),

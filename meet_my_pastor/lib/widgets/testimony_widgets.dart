@@ -42,10 +42,14 @@ class _TestimonyState extends State<Testimony> {
                       page: Flexible(
                         child: TestimonyView(
                           title: Text(
-                              getTestimony.Data[index]["title"].toString()),
+                              getTestimony.Data[index]["title"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
                           urln: getTestimony.Data[index]["Image"].toString(),
                           body: Text(
-                              getTestimony.Data[index]["message"].toString()),
+                              getTestimony.Data[index]["message"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
+                            fontSize: 20, fontWeight: FontWeight.normal),
+                              ),
                         ),
                       ),
                     );
@@ -69,14 +73,15 @@ class _TestimonyState extends State<Testimony> {
                 Flexible(
                   child: Text(
                     "${testimonyData[index]["name"]}",
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w800),
+                    style: const TextStyle(fontFamily: "Montserrat",
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const Flexible(
                   child: Text(
                     "Rockson",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontFamily: "Montserrat",
+                      fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
   
@@ -93,8 +98,9 @@ class _TestimonyState extends State<Testimony> {
         child: const Center(
           child: Text(
             "No testimonies available",
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            style:  TextStyle(  fontFamily: "Montserrat",
+                            fontSize: 20, fontWeight: FontWeight.bold,
+              color: Colors.white),
           ),
         ),
       );
