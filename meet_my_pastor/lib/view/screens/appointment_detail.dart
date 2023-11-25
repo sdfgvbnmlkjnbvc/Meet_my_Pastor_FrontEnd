@@ -54,7 +54,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
   @override
   Widget build(BuildContext context) {
     String UserId = Provider.of<Authentication>(context).user_id;
-    print("User id: ${UserId}");
+    print("User id: $UserId");
     bool inactive = false;
     return Scaffold(
       appBar: AppBar(
@@ -155,7 +155,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               width: 363,
               labelText:
                   "Please lets us know in more details your reason for this apointment",
-              labelTextStyle:   TextStyle(  fontFamily: "Montserrat",
+              labelTextStyle:   const TextStyle(  fontFamily: "Montserrat",
                       fontSize: 20, fontWeight: FontWeight.normal),
             ),
             const SizedBox(

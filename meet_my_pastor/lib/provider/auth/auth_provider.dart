@@ -145,16 +145,16 @@ class Authentication extends ChangeNotifier {
     _isLoading = false;
     _state = true;
 
-    if (e.type == DioErrorType.response) {
+    if (e.type == DioExceptionType.badResponse) {
       final response = e.response;
       final statusCode = response?.statusCode;
       final statusMessage = response?.statusMessage;
       ShowToast.vitaToast(message: "$statusCode: $statusMessage", warn: true);
-    } else if (e.type == DioErrorType.connectTimeout ||
-        e.type == DioErrorType.sendTimeout ||
-        e.type == DioErrorType.receiveTimeout) {
+    } else if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.sendTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
       ShowToast.vitaToast(message: "Network Timeout", warn: true);
-    } else if (e.type == DioErrorType.cancel) {
+    } else if (e.type == DioExceptionType.cancel) {
       ShowToast.vitaToast(message: "Request Cancelled", warn: true);
     } else {
       ShowToast.vitaToast(message: "Network Error", warn: true);

@@ -12,7 +12,7 @@ class AboutPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-             SizedBox(height: 40,),
+             const SizedBox(height: 40,),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15.0),

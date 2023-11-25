@@ -43,7 +43,7 @@ class ResetPassword extends StatelessWidget {
               onTap: () {},
               child: Container(
                 decoration: BoxDecoration(
-                    color: const Color(0xFFF3E64FF),
+                    color: const Color(0xfff3e64ff),
                     borderRadius: BorderRadius.circular(6)),
                 height: 60,
                 width: 360,

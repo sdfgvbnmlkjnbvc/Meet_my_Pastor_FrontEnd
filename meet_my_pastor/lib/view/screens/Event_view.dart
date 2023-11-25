@@ -39,7 +39,7 @@ class _EventViewState extends State<EventView> {
                 bottom: 20,
                 left: 10,
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: widget.title,
                 ),
               )

@@ -14,6 +14,8 @@ import 'package:meet_my_pastor/widgets/authentication.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/admin_control.dart';
+
 class Admin extends StatefulWidget {
   const Admin({ super.key});
 
@@ -79,7 +81,13 @@ class _AdminState extends State<Admin> {
                   PageNavigator(ctx: context)
                       .nextPageOnly(page: const HomePage());
                 },
-                icon: const Icon(color: Colors.blue, Icons.exit_to_app))
+                icon: const Icon(color: Colors.blue, Icons.exit_to_app)),
+                 IconButton(
+                onPressed: () {
+                  PageNavigator(ctx: context)
+                      .nextPageOnly(page: const  Controlpage(),);
+                },
+                icon: const Icon(color: Colors.blue, Icons.data_exploration_outlined))
           ],
         ),
         body: Column(
@@ -186,7 +194,7 @@ class _AdminState extends State<Admin> {
                             long: true);
                       } else {
                         String file1 = _nameController.value.text;
-                        await response.upload(files.file!, "$file1");
+                        await response.upload(files.file!, file1);
                    
                         addPastor.pastor(
                             name: _nameController.value.text,
@@ -237,7 +245,7 @@ class _AdminState extends State<Admin> {
                             long: true);
                       } else {
                         await response.upload(
-                            files.file!, "${_nameController.value.text}");
+                            files.file!, _nameController.value.text);
                         await addEvent.event(
                             name: _nameController.value.text,
                             location: _locationController.value.text,
@@ -278,7 +286,7 @@ class _AdminState extends State<Admin> {
                             long: true);
                       } else {
                         await response.upload(
-                            files.file!, "${_nameController.value.text}");
+                            files.file!, _nameController.value.text);
 
                         await addTestimony.testimony(
                             name: _nameController.value.text,

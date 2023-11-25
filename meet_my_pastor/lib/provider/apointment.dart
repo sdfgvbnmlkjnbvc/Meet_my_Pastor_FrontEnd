@@ -53,7 +53,7 @@ class AppointmentProvider extends ChangeNotifier {
         _state = true;
         notifyListeners();
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       handleDioError(e, context);
     } catch (e) {
       handleGenericError(e, context);
@@ -73,27 +73,27 @@ class AppointmentProvider extends ChangeNotifier {
       respData = response.data;
 
  
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       handleDioError(e, context);
     } catch (e) {
       handleGenericError(e, context);
     }
   }
 
-  void handleDioError(DioError e, [BuildContext? context]) {
+  void handleDioError(DioException e, [BuildContext? context]) {
     _isLoading = false;
     _state = true;
 
-    if (e.type == DioErrorType.response) {
+    if (e.type == DioExceptionType.badResponse) {
       final response = e.response;
       final statusCode = response?.statusCode;
       final statusMessage = response?.statusMessage;
       ShowToast.vitaToast(message: "$statusCode: $statusMessage", warn: true);
-    } else if (e.type == DioErrorType.connectTimeout ||
-        e.type == DioErrorType.sendTimeout ||
-        e.type == DioErrorType.receiveTimeout) {
+    } else if (e.type == DioExceptionType.connectionTimeout ||
+        e.type ==  DioExceptionType.sendTimeout ||
+        e.type ==  DioExceptionType.receiveTimeout) {
       ShowToast.vitaToast(message: "Network Timeout", warn: true);
-    } else if (e.type == DioErrorType.cancel) {
+    } else if (e.type ==  DioExceptionType.cancel) {
       ShowToast.vitaToast(message: "Request Cancelled", warn: true);
     } else {
       ShowToast.vitaToast(message: "Network Error", warn: true);
