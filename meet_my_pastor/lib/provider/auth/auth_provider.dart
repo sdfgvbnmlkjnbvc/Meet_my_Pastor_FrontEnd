@@ -9,6 +9,7 @@ import 'package:meet_my_pastor/view/screens/login.dart';
 import 'package:meet_my_pastor/widgets/meettoast.dart';
 
 class Authentication extends ChangeNotifier {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   bool _state = false;
@@ -59,7 +60,7 @@ class Authentication extends ChangeNotifier {
         _state = true;
         notifyListeners();
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       handleDioError(e, context);
     } catch (e) {
       handleGenericError(e, context);
@@ -69,6 +70,7 @@ class Authentication extends ChangeNotifier {
   Future<void> loginUser({
     required String email,
     required String password,
+     required BuildContext context,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -86,12 +88,12 @@ class Authentication extends ChangeNotifier {
         // final token = res['auth_token'];
         _admin = res['user']['admin'];
         // print("admin: $_admin");
-
+ notifyListeners();
         if (_admin == true) {
-          PageNavigator(ctx: _scaffoldKey.currentState?.context)
+          PageNavigator(ctx:context)
               .nextPageOnly(page: const Admin());
         } else {
-          PageNavigator(ctx: _scaffoldKey.currentState?.context)
+          PageNavigator(ctx:context)
               .nextPageOnly(page: const Appointment());
         }
 
@@ -100,15 +102,15 @@ class Authentication extends ChangeNotifier {
         _state = true;
         ShowToast.vitaToast(
             message: "Wrong Credentials", warn: true, long: true);
-      }
-    } on DioError catch (e) {
-      handleDioError(e, _scaffoldKey.currentState?.context);
-    } catch (e) {
-      handleGenericError(e, _scaffoldKey.currentState?.context);
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+    
     }
+    } on DioException catch (e) {
+  handleDioError(e, context);
+} catch (e) {
+  handleGenericError(e,  
+  context);
+  
+}
   }
 
   Future<void> getAll() async {
@@ -141,7 +143,7 @@ class Authentication extends ChangeNotifier {
     }
   }
 
-  void handleDioError(DioError e, [BuildContext? context]) {
+  void handleDioError(DioException e, [BuildContext? context]) {
     _isLoading = false;
     _state = true;
 

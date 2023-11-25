@@ -17,14 +17,14 @@ class Appointment extends StatefulWidget {
 class _AppointmentState extends State<Appointment> {
   @override
   void dispose() {
-    // Close the StreamController when the widget is disposed
+
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // late AnimationController controller;
+   
     PastorProvider pastors = context.watch<PastorProvider>();
     return SafeArea(
       child: Scaffold(

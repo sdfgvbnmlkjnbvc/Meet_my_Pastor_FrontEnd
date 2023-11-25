@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
                       return buildRegisterButton(context, () {
                         final auth =
                             Provider.of<Authentication>(context, listen: false);
-                        auth.loginUser(
+                        auth.loginUser(context: context,
                           email: _emailController.text,
                           password: _passwordController.text,
                         );

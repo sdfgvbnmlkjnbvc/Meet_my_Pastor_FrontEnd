@@ -39,7 +39,7 @@ class AppointmentProvider extends ChangeNotifier {
     try {
       var dio = Dio();
       Response response =
-          await dio.post("http://127.0.0.1:5000/api/appointment", data: body);
+          await dio.post("https://meet-my-pastor.onrender.com/api/appointment", data: body);
       respData = response.data;
 
       if (respData['status'] == 201) {
