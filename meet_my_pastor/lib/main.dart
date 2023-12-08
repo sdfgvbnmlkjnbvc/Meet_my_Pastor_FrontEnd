@@ -8,8 +8,11 @@ import 'package:meet_my_pastor/provider/pastor_provider.dart';
 import 'package:meet_my_pastor/provider/testimony_provider.dart';
 
 import 'package:meet_my_pastor/provider/testupload.dart';
+import 'package:meet_my_pastor/view/screens/appointment_detail.dart';
 import 'package:meet_my_pastor/view/screens/home.dart';
 import 'package:provider/provider.dart';
+
+import 'view/screens/admin_control.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +48,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const SafeArea(
           child:
-          HomePage(),
+          AppointmentDetail(pastorId:"526f04e3-e5c3-455a-99f4-96b4300dab7a" ,title: "new",),
+          // HomePage(),
+          // Controlpage()
           
         ),
       ),

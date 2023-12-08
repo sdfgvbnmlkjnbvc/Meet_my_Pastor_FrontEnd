@@ -89,15 +89,17 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          
           children: [
             const SizedBox(height: 30),
-            buildInputField(kInputBoxShadow: kInputBoxShadow,
-              controller: _emailController,
-              labelText: "Email",
-              isDateSelected: _isDateSelected,
-            ),
+            
+            FieldInput(
+                expand: false,
+                controller: _emailController,
+                width: 363,
+                height: 50,
+                labelText: "Email"),
             buildInputField(kInputBoxShadow: kInputBoxShadow,
               controller: _dateController,
               labelText: "Enter Date",
@@ -139,46 +141,54 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               },
             ),
             const SizedBox(height: 30),
-            buildInputField(kInputBoxShadow: kInputBoxShadow,
+                FieldInput(
+              expand: true,
               controller: _messageController,
-              labelText: "Please let us know in more details your reason for this appointment",
-              isDateSelected: _isDateSelected,
+              height: 269,
+              width: 363,
+              labelText:
+                  "Please lets us know in more details your reason for this apointment",
+              labelTextStyle:   const TextStyle(  fontFamily: "Montserrat",
+                      fontSize: 20, fontWeight: FontWeight.normal),
             ),
             const SizedBox(height: 30),
-            Flexible(
-              child: Material(
-                child: Consumer<AppointmentProvider>(
-                  builder: (context, Appoint, child) {
-                    return buildRegisterButton(
-                      context,
-                      () {
-                        if (_nameController.value.text.isEmpty ||
-                            _emailController.value.text.isEmpty ||
-                            _messageController.value.text.isEmpty) {
-                          setState(() {
-                            inactive = true;
-                          });
-                        } else if (!inactive) {
-                          Appoint.bookAppointment(
-                            context: context,
-                            userId: widget.pastorId,
-                            pastor: widget.title,
-                            time: _timeController.text,
-                            date: _dateController.text,
-                            email: _emailController.value.text,
-                            reason: _messageController.value.text,
-                            name: _nameController.text,
-                          );
-                        }
-                      },
-                      inactive ? const Color(0xFF3E64FF) : Colors.red[300],
-                      "Book now",
-                      363,
-                      60,
-                    );
-                  },
-                ),
-              ),
+            Material(
+              child: Consumer<AppointmentProvider>(
+                builder: (context, Appoint, child) {
+                  return buildRegisterButton(
+                    context,
+                    () {
+                      // if (_nameController.value.text.isEmpty ||
+                      //     _emailController.value.text.isEmpty ||
+                      //     _messageController.value.text.isEmpty) {
+                      //   setState(() {
+                      //     inactive = true;
+                      //   });
+                      // } else if (!inactive) {
+                        Appoint.bookAppointment(
+                          context: context,
+                          userId: widget.pastorId,
+                          pastor: widget.title,
+                          time: _timeController.text,
+                          date: _dateController.text,
+                          email: _emailController.value.text,
+                          reason: _messageController.value.text,
+                          name: _nameController.text,
+                        // );
+                    //   }
+                    // },
+                        );},
+                    // inactive ? const Color(0xFF3E64FF) : Colors.red[300],
+       const Color(0xFF3E64FF) ,
+       "Book now",
+                    280,
+                    60,
+                  )
+                  ;})
+                  
+                  
+              
+             
             ),
           ],
         ),

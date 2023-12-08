@@ -7,13 +7,14 @@ class AppointmentProvider extends ChangeNotifier {
   bool _state = false;
   int? _itemCount;
   final bool _admin = false;
-  Map<String, dynamic> respData = {};
+  Map<String, dynamic> _respData = {}; 
 
   int? get itemCount => _itemCount;
   bool get state => _state;
   bool get isLoading => _isLoading;
   bool get admin => _admin;
-
+Map<String,dynamic> get respData =>_respData;
+   
   Future<void> bookAppointment({
     required String name,
     required String email,
@@ -40,9 +41,9 @@ class AppointmentProvider extends ChangeNotifier {
       var dio = Dio();
       Response response =
           await dio.post("https://meet-my-pastor.onrender.com/api/appointment", data: body);
-      respData = response.data;
+      _respData = response.data;
 
-      if (respData['status'] == 201) {
+      if (_respData['status'] == 201) {
         ShowToast.vitaToast(message: "Appointment booked", warn: false);
         _isLoading = false;
         notifyListeners();
@@ -60,19 +61,20 @@ class AppointmentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> Appointments({
+  Stream<void> Appointments({
     required BuildContext context,
-  }) async {
+  }) async* {
     _isLoading = true;
     notifyListeners();
 
     try {
       var dio = Dio();
       Response response =
-          await dio.get("http://127.0.0.1:5000/api/appointment");
-      respData = response.data;
+          await dio.get("https://meet-my-pastor.onrender.com/api/getappointment");
+      _respData = response.data;
+      notifyListeners();
 
- 
+//  print(_respData);
     } on DioException catch (e) {
       handleDioError(e, context);
     } catch (e) {
