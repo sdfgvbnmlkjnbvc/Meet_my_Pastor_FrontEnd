@@ -48,8 +48,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const SafeArea(
           child:
-          AppointmentDetail(pastorId:"526f04e3-e5c3-455a-99f4-96b4300dab7a" ,title: "new",),
-          // HomePage(),
+          // AppointmentDetail(pastorId:"526f04e3-e5c3-455a-99f4-96b4300dab7a" ,title: "new",),
+          HomePage(),
           // Controlpage()
           
         ),

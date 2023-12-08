@@ -43,7 +43,7 @@ class AppointmentDetail extends StatefulWidget {
 class _AppointmentDetailState extends State<AppointmentDetail> {
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  // final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   bool _isDateSelected = false;
@@ -60,7 +60,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
 
   @override
   Widget build(BuildContext context) {
-    String userId = Provider.of<Authentication>(context).user_id;
+   var userId = Provider.of<Authentication>(context);
     print("User id: $userId");
     bool inactive = false;
     return Scaffold(
@@ -125,20 +125,22 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               controller: _timeController,
               labelText: "Enter Time",
               isTimeSelected: _isTimeSelected,
-              onTap: () async {
-                TimeOfDay? pickedTime = await showTimePicker(
-                  context: context,
-                  initialTime: _selectedTime,
-                );
+             onTap: () async {
+  TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: _selectedTime,
+  );
 
-                if (pickedTime != null && pickedTime != _selectedTime) {
-                  setState(() {
-                    _isTimeSelected = true;
-                    _selectedTime = pickedTime;
-                    print("Selected Time: $_selectedTime");
-                  });
-                }
-              },
+  if (pickedTime != null && pickedTime != _selectedTime) {
+    setState(() {
+      _isTimeSelected = true;
+      _selectedTime = pickedTime;
+      _timeController.text = _selectedTime.format(context); // Set the text
+      print("Selected Time: $_selectedTime");
+      print("stored in variable ${_timeController.text}");
+    });
+  }
+},
             ),
             const SizedBox(height: 30),
                 FieldInput(
@@ -167,13 +169,14 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                       // } else if (!inactive) {
                         Appoint.bookAppointment(
                           context: context,
-                          userId: widget.pastorId,
+                          // userId: widget.pastorId,
+                          userId: userId.userId,
                           pastor: widget.title,
                           time: _timeController.text,
                           date: _dateController.text,
                           email: _emailController.value.text,
                           reason: _messageController.value.text,
-                          name: _nameController.text,
+                          name: userId.userName,
                         // );
                     //   }
                     // },

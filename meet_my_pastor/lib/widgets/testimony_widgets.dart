@@ -48,7 +48,7 @@ class _TestimonyState extends State<Testimony> {
                           urln: getTestimony.Data[index]["Image"].toString(),
                           body: Text(
                               getTestimony.Data[index]["message"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.normal),
+                            fontSize: 18, fontWeight: FontWeight.normal),
                               ),
                         ),
                       ),

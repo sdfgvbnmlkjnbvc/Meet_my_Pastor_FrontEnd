@@ -16,7 +16,7 @@ class readAppointment extends StatelessWidget {
       child: Padding(
         padding:const EdgeInsets.all(25.0),
         child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,children: [
-          Flexible(child: Row(children: [date,const SizedBox(width: 20,),time,const Spacer(),name],)),
+          Row(children: [date,const SizedBox(width: 20,),time,const Spacer(),name],),
           pastor,
          msg
         ],),

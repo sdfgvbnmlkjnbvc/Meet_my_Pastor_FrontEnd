@@ -27,7 +27,7 @@ Widget buildInputField({
             border: InputBorder.none,
             labelText: isDateSelected || isTimeSelected ? "" : labelText,
             labelStyle: (isDateSelected || isTimeSelected)
-                ? const TextStyle(fontSize: 0, fontWeight: FontWeight.bold)
+                ? const TextStyle(fontSize: 0.1, fontWeight: FontWeight.bold)
                 : const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           readOnly: true,

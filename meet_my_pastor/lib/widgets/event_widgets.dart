@@ -52,7 +52,7 @@ class _EventsState extends State<Events> {
                       body: Text(
                           getEvent.Data[index]["eventDescription"].toString(),
                           style:const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.normal),
+                            fontSize: 18, fontWeight: FontWeight.normal),
                           ),
                     ),
                   );
