@@ -50,8 +50,10 @@ class Testimonies extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Testimonies",
-                    style: TextStyle(  fontFamily: "Montserrat",
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Testimony(),
@@ -59,11 +61,15 @@ class Testimonies extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Up coming Events",
-                    style: TextStyle(  fontFamily: "Montserrat",
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Events()
               ],
             ),

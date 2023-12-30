@@ -37,23 +37,36 @@ class _EventsState extends State<Events> {
                 onTap: () {
                   PageNavigator(ctx: context).nextPage(
                     page: EventView(
-                      title: Text(getEvent.Data[index]["name"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 24, fontWeight: FontWeight.bold,
+                      title: Text(
+                        getEvent.Data[index]["name"].toString(),
+                        style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                             color: Colors.white),
-                      
                       ),
-                      time: Text(getEvent.Data[index]["time"].toString() , style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.normal),
+                      time: Text(
+                        getEvent.Data[index]["time"].toString(),
+                        style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal),
                       ),
-                      date: Text(getEvent.Data[index]["date"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.normal),
+                      date: Text(
+                        getEvent.Data[index]["date"].toString(),
+                        style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal),
                       ),
                       urln: getEvent.Data[index]["Image"].toString(),
                       body: Text(
-                          getEvent.Data[index]["eventDescription"].toString(),
-                          style:const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 18, fontWeight: FontWeight.normal),
-                          ),
+                        getEvent.Data[index]["eventDescription"].toString(),
+                        style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ),
                   );
                 },
@@ -77,20 +90,23 @@ class _EventsState extends State<Events> {
                           ],
                         )),
                     const SizedBox(
-                      height: 10,
+                      height: 4,
                     ),
                     const Text(
                       "A Night of Praise and Adoration",
-                      style:
-                          TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.w800),
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text(
                         "Date: ${getEvent.Data[index]["date"]}",
-                        style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.normal),
+                        style: const TextStyle(
+                            fontFamily: "Montserrat",
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal),
                       ),
                     ),
                   ],
@@ -109,9 +125,10 @@ class _EventsState extends State<Events> {
           child: Text(
             "No events available",
             style: TextStyle(
-            fontFamily: "Montserrat",
-                            
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                fontFamily: "Montserrat",
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
         ),
       );

@@ -60,9 +60,9 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
 
   @override
   Widget build(BuildContext context) {
-   var userId = Provider.of<Authentication>(context);
-    print("User id: $userId");
-    bool inactive = false;
+    var userId = Provider.of<Authentication>(context);
+    // print("User id: $userId");
+    // bool inactive = false;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -74,7 +74,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
               color: Colors.blue,
             ),
             onPressed: () {
-              PageNavigator(ctx: context).nextPageOnly(page: const Appointment());
+              PageNavigator(ctx: context)
+                  .nextPageOnly(page: const Appointment());
             },
           ),
         ),
@@ -90,17 +91,17 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
       body: SingleChildScrollView(
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,
-          
+
           children: [
             const SizedBox(height: 30),
-            
             FieldInput(
                 expand: false,
                 controller: _emailController,
                 width: 363,
                 height: 50,
                 labelText: "Email"),
-            buildInputField(kInputBoxShadow: kInputBoxShadow,
+            buildInputField(
+              kInputBoxShadow: kInputBoxShadow,
               controller: _dateController,
               labelText: "Enter Date",
               isDateSelected: _isDateSelected,
@@ -113,7 +114,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                 );
 
                 if (pickedDate != null) {
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
                   setState(() {
                     _isDateSelected = true;
                     _dateController.text = formattedDate;
@@ -121,78 +123,77 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                 }
               },
             ),
-            buildInputField(kInputBoxShadow: kInputBoxShadow,
+            buildInputField(
+              kInputBoxShadow: kInputBoxShadow,
               controller: _timeController,
               labelText: "Enter Time",
               isTimeSelected: _isTimeSelected,
-             onTap: () async {
-  TimeOfDay? pickedTime = await showTimePicker(
-    context: context,
-    initialTime: _selectedTime,
-  );
+              onTap: () async {
+                TimeOfDay? pickedTime = await showTimePicker(
+                  context: context,
+                  initialTime: _selectedTime,
+                );
 
-  if (pickedTime != null && pickedTime != _selectedTime) {
-    setState(() {
-      _isTimeSelected = true;
-      _selectedTime = pickedTime;
-      _timeController.text = _selectedTime.format(context); // Set the text
-      print("Selected Time: $_selectedTime");
-      print("stored in variable ${_timeController.text}");
-    });
-  }
-},
+                if (pickedTime != null && pickedTime != _selectedTime) {
+                  setState(() {
+                    _isTimeSelected = true;
+                    _selectedTime = pickedTime;
+                    _timeController.text =
+                        _selectedTime.format(context); // Set the text
+                    //   print("Selected Time: $_selectedTime");
+                    //   print("stored in variable ${_timeController.text}");
+                  });
+                }
+              },
             ),
             const SizedBox(height: 30),
-                FieldInput(
+            FieldInput(
               expand: true,
               controller: _messageController,
               height: 269,
               width: 363,
               labelText:
                   "Please lets us know in more details your reason for this apointment",
-              labelTextStyle:   const TextStyle(  fontFamily: "Montserrat",
-                      fontSize: 20, fontWeight: FontWeight.normal),
+              labelTextStyle: const TextStyle(
+                  fontFamily: "Montserrat",
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal),
             ),
             const SizedBox(height: 30),
-            Material(
-              child: Consumer<AppointmentProvider>(
-                builder: (context, Appoint, child) {
-                  return buildRegisterButton(
-                    context,
-                    () {
-                      // if (_nameController.value.text.isEmpty ||
-                      //     _emailController.value.text.isEmpty ||
-                      //     _messageController.value.text.isEmpty) {
-                      //   setState(() {
-                      //     inactive = true;
-                      //   });
-                      // } else if (!inactive) {
-                        Appoint.bookAppointment(
-                          context: context,
-                          // userId: widget.pastorId,
-                          userId: userId.userId,
-                          pastor: widget.title,
-                          time: _timeController.text,
-                          date: _dateController.text,
-                          email: _emailController.value.text,
-                          reason: _messageController.value.text,
-                          name: userId.userName,
-                        // );
+            Material(child: Consumer<AppointmentProvider>(
+                builder: (context, appoint, child) {
+              return buildRegisterButton(
+                context,
+                () {
+                  // if (_nameController.value.text.isEmpty ||
+                  //     _emailController.value.text.isEmpty ||
+                  //     _messageController.value.text.isEmpty) {
+                  //   setState(() {
+                  //     inactive = true;
+                  //   });
+                  // } else if (!inactive) {
+                  appoint.bookAppointment(
+                    context: context,
+                    // userId: widget.pastorId,
+                    userId: userId.userId,
+                    pastor: widget.title,
+                    time: _timeController.text,
+                    date: _dateController.text,
+                    email: _emailController.value.text,
+                    reason: _messageController.value.text,
+                    name: userId.userName,
+                    // );
                     //   }
                     // },
-                        );},
-                    // inactive ? const Color(0xFF3E64FF) : Colors.red[300],
-       const Color(0xFF3E64FF) ,
-       "Book now",
-                    280,
-                    60,
-                  )
-                  ;})
-                  
-                  
-              
-             
-            ),
+                  );
+                },
+                // inactive ? const Color(0xFF3E64FF) : Colors.red[300],
+                const Color(0xFF3E64FF),
+                "Book now",
+                280,
+                60,
+              );
+            })),
           ],
         ),
       ),

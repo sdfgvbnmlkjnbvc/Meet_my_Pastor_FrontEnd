@@ -42,14 +42,20 @@ class _TestimonyState extends State<Testimony> {
                       page: Flexible(
                         child: TestimonyView(
                           title: Text(
-                              getTestimony.Data[index]["title"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
+                            getTestimony.Data[index]["title"].toString(),
+                            style: const TextStyle(
+                                fontFamily: "Montserrat",
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
                           urln: getTestimony.Data[index]["Image"].toString(),
                           body: Text(
-                              getTestimony.Data[index]["message"].toString(), style: const TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 18, fontWeight: FontWeight.normal),
-                              ),
+                            getTestimony.Data[index]["message"].toString(),
+                            style: const TextStyle(
+                                fontFamily: "Montserrat",
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal),
+                          ),
                         ),
                       ),
                     );
@@ -61,7 +67,6 @@ class _TestimonyState extends State<Testimony> {
                       width: 200,
                       child: Image.network(
                         testimonyData[index]["Image"].toString(),
-                       
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.cover,
@@ -73,18 +78,19 @@ class _TestimonyState extends State<Testimony> {
                 Flexible(
                   child: Text(
                     "${testimonyData[index]["name"]}",
-                    style: const TextStyle(fontFamily: "Montserrat",
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                const Flexible(
-                  child: Text(
-                    "Rockson",
-                    style: TextStyle(fontFamily: "Montserrat",
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-  
+                // const Flexible(
+                //   child: Text(
+                //     "Rockson",
+                //     style: TextStyle(fontFamily: "Montserrat",
+                //       fontSize: 18, fontWeight: FontWeight.bold),
+                //   ),
+                // ),
               ],
             ),
           );
@@ -98,9 +104,11 @@ class _TestimonyState extends State<Testimony> {
         child: const Center(
           child: Text(
             "No testimonies available",
-            style:  TextStyle(  fontFamily: "Montserrat",
-                            fontSize: 20, fontWeight: FontWeight.bold,
-              color: Colors.white),
+            style: TextStyle(
+                fontFamily: "Montserrat",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
         ),
       );

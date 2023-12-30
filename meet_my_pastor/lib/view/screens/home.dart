@@ -46,9 +46,9 @@ class HomePage extends StatelessWidget {
                       child: const Text(
                         "About",
                         style: TextStyle(
-                          fontFamily: "Montserrat",
+                            fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
-                            fontSize: 24,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -61,10 +61,10 @@ class HomePage extends StatelessWidget {
                       },
                       child: const Text(
                         "Contact us",
-                        style: TextStyle(  
-                          fontFamily: "Montserrat",
+                        style: TextStyle(
+                            fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
-                            fontSize: 24,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -76,12 +76,11 @@ class HomePage extends StatelessWidget {
                             .nextPage(page: const Testimonies());
                       },
                       child: const Text(
-                        
                         "Testimonies",
                         style: TextStyle(
                             fontFamily: "Montserrat",
                             decoration: TextDecoration.underline,
-                            fontSize: 24,
+                            fontSize: 19,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
