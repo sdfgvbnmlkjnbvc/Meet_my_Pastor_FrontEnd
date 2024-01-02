@@ -32,7 +32,7 @@ class _EventsState extends State<Events> {
           itemCount: getEvent.itemCount,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(4.0),
               child: InkWell(
                 onTap: () {
                   PageNavigator(ctx: context).nextPage(
@@ -77,24 +77,24 @@ class _EventsState extends State<Events> {
                     SizedBox(
                         height: 340,
                         width: 395,
+                       
                         child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
-                              child: Image.network(
-                                getEvent.Data[index]["Image"],
-                                height: 340,
-                                width: 395,
-                                fit: BoxFit.fitWidth,
+                              child: SizedBox(
+                                child: Image.network(
+                                  getEvent.Data[index]["Image"],
+                                  height: 340,
+                                  width: 395,
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                             ),
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    const Text(
-                      "A Night of Praise and Adoration",
-                      style: TextStyle(
+                              Text(
+                       getEvent.Data[index]["name"].toString(),
+                      style:const TextStyle(
                           fontFamily: "Montserrat",
                           fontSize: 20,
                           fontWeight: FontWeight.w800),
@@ -109,6 +109,10 @@ class _EventsState extends State<Events> {
                             fontWeight: FontWeight.normal),
                       ),
                     ),
+                          ],
+                        )),
+                  
+                
                   ],
                 ),
               ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meet_my_pastor/page_navigator.dart';
@@ -15,6 +17,7 @@ import 'package:meet_my_pastor/widgets/meettoast.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/admin_control.dart';
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 
 class Admin extends StatefulWidget {
   const Admin({ super.key});
@@ -90,230 +93,335 @@ class _AdminState extends State<Admin> {
                 icon: const Icon(color: Colors.blue, Icons.data_exploration_outlined))
           ],
         ),
-        body: Column(
-          children: [
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                files.picked == true
-                    ? Flexible(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              width: 159,
-                              height: 210,
-                              child:
-                                  // Text("${response.response?.secureUrl.toString()}")
-                                  Image.file(
-                                files.imageFile,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.75,
-                                scale: 1.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              child: Center(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      // color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    height: 50,
-                                    width: 50,
-                                    child: InkWell(
-                                      onTap: () async {
-                                        await files.int();
-                                      },
-                                      child: const Icon(
-                                        color: Colors.blue,
-                                        Icons.add_circle_outline,
-                                        size: 55,
+        body: Flexible(
+          child: Column(
+            children: [
+              // const SizedBox(height: 30),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     files.picked == true
+              //         ? Flexible(
+              //             child: Stack(
+              //               alignment: Alignment.center,
+              //               children: [
+              //                 SizedBox(
+              //                   width: 159,
+              //                   height: 210,
+              //                   child:kIsWeb
+              //     ? Image.network(
+              //         files.imageFile.toString(),
+              //         height: MediaQuery.of(context).size.width * 0.75,
+              //         scale: 1.0,
+              //         fit: BoxFit.cover,
+              //       )
+              //     : Image.file(
+              //         files.imageFile,
+              //         height: MediaQuery.of(context).size.width * 0.75,
+              //         scale: 1.0,
+              //         fit: BoxFit.cover,
+              //       ),
+                              
+
+
+              //                   //     // Text("${response.response?.secureUrl.toString()}")
+              //                   //     Image.file(
+              //                   //   files.imageFile,
+              //                   //   height:
+              //                   //       MediaQuery.of(context).size.width * 0.75,
+              //                   //   scale: 1.0,
+              //                   //   fit: BoxFit.cover,
+              //                   // ),
+              //                 ),
+
+
+SizedBox(
+  width: 159,
+  height: 210,
+  child: Stack(
+    children: [
+      FutureBuilder<String>(
+        // Replace 'YOUR_IMAGE_URL' with the actual URL of the image or file path
+        future: loadImageUrlOrFilePath(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              // Handle the error
+              return Center(
+                child: Text('Error loading image'),
+              );
+            } else {
+              // Use Image.network for web and Image.file for mobile
+              if (kIsWeb) {
+                return Image.network(
+                  snapshot.data!,
+                  height: MediaQuery.of(context).size.width * 0.75,
+                  scale: 1.0,
+                  fit: BoxFit.cover,
+                );
+              } else {
+                return Image.file(
+                  File(snapshot.data!), // Assuming snapshot.data is a file path
+                  height: MediaQuery.of(context).size.width * 0.75,
+                  scale: 1.0,
+                  fit: BoxFit.cover,
+                );
+              }
+            }
+          } else {
+            // Show a loading indicator while the image is being fetched
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+      Positioned(
+        child: Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              height: 50,
+              width: 50,
+              child: InkWell(
+                onTap: () async {
+                  await files.int();
+                },
+                child: const Icon(
+                  color: Colors.blue,
+                  Icons.add_circle_outline,
+                  size: 55,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ],
+  ),
+);
+
+Future<String> loadImageUrlOrFilePath() async {
+  try {
+    // Replace 'YOUR_IMAGE_URL_OR_FILE_PATH' with the actual URL or file path
+    // Example: 'https://example.com/your_image.jpg' or '/path/to/your_image.jpg'
+    return '';
+  } catch (e) {
+    // Handle the error, and you can return a default URL or throw an exception
+    print('Error loading image URL or file path: $e');
+    // return a default URL or throw an exception
+    throw 'Failed to load image URL or file path';
+  }
+}
+
+                              Positioned(
+                                child: Center(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        // color: Colors.blue,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      height: 50,
+                                      width: 50,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          if (kDebugMode) {
+                                            print(files.imageFile.toString());
+                                          }
+                                          await files.int();
+                                          
+                                        },
+                                        child: const Icon(
+                                          color: Colors.blue,
+                                          Icons.add_circle_outline,
+                                          size: 55,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
+                        )
+                      : Flexible(
+                          child: Container(
+                            width: 159,
+                            height: 210,
+                            color: const Color(0xffD9D9D9),
+                            child: buildImagePlaceholder(files),
+                          ),
                         ),
-                      )
-                    : Flexible(
-                        child: Container(
-                          width: 159,
-                          height: 210,
-                          color: const Color(0xffD9D9D9),
-                          child: buildImagePlaceholder(files),
+                  Flexible(
+                    child: SizedBox(
+                      height: 200,
+                      width: 192,
+                      child: buildDropdownAndFields(),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
+              dropdownValue == "Pastor"
+                  ? const Text("")
+                  : Flexible(
+                      child: Container(
+                        margin: const EdgeInsets.all(20),
+                        child: FieldInput(
+                          expand: true,
+                          maxLines: null,
+                          minLines: null,
+                          labelText: "Kindly Type here",
+                          height: MediaQuery.of(context).size.height * 0.4179,
+                          controller: _messageController,
                         ),
-                      ),
-                Flexible(
-                  child: SizedBox(
-                    height: 200,
-                    width: 192,
-                    child: buildDropdownAndFields(),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 20),
-            dropdownValue == "Pastor"
-                ? const Text("")
-                : Flexible(
-                    child: Container(
-                      margin: const EdgeInsets.all(20),
-                      child: FieldInput(
-                        expand: true,
-                        maxLines: null,
-                        minLines: null,
-                        labelText: "Kindly Type here",
-                        height: MediaQuery.of(context).size.height * 0.4179,
-                        controller: _messageController,
                       ),
                     ),
-                  ),
-            const SizedBox(height: 30),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (dropdownValue == 'Pastor') ...[
-                  buildRegisterButton(
-                    context,
-                    () async {
-                      if (_nameController.value.text.isEmpty ||
-                          _titleController.value.text.isEmpty ||
-                          _contactController.value.text.isEmpty) {
-                        // || response.response?.secureUrl == null
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      } else {
-                        String file1 = _nameController.value.text;
-                        await response.upload(files.file!, file1);
-                   
+              const SizedBox(height: 30),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (dropdownValue == 'Pastor') ...[
+                    buildRegisterButton(
+                      context,
+                      () async {
+                        if (_nameController.value.text.isEmpty ||
+                            _titleController.value.text.isEmpty ||
+                            _contactController.value.text.isEmpty) {
+                          // || response.response?.secureUrl == null
+                          ShowToast.vitaToast(
+                              message: "provide data for all fields",
+                              warn: true,
+                              long: true);
+                        } else {
+                          String file1 = _nameController.value.text;
+                          await response.upload(files.file!, file1);
+                     
+                          addPastor.pastor(
+                              name: _nameController.value.text,
+                              title: _titleController.value.text,
+                              contact: _contactController.value.text,
+                              imageUrl: "${response.response?.secureUrl}",
+                              context: context);
+                        }
+                      },
+                      const Color(0xFF3E64FF),
+                      "Add",
+                      170,
+                      59,
+                    ),
+                    buildRegisterButton(
+                      context,
+                      () {
+                       
                         addPastor.pastor(
                             name: _nameController.value.text,
                             title: _titleController.value.text,
                             contact: _contactController.value.text,
                             imageUrl: "${response.response?.secureUrl}",
                             context: context);
-                      }
-                    },
-                    const Color(0xFF3E64FF),
-                    "Add",
-                    170,
-                    59,
-                  ),
-                  buildRegisterButton(
-                    context,
-                    () {
-                     
-                      addPastor.pastor(
-                          name: _nameController.value.text,
-                          title: _titleController.value.text,
-                          contact: _contactController.value.text,
-                          imageUrl: "${response.response?.secureUrl}",
-                          context: context);
-                    
-                    },
-                    const Color(0xFF3E64FF),
-                    "Cancel",
-                    170,
-                    59,
-                  ),
-                ]
-                
-                else if (dropdownValue == 'Event') ...[
-                  buildRegisterButton(
-                    context,
-                    () async {
-                      // print("checkInMy${response.url}");
-                      if (_nameController.value.text.isEmpty ||
-                          _timeController.value.text.isEmpty ||
-                          _locationController.value.text.isEmpty ||
-                          dateInput.value.text.isEmpty ||
-                          _messageController.value.text.isEmpty) {
-                        //  || response.response?.secureUrl == null
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      } else {
-                        await response.upload(
-                            files.file!, _nameController.value.text);
-                        await addEvent.event(
-                            name: _nameController.value.text,
-                            location: _locationController.value.text,
-                            date: dateInput.value.text,
-                            time: _timeController.value.text,
-                            imageUrl: "${response.response?.secureUrl}",
-                            eventDescription: _messageController.value.text,
-                            context: context);
-                      }
-                    },
-                    const Color(0xFF3E64FF),
-                    "Add",
-                    170,
-                    59,
-                  ),
-                  buildRegisterButton(
-                    context,
-                    () {},
-                    const Color(0xFF3E64FF),
-                    "Cancel",
-                    170,
-                    59,
-                  ),
-                ] else if (dropdownValue == 'Testimony') ...[
-                  buildRegisterButton(
-                    context,
-                    () async {
-
-
-                      if (_nameController.value.text.isEmpty ||
-                          _titleController.value.text.isEmpty ||
-                          dateInput.value.text.isEmpty ||
-                          _messageController.value.text.isEmpty) {
-          
-                        ShowToast.vitaToast(
-                            message: "provide data for all fields",
-                            warn: true,
-                            long: true);
-                      } else {
-                        await response.upload(
-                            files.file!, _nameController.value.text);
-
-                        await addTestimony.testimony(
-                            name: _nameController.value.text,
-                            title: _titleController.value.text,
-                            date: dateInput.value.text,
-                            message: _messageController.value.text,
-                            imageUrl: "${response.response?.secureUrl}",
-                            context: context);
-                      }
-                    },
-                    const Color(0xFF3E64FF),
-                    "Add",
-                    170,
-                    59,
-                  ),
-                  buildRegisterButton(
-                    context,
-                    () {},
-                    const Color(0xFF3E64FF),
-                    "Cancel",
-                    170,
-                    59,
-                  ),
-                ]
-              ],
-            ),
-          ],
+                      
+                      },
+                      const Color(0xFF3E64FF),
+                      "Cancel",
+                      170,
+                      59,
+                    ),
+                  ]
+                  
+                  else if (dropdownValue == 'Event') ...[
+                    buildRegisterButton(
+                      context,
+                      () async {
+                        // print("checkInMy${response.url}");
+                        if (_nameController.value.text.isEmpty ||
+                            _timeController.value.text.isEmpty ||
+                            _locationController.value.text.isEmpty ||
+                            dateInput.value.text.isEmpty ||
+                            _messageController.value.text.isEmpty) {
+                          //  || response.response?.secureUrl == null
+                          ShowToast.vitaToast(
+                              message: "provide data for all fields",
+                              warn: true,
+                              long: true);
+                        } else {
+                          await response.upload(
+                              files.file!, _nameController.value.text);
+                          await addEvent.event(
+                              name: _nameController.value.text,
+                              location: _locationController.value.text,
+                              date: dateInput.value.text,
+                              time: _timeController.value.text,
+                              imageUrl: "${response.response?.secureUrl}",
+                              eventDescription: _messageController.value.text,
+                              context: context);
+                        }
+                      },
+                      const Color(0xFF3E64FF),
+                      "Add",
+                      170,
+                      59,
+                    ),
+                    buildRegisterButton(
+                      context,
+                      () {},
+                      const Color(0xFF3E64FF),
+                      "Cancel",
+                      170,
+                      59,
+                    ),
+                  ] else if (dropdownValue == 'Testimony') ...[
+                    buildRegisterButton(
+                      context,
+                      () async {
+        
+        
+                        if (_nameController.value.text.isEmpty ||
+                            _titleController.value.text.isEmpty ||
+                            dateInput.value.text.isEmpty ||
+                            _messageController.value.text.isEmpty) {
+            
+                          ShowToast.vitaToast(
+                              message: "provide data for all fields",
+                              warn: true,
+                              long: true);
+                        } else {
+                          await response.upload(
+                              files.file!, _nameController.value.text);
+        
+                          await addTestimony.testimony(
+                              name: _nameController.value.text,
+                              title: _titleController.value.text,
+                              date: dateInput.value.text,
+                              message: _messageController.value.text,
+                              imageUrl: "${response.response?.secureUrl}",
+                              context: context);
+                        }
+                      },
+                      const Color(0xFF3E64FF),
+                      "Add",
+                      170,
+                      59,
+                    ),
+                    buildRegisterButton(
+                      context,
+                      () {},
+                      const Color(0xFF3E64FF),
+                      "Cancel",
+                      170,
+                      59,
+                    ),
+                  ]
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

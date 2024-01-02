@@ -74,14 +74,17 @@ class _TestimonyState extends State<Testimony> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
+               
                 Flexible(
-                  child: Text(
-                    "${testimonyData[index]["name"]}",
-                    style: const TextStyle(
-                        fontFamily: "Montserrat",
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${testimonyData[index]["name"]}",
+                      style: const TextStyle(
+                          fontFamily: "Montserrat",
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 // const Flexible(
@@ -90,7 +93,7 @@ class _TestimonyState extends State<Testimony> {
                 //     style: TextStyle(fontFamily: "Montserrat",
                 //       fontSize: 18, fontWeight: FontWeight.bold),
                 //   ),
-                // ),
+                 const SizedBox(height: 5),
               ],
             ),
           );

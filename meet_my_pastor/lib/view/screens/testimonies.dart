@@ -57,6 +57,7 @@ class Testimonies extends StatelessWidget {
                   ),
                 ),
                 Testimony(),
+                
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -67,9 +68,7 @@ class Testimonies extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+             
                 Events()
               ],
             ),

@@ -53,9 +53,8 @@ class Authentication extends ChangeNotifier {
       if (respData['status'] == 201) {
         ShowToast.vitaToast(message: "Account created", warn: false);
         _isLoading = false;
+         PageNavigator(ctx:context).nextPage(page: const Login());
         notifyListeners();
-        PageNavigator(ctx: _scaffoldKey.currentState?.context)
-            .nextPage(page: const Login());
       } else {
         ShowToast.vitaToast(message: "User Already Exists", warn: false);
         _isLoading = false;
